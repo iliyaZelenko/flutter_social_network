@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
+import 'features/home/home_presenter.dart';
 import 'features/core/core_presenter.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
 import 'resources/emojis.dart';
-import 'screens/home_screen.dart';
+import 'features/home/home_screen.dart';
 
 final mainNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -27,50 +28,57 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (kDebugMode) {
-          SystemChannels.textInput.invokeMethod('TextInput.hide');
-        }
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Material(
-        color: AppColors.black,
-        child: ScrollConfiguration(
-          behavior: const _Bouncing(),
-          child: CupertinoApp(
-            navigatorKey: mainNavigatorKey,
-            theme: const CupertinoThemeData(
-              brightness: Brightness.dark,
-              textTheme: CupertinoTextThemeData(
-                navLargeTitleTextStyle: AppTextStyles.body16,
-                primaryColor: AppColors.white,
+    return BolterProvider(
+      container: DependenciesContainer(),
+      child: GestureDetector(
+        onTap: () {
+          if (kDebugMode) {
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
+          }
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Material(
+          color: AppColors.black100,
+          child: ScrollConfiguration(
+            behavior: const _Bouncing(),
+            child: CupertinoApp(
+              navigatorKey: mainNavigatorKey,
+              theme: const CupertinoThemeData(
+                brightness: Brightness.dark,
+                textTheme: CupertinoTextThemeData(
+                  navLargeTitleTextStyle: AppTextStyles.body16,
+                  primaryColor: AppColors.black100,
+                  textStyle: TextStyle(color: AppColors.black100)
+                ),
               ),
-            ),
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [DefaultMaterialLocalizations.delegate],
-            initialRoute: AppRoutes.home,
-            home: nil,
-            builder: (ctx, widget) {
-              return Stack(
-                children: [
-                  const Text(
-                    emojis,
-                    style: TextStyle(fontSize: 5),
-                    textScaleFactor: 1,
-                  ),
-                  PresenterProvider(
-                    presenter: CorePresenter(),
-                    child: widget!,
-                  ),
-                ],
-              );
-            },
-            routes: {
-              AppRoutes.home: (_) {
-                return const HomeScreen();
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: const [DefaultMaterialLocalizations.delegate],
+              initialRoute: AppRoutes.home,
+              home: nil,
+              builder: (ctx, widget) {
+                return Stack(
+                  children: [
+                    const Text(
+                      emojis,
+                      style: TextStyle(fontSize: 5),
+                      textScaleFactor: 1,
+                    ),
+                    PresenterProvider(
+                      presenter: CorePresenter(),
+                      child: widget!,
+                    ),
+                  ],
+                );
               },
-            },
+              routes: {
+                AppRoutes.home: (_) {
+                  return PresenterProvider(
+                    presenter: HomePresenter(),
+                    child: const HomeScreen(),
+                  );
+                },
+              },
+            ),
           ),
         ),
       ),

@@ -93,7 +93,7 @@ flutter:
     - family: Inter Light
       fonts:
         - asset: fonts/Inter-Light.ttf
-#    - family: AppIcons
-#      fonts:
-#        - asset: fonts/AppIcons.ttf
+    - family: AppIcons
+      fonts:
+        - asset: fonts/MingCuteIcons.ttf
 

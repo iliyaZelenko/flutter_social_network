@@ -5,6 +5,6 @@ mixin AppTextStyles {
   static const body16 = TextStyle(
     fontSize: 16,
     fontFamily: 'Inter Semi Bold',
-    color: AppColors.black,
+    color: AppColors.black100,
   );
 }
