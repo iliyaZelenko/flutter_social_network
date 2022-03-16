@@ -1,9 +1,12 @@
 import 'package:bolter_flutter/bolter_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rate_club/features/chats/chats_screen.dart';
+import 'package:rate_club/features/create/create_screen.dart';
 import 'package:rate_club/features/feed/feed_screen.dart';
-import 'package:rate_club/features/feed/invest_screen.dart';
+import 'package:rate_club/features/invest/invest_screen.dart';
 import 'package:rate_club/features/home/home_presenter.dart';
 import 'package:rate_club/features/home/tap_bar.dart';
+import 'package:rate_club/features/subscriptions/subscriptions_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,15 +25,18 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         ValueListenableBuilder<int>(
           valueListenable: homePresenter.index,
-          builder: (_, value, __) {
+          builder: (_, index, __) {
             return Column(
               children: [
                 Expanded(
                   child: IndexedStack(
-                    index: value,
+                    index: index,
                     children: const [
                       FeedScreen(),
                       InvestScreen(),
+                      CreateScreen(),
+                      ChatsScreen(),
+                      SubscriptionsScreen(),
                     ],
                   ),
                 ),

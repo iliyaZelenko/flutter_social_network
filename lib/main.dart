@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: Material(
-          color: AppColors.black100,
+          color: AppColors.black80,
           child: ScrollConfiguration(
             behavior: const _Bouncing(),
             child: CupertinoApp(
@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
               theme: const CupertinoThemeData(
                 brightness: Brightness.dark,
                 textTheme: CupertinoTextThemeData(
-                  navLargeTitleTextStyle: AppTextStyles.body16,
-                  primaryColor: AppColors.black100,
-                  textStyle: TextStyle(color: AppColors.black100)
+                  navLargeTitleTextStyle: AppTextStyles.semiBold16,
+                  primaryColor: AppColors.black80,
+                  textStyle: TextStyle(color: AppColors.black80)
                 ),
               ),
               debugShowCheckedModeBanner: false,
