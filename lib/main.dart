@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
+import 'features/auth/sign_in_screen.dart';
 import 'features/home/home_presenter.dart';
 import 'features/core/core_presenter.dart';
 import 'resources/app_colors.dart';
@@ -20,15 +21,11 @@ Future<void> main() async {
     await Executor().warmUp();
   }
 
-  runApp(const MyApp());
-}
+  final loggedIn = false;
+  final initialRoute = loggedIn ? AppRoutes.home : AppRoutes.auth;
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BolterProvider(
+  runApp(
+    BolterProvider(
       container: DependenciesContainer(),
       child: GestureDetector(
         onTap: () {
@@ -46,14 +43,13 @@ class MyApp extends StatelessWidget {
               theme: const CupertinoThemeData(
                 brightness: Brightness.dark,
                 textTheme: CupertinoTextThemeData(
-                  navLargeTitleTextStyle: AppTextStyles.semiBold16,
-                  primaryColor: AppColors.black80,
-                  textStyle: TextStyle(color: AppColors.black80)
-                ),
+                    navLargeTitleTextStyle: AppTextStyles.semiBold16,
+                    primaryColor: AppColors.black80,
+                    textStyle: TextStyle(color: AppColors.black80)),
               ),
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [DefaultMaterialLocalizations.delegate],
-              initialRoute: AppRoutes.home,
+              initialRoute: initialRoute,
               home: nil,
               builder: (ctx, widget) {
                 return Stack(
@@ -70,20 +66,13 @@ class MyApp extends StatelessWidget {
                   ],
                 );
               },
-              routes: {
-                AppRoutes.home: (_) {
-                  return PresenterProvider(
-                    presenter: HomePresenter(),
-                    child: const HomeScreen(),
-                  );
-                },
-              },
+              routes: routesMap,
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 class _Bouncing extends ScrollBehavior {
