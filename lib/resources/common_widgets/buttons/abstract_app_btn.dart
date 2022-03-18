@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
@@ -17,28 +18,10 @@ abstract class AbstractAppBtn extends StatefulWidget {
     required this.padding,
     required this.centered,
     this.onTap,
-  })  : assert((child != null && text == null) || (child == null && text != null), 'Only "child" or "text"'),
+    bool? loading,
+  })  : loading = loading ?? false,
+        assert((child != null && text == null) || (child == null && text != null), 'Only "child" or "text"'),
         super(key: key);
-
-  const factory AbstractAppBtn.regularUnconstrained({
-    Key? key,
-    bool tapped,
-    Widget? child,
-    String? text,
-    Color? color,
-    Color textColor,
-    VoidCallback? onTap,
-  }) = RegularUnconstrainedAppBtn;
-
-  const factory AbstractAppBtn.regular({
-    Key? key,
-    bool tapped,
-    Widget? child,
-    String? text,
-    Color? color,
-    Color textColor,
-    VoidCallback? onTap,
-  }) = RegularAppBtn;
 
   final bool tapped;
   final Widget? child;
@@ -49,6 +32,29 @@ abstract class AbstractAppBtn extends StatefulWidget {
   final EdgeInsets padding;
   final bool centered;
   final VoidCallback? onTap;
+  final bool loading;
+
+  const factory AbstractAppBtn.regularUnconstrained({
+    Key? key,
+    bool tapped,
+    Widget? child,
+    String? text,
+    Color? color,
+    Color textColor,
+    VoidCallback? onTap,
+    bool? loading,
+  }) = RegularUnconstrainedAppBtn;
+
+  const factory AbstractAppBtn.regular({
+    Key? key,
+    bool tapped,
+    Widget? child,
+    String? text,
+    Color? color,
+    Color textColor,
+    VoidCallback? onTap,
+    bool? loading,
+  }) = RegularAppBtn;
 
   @override
   State<AbstractAppBtn> createState() => _AbstractAppBtnState();
@@ -61,14 +67,20 @@ class _AbstractAppBtnState extends State<AbstractAppBtn> {
 
   @override
   Widget build(BuildContext context) {
-    final wrappedChild = DefaultTextStyle(
-      style: AppTextStyles.semiBold16.apply(color: widget.textColor),
-      child: widget.text != null ? Text(widget.text!) : widget.child!,
-    );
+    final wrappedChild = widget.loading
+        ? const SizedBox(
+            width: 16,
+            height: 16,
+            child: CircularProgressIndicator(color: AppColors.white100, strokeWidth: 2.5,),
+          )
+        : DefaultTextStyle(
+            style: AppTextStyles.semiBold16.apply(color: widget.textColor),
+            child: widget.text != null ? Text(widget.text!) : widget.child!,
+          );
 
     final child = AnimatedContainer(
       alignment: widget.centered ? Alignment.center : null,
-      padding: widget.padding,
+      padding: widget.loading ? const EdgeInsets.all(10) : widget.padding,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(32)),
         color: widget.color == null

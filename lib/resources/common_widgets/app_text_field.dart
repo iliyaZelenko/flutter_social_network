@@ -36,6 +36,7 @@ class AppTextField extends StatefulWidget {
   final Color cursorColor;
   final Color? hintColor;
   final bool showCursor;
+  final String initialValue;
 
   AppTextField({
     Key? key,
@@ -67,6 +68,7 @@ class AppTextField extends StatefulWidget {
     this.hideInput = false,
     this.cursorColor = AppColors.purple80,
     this.hintColor = AppColors.black60,
+    this.initialValue = '',
   })  : textStyle = textStyle ?? AppTextStyles.medium16.apply(color: AppColors.black100),
         focusNode = focusNode ?? FocusNode(),
         super(key: key);
@@ -79,11 +81,20 @@ class _AppTextFieldState extends State<AppTextField> {
   static const double bottomPadding = 2;
 
   Timer? _timer;
+  TextEditingController? _inputController;
 
   @override
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    this._inputController = widget.controller ?? TextEditingController();
+    _inputController!.text = widget.initialValue;
+
+    super.initState();
   }
 
   @override
@@ -141,7 +152,7 @@ class _AppTextFieldState extends State<AppTextField> {
           scrollPadding: EdgeInsets.zero,
           expands: widget.expand,
           textCapitalization: widget.capitalize ? TextCapitalization.words : TextCapitalization.none,
-          controller: widget.controller,
+          controller: _inputController,
           onChanged: (text) {
             widget.onChanged?.call(text);
             _timer?.cancel();

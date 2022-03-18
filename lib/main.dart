@@ -1,3 +1,5 @@
+import 'package:app_http_client/app_http_client.dart';
+import 'package:auth/auth.dart';
 import 'package:bolter_flutter/bolter_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -5,21 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
-import 'features/auth/sign_in_screen.dart';
-import 'features/home/home_presenter.dart';
 import 'features/core/core_presenter.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
 import 'resources/emojis.dart';
-import 'features/home/home_screen.dart';
 
-final mainNavigatorKey = GlobalKey<NavigatorState>();
+const debug = kDebugMode;
 
 Future<void> main() async {
-  if (!kDebugMode) {
-    await Executor().warmUp();
-  }
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final mainNavigatorKey = GlobalKey<NavigatorState>();
+  final dc = await _setupEnvironment();
+  dc.update(dependencies: {GlobalKey: () => mainNavigatorKey});
 
   final loggedIn = false;
   final initialRoute = loggedIn ? AppRoutes.home : AppRoutes.auth;
@@ -66,7 +67,7 @@ Future<void> main() async {
                   ],
                 );
               },
-              routes: routesMap,
+              routes: getRoutesMap(dc),
             ),
           ),
         ),
@@ -80,4 +81,23 @@ class _Bouncing extends ScrollBehavior {
 
   @override
   ScrollPhysics getScrollPhysics(BuildContext context) => const BouncingScrollPhysics();
+}
+
+Future<DependenciesContainer> _setupEnvironment() async {
+  if (!kDebugMode) {
+    await Executor().warmUp();
+  }
+  final client = AppHttpClient(
+    log: debug,
+    fakeIsolate: debug,
+    defaultHost: 'https://dev.easydev.group/',
+  );
+  await client.init();
+
+  return DependenciesContainer(
+    dependencies: {
+      AppHttpClientInterface: () => client,
+      AuthUseCase: () => authUseCase(client),
+    },
+  );
 }

@@ -1,5 +1,8 @@
+import 'package:bolter_flutter/bolter_flutter.dart';
+import 'package:bolter_flutter/src/bolter_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rate_club/features/auth/auth_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
@@ -15,11 +18,10 @@ class SignInScreen extends StatefulWidget {
 }
 
 class SignInScreenState extends State<SignInScreen> {
-  bool _rememberMe = false;
-  bool _hidePassword = true;
-
   @override
   Widget build(BuildContext context) {
+    final presenter = context.presenter<AuthPresenter>();
+
     return ColoredBox(
       color: AppColors.white100,
       child: SafeArea(
@@ -38,23 +40,35 @@ class SignInScreenState extends State<SignInScreen> {
                 child: AppTextField(
                   labelText: 'адрес электронной почты',
                   textInputType: TextInputType.emailAddress,
+                  initialValue: presenter.username,
+                  onChanged: (value) {
+                    presenter.username = value;
+                  },
                 ),
               ),
-              AppTextField(
-                  labelText: 'пароль',
-                  hideInput: _hidePassword,
-                  suffix: InkWell(
-                    onTap: () {
-                      setState(() {
-                        _hidePassword = !_hidePassword;
-                      });
-                    },
-                    child: Icon(
-                      _hidePassword ? AppIcons.eye_line : AppIcons.eye_close_line,
-                      color: AppColors.white40,
-                      size: 26,
+              ValueListenableBuilder<bool>(
+                valueListenable: presenter.hidePassword,
+                builder: (_, value, __) {
+                  return AppTextField(
+                    labelText: 'пароль',
+                    hideInput: value,
+                    initialValue: presenter.password,
+                    suffix: InkWell(
+                      onTap: () {
+                        presenter.hidePassword.value = !presenter.hidePassword.value;
+                      },
+                      child: Icon(
+                        value ? AppIcons.eye_line : AppIcons.eye_close_line,
+                        color: AppColors.white40,
+                        size: 26,
+                      ),
                     ),
-                  )),
+                    onChanged: (value) {
+                      presenter.password = value;
+                    },
+                  );
+                },
+              ),
               // Checkbox
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
@@ -62,19 +76,24 @@ class SignInScreenState extends State<SignInScreen> {
                   offset: const Offset(-15, 0),
                   child: Row(
                     children: [
-                      Checkbox(
-                        shape: const CircleBorder(),
-                        value: _rememberMe,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _rememberMe = value!;
-                          });
+                      ValueListenableBuilder<bool>(
+                        valueListenable: presenter.rememberMe,
+                        builder: (_, value, __) {
+                          return Checkbox(
+                            shape: const CircleBorder(),
+                            value: value,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                presenter.rememberMe.value = value!;
+                              });
+                            },
+                          );
                         },
                       ),
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            _rememberMe = !_rememberMe;
+                            presenter.rememberMe.value = !presenter.rememberMe.value;
                           });
                         },
                         child: Text(
@@ -89,7 +108,22 @@ class SignInScreenState extends State<SignInScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const RegularAppBtn(text: 'войти'),
+                  ValueStreamBuilder<bool>(
+                    valueStream: presenter.loadingStream,
+                    builder: (context, loading) {
+                      print(loading);
+                      return RegularAppBtn(
+                        text: 'войти',
+                        loading: loading,
+                        onTap: () {
+                          presenter.signIn(
+                            username: presenter.username,
+                            password: presenter.password,
+                          );
+                        },
+                      );
+                    }
+                  ),
                 ],
               )
             ],

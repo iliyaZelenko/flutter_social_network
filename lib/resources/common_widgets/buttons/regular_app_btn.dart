@@ -12,6 +12,7 @@ class RegularAppBtn extends AbstractAppBtn {
     Color? color,
     Color textColor = AppColors.white80,
     VoidCallback? onTap,
+    bool? loading,
   }) : super(
     key: key,
     tapped: tapped,
@@ -22,5 +23,6 @@ class RegularAppBtn extends AbstractAppBtn {
     padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 11),
     centered: false,
     onTap: onTap,
+    loading: loading,
   );
 }

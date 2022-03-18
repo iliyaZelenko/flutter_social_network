@@ -12,6 +12,7 @@ class RegularUnconstrainedAppBtn extends AbstractAppBtn {
     Color? color,
     Color textColor = AppColors.white80,
     VoidCallback? onTap,
+    bool? loading,
   }) : super(
     key: key,
     tapped: tapped,
@@ -22,5 +23,6 @@ class RegularUnconstrainedAppBtn extends AbstractAppBtn {
     padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 11),
     centered: true,
     onTap: onTap,
+    loading: loading,
   );
 }
