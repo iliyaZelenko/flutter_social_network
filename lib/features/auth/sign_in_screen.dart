@@ -4,6 +4,7 @@ import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/app_text_field.dart';
+import 'package:rate_club/resources/common_widgets/buttons/regular_app_btn.dart';
 import 'package:rate_club/resources/constants.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -39,43 +40,57 @@ class SignInScreenState extends State<SignInScreen> {
                   textInputType: TextInputType.emailAddress,
                 ),
               ),
+              AppTextField(
+                  labelText: 'пароль',
+                  hideInput: _hidePassword,
+                  suffix: InkWell(
+                    onTap: () {
+                      setState(() {
+                        _hidePassword = !_hidePassword;
+                      });
+                    },
+                    child: Icon(
+                      _hidePassword ? AppIcons.eye_line : AppIcons.eye_close_line,
+                      color: AppColors.white40,
+                      size: 26,
+                    ),
+                  )),
+              // Checkbox
               Padding(
-                padding: const EdgeInsets.only(bottom: 25),
-                child: AppTextField(
-                    labelText: 'пароль',
-                    hideInput: _hidePassword,
-                    suffix: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _hidePassword = !_hidePassword;
-                        });
-                      },
-                      child: Icon(
-                        _hidePassword ? AppIcons.eye_line : AppIcons.eye_close_line,
-                        color: AppColors.white40,
-                        size: 26,
+                padding: const EdgeInsets.only(top: 25, bottom: 15),
+                child: Transform.translate(
+                  offset: const Offset(-15, 0),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        shape: const CircleBorder(),
+                        value: _rememberMe,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            _rememberMe = value!;
+                          });
+                        },
                       ),
-                    )),
-              ),
-              Transform.translate(
-                offset: const Offset(-15, 0),
-                child: Row(
-                  children: [
-                    Checkbox(
-                      shape: const CircleBorder(),
-                      value: _rememberMe,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _rememberMe = value!;
-                        });
-                      },
-                    ),
-                    Text(
-                      'запомнить меня',
-                      style: AppTextStyles.regular12.apply(color: AppColors.black80),
-                    ),
-                  ],
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _rememberMe = !_rememberMe;
+                          });
+                        },
+                        child: Text(
+                          'запомнить меня',
+                          style: AppTextStyles.regular12.apply(color: AppColors.black80),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const RegularAppBtn(text: 'войти'),
+                ],
               )
             ],
           ),
