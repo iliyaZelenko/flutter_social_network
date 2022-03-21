@@ -30,7 +30,7 @@ class AppHttpClient extends IsolatedHttpClient implements AppHttpClientInterface
 
   // TODO Ilya: is necessary
   Map<String, String> getHeaders() => {
-        HttpHeaders.authorizationHeader: bearer(_tokensStorage.token),
+        HttpHeaders.authorizationHeader: 'Bearer ${_tokensStorage.token}',
         HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       };
 
@@ -136,19 +136,24 @@ class AppHttpClient extends IsolatedHttpClient implements AppHttpClientInterface
         if (error is HttpUnauthorizedException && handleOnUnauthorized) {
           return Cancelable.fromFuture(
             http.post(
-              Uri.parse('$defaultHost/v2/auth/refresh'),
+              Uri.parse('${defaultHost}token/refresh/'),
+              body: jsonEncode({
+                'refresh': _tokensStorage.refreshToken
+              }),
               headers: {
-                HttpHeaders.authorizationHeader: bearer(_tokensStorage.refreshToken),
                 HttpHeaders.contentTypeHeader: ContentType.json.toString(),
               },
             ),
           ).next(
             onValue: (response) async {
               final json = jsonDecode(response.body);
+              print('-------------');
+              print(json);
               await _tokensStorage.save(
                 json[TokensStorageKeys.token] as String?,
                 json[TokensStorageKeys.refreshToken] as String?,
               );
+              // Update auth header
               internalHeaders.addAll(getHeaders());
             },
           ).next(

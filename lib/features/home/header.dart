@@ -1,17 +1,18 @@
 import 'package:bolter_flutter/bolter_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rate_club/features/home/home_presenter.dart';
+import 'package:rate_club/features/core/core_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/delays.dart';
 
 class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final presenter = context.presenter<CorePresenter>();
+
     return SizedBox(
       width: double.infinity,
       height: 55,
@@ -21,12 +22,12 @@ class Header extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              const SizedBox(
+              SizedBox(
                 width: 35,
                 height: 35,
                 child: CircleAvatar(
                   radius: 35,
-                  backgroundImage: NetworkImage('https://i.imgur.com/GsvZOuZ.png'),
+                  backgroundImage: NetworkImage(presenter.profile!.avatar),
                 ),
               ),
               const SizedBox(width: 15),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
+import 'package:profile/profile.dart';
 import 'features/core/core_presenter.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
@@ -19,11 +20,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final mainNavigatorKey = GlobalKey<NavigatorState>();
-  final dc = await _setupEnvironment();
-  dc.update(dependencies: {GlobalKey: () => mainNavigatorKey});
+  final dc = await _setupEnvironment(mainNavigatorKey: mainNavigatorKey);
+  final profileUseCase = dc.dependency<ProfileUseCase>(existingInstance: true);
 
-  final loggedIn = false;
-  final initialRoute = loggedIn ? AppRoutes.home : AppRoutes.auth;
+  await profileUseCase.fetch();
+
+  final initialRoute = profileUseCase.loggedIn ? AppRoutes.home : AppRoutes.auth;
 
   runApp(
     BolterProvider(
@@ -61,7 +63,7 @@ Future<void> main() async {
                       textScaleFactor: 1,
                     ),
                     PresenterProvider(
-                      presenter: CorePresenter(),
+                      presenter: CorePresenter(profileUseCase),
                       child: widget!,
                     ),
                   ],
@@ -83,21 +85,23 @@ class _Bouncing extends ScrollBehavior {
   ScrollPhysics getScrollPhysics(BuildContext context) => const BouncingScrollPhysics();
 }
 
-Future<DependenciesContainer> _setupEnvironment() async {
+Future<DependenciesContainer> _setupEnvironment({ required GlobalKey mainNavigatorKey }) async {
   if (!kDebugMode) {
     await Executor().warmUp();
   }
-  final client = AppHttpClient(
+  final http = AppHttpClient(
     log: debug,
     fakeIsolate: debug,
-    defaultHost: 'https://dev.easydev.group/',
+    defaultHost: 'https://dev.easydev.group/api/',
   );
-  await client.init();
+  await http.init();
 
   return DependenciesContainer(
     dependencies: {
-      AppHttpClientInterface: () => client,
-      AuthUseCase: () => authUseCase(client),
+      GlobalKey: () => mainNavigatorKey,
+      AppHttpClientInterface: () => http,
+      AuthUseCase: () => authUseCase(http),
+      ProfileUseCase: () => profileUseCase(http),
     },
   );
 }

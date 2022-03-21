@@ -7,7 +7,7 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependency_overrides:
-  async: ^2.6.1
+  async: 2.6.1
 
 dependencies:
   jwt_decoder: 2.0.1

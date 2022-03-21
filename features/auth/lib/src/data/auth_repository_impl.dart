@@ -12,7 +12,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) {
     return _http.post(
-      path: 'api/token/',
+      path: 'token/',
       body: {
         'username': username,
         'password': password,

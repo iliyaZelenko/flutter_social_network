@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:app_http_client/app_http_client.dart';
-
 
 abstract class AppHttpClientInterface {
   String? get tokenStr;
@@ -14,7 +12,6 @@ abstract class AppHttpClientInterface {
 
   Map<String, String> getHeaders();
 
-  @override
   Cancelable<Response> get({
     String? host,
     String path = '',
@@ -24,7 +21,6 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  @override
   Cancelable<Response> post({
     String? host,
     String path = '',
@@ -35,7 +31,6 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  @override
   Cancelable<Response> put({
     String? host,
     String path = '',
@@ -46,7 +41,6 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  @override
   Cancelable<Response> delete({
     String? host,
     String path = '',
@@ -57,7 +51,6 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  @override
   Cancelable<Response> patch({
     String? host,
     String path = '',
