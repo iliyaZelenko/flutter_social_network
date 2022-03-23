@@ -36,6 +36,7 @@ dependencies:
   dependencies_container: 1.0.1
   shared_preferences: 2.0.8
   worker_manager: 4.2.6
+  animator: 3.1.0
 
   app_http_client:
     path: features/app_http_client
@@ -43,6 +44,8 @@ dependencies:
     path: features/auth
   profile:
     path: features/profile
+  feed:
+    path: features/feed
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

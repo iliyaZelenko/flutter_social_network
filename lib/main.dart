@@ -1,6 +1,7 @@
 import 'package:app_http_client/app_http_client.dart';
 import 'package:auth/auth.dart';
 import 'package:bolter_flutter/bolter_flutter.dart';
+import 'package:feed/feed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ Future<void> main() async {
 
   runApp(
     BolterProvider(
-      container: DependenciesContainer(),
+      container: dc,
       child: GestureDetector(
         onTap: () {
           if (kDebugMode) {
@@ -102,6 +103,7 @@ Future<DependenciesContainer> _setupEnvironment({ required GlobalKey mainNavigat
       AppHttpClientInterface: () => http,
       AuthUseCase: () => authUseCase(http),
       ProfileUseCase: () => profileUseCase(http),
+      FeedUseCase: () => feedUseCase(http),
     },
   );
 }

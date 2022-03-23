@@ -147,8 +147,7 @@ class AppHttpClient extends IsolatedHttpClient implements AppHttpClientInterface
           ).next(
             onValue: (response) async {
               final json = jsonDecode(response.body);
-              print('-------------');
-              print(json);
+
               await _tokensStorage.save(
                 json[TokensStorageKeys.token] as String?,
                 json[TokensStorageKeys.refreshToken] as String?,

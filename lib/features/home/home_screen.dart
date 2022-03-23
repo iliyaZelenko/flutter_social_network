@@ -1,7 +1,9 @@
 import 'package:bolter_flutter/bolter_flutter.dart';
+import 'package:feed/feed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rate_club/features/chats/chats_screen.dart';
 import 'package:rate_club/features/create/create_screen.dart';
+import 'package:rate_club/features/feed/feed_presenter.dart';
 import 'package:rate_club/features/feed/feed_screen.dart';
 import 'package:rate_club/features/invest/invest_screen.dart';
 import 'package:rate_club/features/home/home_presenter.dart';
@@ -31,12 +33,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: IndexedStack(
                     index: index,
-                    children: const [
-                      FeedScreen(),
-                      InvestScreen(),
-                      CreateScreen(),
-                      ChatsScreen(),
-                      SubscriptionsScreen(),
+                    children: [
+                      PresenterProvider(
+                        presenter: FeedPresenter(
+                          BolterProvider.of(context).dependency<FeedUseCase>(existingInstance: true),
+                        ),
+                        child: const FeedScreen(),
+                      ),
+                      const InvestScreen(),
+                      const CreateScreen(),
+                      const ChatsScreen(),
+                      const SubscriptionsScreen(),
                     ],
                   ),
                 ),
