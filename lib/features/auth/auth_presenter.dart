@@ -35,7 +35,9 @@ class AuthPresenter extends Presenter {
       afterAction: () {
         // loading = false;
         FocusManager.instance.primaryFocus?.unfocus();
-        Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+        Delays.defaultDelayCancelable.next(onValue: (_) {
+          Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+        });
       },
       onError: (_) {
         loading = false;
