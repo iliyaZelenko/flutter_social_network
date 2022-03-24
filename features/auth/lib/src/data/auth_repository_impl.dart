@@ -19,4 +19,7 @@ class AuthRepositoryImpl implements AuthRepository {
       },
     );
   }
+
+  @override
+  void logOut() => _http.clearTokens();
 }

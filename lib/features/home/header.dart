@@ -2,6 +2,7 @@ import 'package:bolter_flutter/bolter_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rate_club/features/core/core_presenter.dart';
+import 'package:rate_club/features/home/home_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
@@ -11,7 +12,8 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = context.presenter<CorePresenter>();
+    final corePresenter = context.presenter<CorePresenter>();
+    final homePresenter = context.presenter<HomePresenter>();
 
     return SizedBox(
       width: double.infinity,
@@ -22,12 +24,17 @@ class Header extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              SizedBox(
-                width: 35,
-                height: 35,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(presenter.profile!.avatar),
+              GestureDetector(
+                onTap: () {
+                  homePresenter.logOut();
+                },
+                child: SizedBox(
+                  width: 35,
+                  height: 35,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(corePresenter.profile!.avatar),
+                  ),
                 ),
               ),
               const SizedBox(width: 15),

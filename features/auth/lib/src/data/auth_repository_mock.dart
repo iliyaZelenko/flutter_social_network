@@ -12,4 +12,9 @@ class AuthRepositoryMock implements AuthRepository {
     // TODO: implement signIn
     throw UnimplementedError();
   }
+
+  @override
+  void logOut() {
+    // TODO: implement logOut
+  }
 }

@@ -15,4 +15,8 @@ class AuthUseCase {
       password: password,
     );
   }
+
+  void logOut() {
+    _repository.logOut();
+  }
 }

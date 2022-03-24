@@ -13,7 +13,12 @@ class ProfileUseCase {
 
   bool get loggedIn => _profile != null;
 
-  Cancelable<void> fetch() => _profileRepository.fetch().next(onValue: (profile) {
-        _profile = profile;
-      });
+  Cancelable<void> fetch() => _profileRepository.fetch().next(
+        onValue: (profile) {
+          _profile = profile;
+        },
+        onError: (_) {
+          // handle 401
+        },
+      );
 }
