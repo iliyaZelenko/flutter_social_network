@@ -26,7 +26,7 @@ class Header extends StatelessWidget {
                 width: 35,
                 height: 35,
                 child: CircleAvatar(
-                  radius: 35,
+                  radius: 50,
                   backgroundImage: NetworkImage(presenter.profile!.avatar),
                 ),
               ),

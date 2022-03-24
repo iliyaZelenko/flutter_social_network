@@ -40,7 +40,7 @@ class FeedRepositoryImpl implements FeedRepository {
       creator: PostCreatorEntity(
         id: creator['pid'],
         username: creator['username'] ?? 'nousername',
-        avatar: creator['avatar']?['default']?['url'] ?? 'defaultAvatar',
+        avatar: 'https://' + (creator['avatar']?['default']?['url'] ?? 'i.imgur.com/QHyTGKE.png'),
         firstName: creator['first_name'] ?? 'no first name',
         lastName: creator['last_name'] ?? 'no last name',
         isVerified: creator['is_verified'] ?? false,

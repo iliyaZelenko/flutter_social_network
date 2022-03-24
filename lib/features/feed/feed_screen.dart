@@ -3,6 +3,7 @@ import 'package:feed/feed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rate_club/features/feed/feed_presenter.dart';
+import 'package:rate_club/features/feed/widgets/post_card/post_card.dart';
 import 'package:rate_club/features/home/header.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
@@ -60,14 +61,7 @@ class _FeedBody extends StatelessWidget {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (ctx, index) {
-                    final currentPost = posts[index];
-
-                    return Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(currentPost.content),
-                      ),
-                    );
+                    return PostCard(post: posts[index]);
                   },
                   childCount: posts.length,
                   addAutomaticKeepAlives: false,
