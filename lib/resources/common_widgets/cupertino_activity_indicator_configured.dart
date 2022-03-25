@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animator/animator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nil/nil.dart';
+import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/delays.dart';
 
 Widget buildRefreshIndicator(
@@ -16,50 +17,28 @@ Widget buildRefreshIndicator(
   return Center(
     child: Stack(
       clipBehavior: Clip.none,
-      children: <Widget>[
+      children: [
         Positioned(
           // TODO Ilya: screenPadding.top + (Platform.isAndroid ? 18 : 6)
           top: 30 + (Platform.isAndroid ? 18 : 6),
           left: 0,
           right: 0,
-          child:
-              Center(child: _buildIndicatorForRefreshState(refreshState, 15, percentageComplete)),
+          child: Center(
+            child: ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                AppColors.purple100,
+                BlendMode.srcATop,
+              ),
+              child: _buildIndicatorForRefreshState(refreshState, 15, percentageComplete),
+            ),
+          ),
         ),
       ],
     ),
   );
 }
 
-Widget buildRefreshIndicatorDefault(
-  BuildContext context,
-  RefreshIndicatorMode refreshState,
-  double pulledExtent,
-  double refreshTriggerPullDistance,
-  double refreshIndicatorExtent,
-) {
-  final double percentageComplete = (pulledExtent / refreshTriggerPullDistance).clamp(0, 1);
-  return Center(
-    child: Stack(
-      clipBehavior: Clip.none,
-      children: <Widget>[
-        Positioned(
-          top: 0,
-          left: 0.0,
-          right: 0.0,
-          child:
-              Center(child: _buildIndicatorForRefreshState(refreshState, 15, percentageComplete)),
-        ),
-      ],
-    ),
-  );
-}
-
-const activityIndicator = Center(
-  child: CupertinoActivityIndicator(radius: 15),
-);
-
-Widget _buildIndicatorForRefreshState(
-    RefreshIndicatorMode refreshState, double radius, double percentageComplete) {
+Widget _buildIndicatorForRefreshState(RefreshIndicatorMode refreshState, double radius, double percentageComplete) {
   switch (refreshState) {
     case RefreshIndicatorMode.drag:
       const Curve opacityCurve = Interval(0, 0.35, curve: Curves.easeInOut);

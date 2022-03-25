@@ -111,7 +111,6 @@ class SignInScreenState extends State<SignInScreen> {
                   ValueStreamBuilder<bool>(
                     valueStream: presenter.loadingStream,
                     builder: (context, loading) {
-                      print(loading);
                       return RegularAppBtn(
                         text: 'войти',
                         loading: loading,

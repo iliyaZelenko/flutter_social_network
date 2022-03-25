@@ -5,7 +5,6 @@ import 'package:rate_club/features/feed/widgets/post_card/post_card_content.dart
 import 'package:rate_club/features/feed/widgets/post_card/post_card_footer.dart';
 import 'package:rate_club/features/feed/widgets/post_card/post_card_header.dart';
 import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/app_text_styles.dart';
 
 class PostCard extends StatelessWidget {
   final PostEntity post;

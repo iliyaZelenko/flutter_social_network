@@ -20,8 +20,6 @@ class FeedPresenter extends Presenter {
   }
 
   Future<void> initFetch() {
-    _feedUseCase.fetch();
-
     return runAndUpdate(
       beforeAction: () {
         _loading.value = true;
@@ -36,7 +34,11 @@ class FeedPresenter extends Presenter {
   }
 
   Future<void> refresh() {
-    return Future.value(null);
+    return runAndUpdate(
+      action: () async {
+        await _feedUseCase.fetch();
+      },
+    );
   }
 
   // void fetchMore () {

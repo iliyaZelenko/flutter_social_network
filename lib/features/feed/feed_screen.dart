@@ -26,11 +26,17 @@ class _FeedScreenState extends State<FeedScreen> {
         child: Column(
           children: [
             const Header(),
-            ValueListenableBuilder<bool>(
-              valueListenable: feedPresenter.loading,
-              builder: (ctx, loading, _) {
-                return loading ? const CircularProgressIndicator() : const _FeedBody();
-              },
+            Expanded(
+              child: ValueListenableBuilder<bool>(
+                valueListenable: feedPresenter.loading,
+                builder: (ctx, loading, _) {
+                  return loading
+                      ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                      : const _FeedBody();
+                },
+              ),
             ),
           ],
         ),
@@ -53,25 +59,23 @@ class _FeedBody extends StatelessWidget {
 
         final posts = feed.results;
 
-        return Expanded(
-          child: Refreshable(
-            scrollPhysics: const AlwaysScrollableScrollPhysics(),
-            onRefresh: presenter.refresh,
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (ctx, index) {
-                    return PostCard(post: posts[index]);
-                  },
-                  childCount: posts.length,
-                  addAutomaticKeepAlives: false,
-                  addSemanticIndexes: false,
-                ),
-              )
-            ],
-            refreshIndicatorExtent: 100,
-            refreshTriggerPullDistance: 140,
-          ),
+        return Refreshable(
+          scrollPhysics: const AlwaysScrollableScrollPhysics(),
+          onRefresh: presenter.refresh,
+          slivers: [
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (ctx, index) {
+                  return PostCard(post: posts[index]);
+                },
+                childCount: posts.length,
+                addAutomaticKeepAlives: false,
+                addSemanticIndexes: false,
+              ),
+            )
+          ],
+          refreshIndicatorExtent: 100,
+          refreshTriggerPullDistance: 140,
         );
       },
     );

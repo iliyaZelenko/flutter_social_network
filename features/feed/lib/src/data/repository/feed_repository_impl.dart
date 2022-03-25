@@ -1,6 +1,7 @@
 import 'package:feed/feed.dart';
 import 'package:feed/src/domain/entities/feed_response_entity.dart';
 import 'package:feed/src/domain/entities/post_creator_entity.dart';
+import 'package:feed/src/domain/entities/post_media_entity.dart';
 import 'package:feed/src/domain/repositories/feed_repository.dart';
 import 'package:rate_club/rate_club.dart';
 
@@ -28,6 +29,10 @@ class FeedRepositoryImpl implements FeedRepository {
 
   PostEntity _fromPostDtoToPostEntity(Map<String, dynamic> dto) {
     final creator = dto['creator'];
+    // const mediaMock = [
+    //   PostMediaEntity(id: 1, url: 'https://i.imgur.com/nhuOytU.jpeg'),
+    //   PostMediaEntity(id: 2, url: 'https://i.imgur.com/NErzmhn.jpeg'),
+    // ];
 
     return PostEntity(
       id: dto['id'],
@@ -45,6 +50,13 @@ class FeedRepositoryImpl implements FeedRepository {
         lastName: creator['last_name'] ?? 'no last name',
         isVerified: creator['is_verified'] ?? false,
       ),
+      media: (dto['media'] as List<dynamic>)
+          .cast<Map<String, dynamic>>()
+          .map((e) => PostMediaEntity(
+                id: e['id'],
+                url: 'https://' + e['url'],
+              ))
+          .toList(),
     );
   }
 }
