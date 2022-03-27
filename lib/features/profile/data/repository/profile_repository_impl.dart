@@ -1,6 +1,6 @@
-import 'package:profile/src/data/models/profile_models.dart';
-import 'package:profile/src/domain/entities/profile.dart';
-import 'package:profile/src/domain/profile_repository.dart';
+import 'package:rate_club/features/profile/data/models/profile_models.dart';
+import 'package:rate_club/features/profile/domain/entities/profile.dart';
+import 'package:rate_club/features/profile/domain/repositories/profile_repository.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:worker_manager/worker_manager.dart';
 

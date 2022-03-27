@@ -1,4 +1,4 @@
-import 'package:auth/src/domain/auth_repository.dart';
+import 'package:rate_club/features/auth/domain/repositories/auth_repository.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:worker_manager/src/cancelable/cancelable.dart';
 

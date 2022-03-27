@@ -19,7 +19,7 @@ class PostCardContentCarousel extends StatefulWidget {
 }
 
 class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
-  final PageController _pageController = PageController(initialPage: 0);
+  late final PageController _pageController = PageController(initialPage: 0);
 
   int _currentPageIndex = 0;
 

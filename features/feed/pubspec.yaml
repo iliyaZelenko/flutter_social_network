@@ -10,7 +10,6 @@ dependency_overrides:
   async: 2.6.1
 
 dependencies:
-  json_annotation: 4.3.0
   worker_manager: 4.2.6
   equatable: 2.0.3
   flutter:
@@ -19,7 +18,6 @@ dependencies:
     path: "../../"
 
 dev_dependencies:
-  json_serializable: 6.0.0
   build_runner: 2.1.4
   flutter_test:
     sdk: flutter

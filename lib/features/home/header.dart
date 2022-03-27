@@ -26,14 +26,14 @@ class Header extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  homePresenter.logOut();
+                  // homePresenter.logOut();
                 },
                 child: SizedBox(
                   width: 35,
                   height: 35,
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage(corePresenter.profile!.avatar),
+                    // backgroundImage: NetworkImage(corePresenter.profile!.avatar),
                   ),
                 ),
               ),

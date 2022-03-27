@@ -1,19 +1,21 @@
 import 'package:app_http_client/app_http_client.dart';
-import 'package:auth/auth.dart';
-import 'package:bolter_flutter/bolter_flutter.dart';
-import 'package:feed/feed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
-import 'package:profile/profile.dart';
-import 'features/core/core_presenter.dart';
+import 'package:provider/provider.dart';
+import 'package:rate_club/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:rate_club/features/profile/data/repository/profile_repository_impl.dart';
+import 'package:rate_club/features/profile/domain/use_cases/get_profile_use_case.dart';
+import 'features/auth/domain/use_cases/sign_in_use_case.dart';
+import 'features/profile/presentation/profile_presenter.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
 import 'resources/emojis.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
 
 const debug = kDebugMode;
 
@@ -21,16 +23,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final mainNavigatorKey = GlobalKey<NavigatorState>();
-  final dc = await _setupEnvironment(mainNavigatorKey: mainNavigatorKey);
-  final profileUseCase = dc.dependency<ProfileUseCase>(existingInstance: true);
+  final injector = await _setupEnvironment(mainNavigatorKey: mainNavigatorKey);
+  // final profileUseCase = dc.dependency<ProfileUseCase>(existingInstance: true);
+  //
+  // await profileUseCase.fetch();
 
-  await profileUseCase.fetch();
-
-  final initialRoute = profileUseCase.loggedIn ? AppRoutes.home : AppRoutes.auth;
+  final initialRoute = AppRoutes.auth; // profileUseCase.loggedIn ? AppRoutes.home : AppRoutes.auth;
 
   runApp(
-    BolterProvider(
-      container: dc,
+    MultiProvider(
+      providers: [Provider<Injector>(create: (_) => injector)],
       child: GestureDetector(
         onTap: () {
           if (kDebugMode) {
@@ -63,14 +65,15 @@ Future<void> main() async {
                       style: TextStyle(fontSize: 5),
                       textScaleFactor: 1,
                     ),
-                    PresenterProvider(
-                      presenter: CorePresenter(profileUseCase),
-                      child: widget!,
-                    ),
+                    widget!,
+                    // PresenterProvider(
+                    //   presenter: CorePresenter(profileUseCase),
+                    //   child: widget!,
+                    // ),
                   ],
                 );
               },
-              routes: getRoutesMap(dc),
+              routes: getRoutesMap(injector),
             ),
           ),
         ),
@@ -86,7 +89,7 @@ class _Bouncing extends ScrollBehavior {
   ScrollPhysics getScrollPhysics(BuildContext context) => const BouncingScrollPhysics();
 }
 
-Future<DependenciesContainer> _setupEnvironment({ required GlobalKey mainNavigatorKey }) async {
+Future<Injector> _setupEnvironment({required GlobalKey<NavigatorState> mainNavigatorKey}) async {
   if (!kDebugMode) {
     await Executor().warmUp();
   }
@@ -97,13 +100,45 @@ Future<DependenciesContainer> _setupEnvironment({ required GlobalKey mainNavigat
   );
   await http.init();
 
-  return DependenciesContainer(
-    dependencies: {
-      GlobalKey: () => mainNavigatorKey,
-      AppHttpClientInterface: () => http,
-      AuthUseCase: () => authUseCase(http),
-      ProfileUseCase: () => profileUseCase(http),
-      FeedUseCase: () => feedUseCase(http),
-    },
+  final injector = Injector();
+
+  // abstract class MainNavigatorKeyInterface implements GlobalKey<NavigatorState> {}
+  injector.map<GlobalKey<NavigatorState>>((i) => mainNavigatorKey, isSingleton: true);
+  injector.map<AppHttpClientInterface>((i) => http, isSingleton: true);
+
+  // TODO Ilya: каждая фича сама мапит нужные зависимости в инджектор
+  injector.map<AuthRepositoryImpl>(
+    (i) => AuthRepositoryImpl(i.get<AppHttpClientInterface>()),
+    isSingleton: true,
   );
+  injector.map<SignInUseCase>(
+    (i) => SignInUseCase(i.get<AuthRepositoryImpl>()),
+    isSingleton: true,
+  );
+
+  injector.map<ProfileRepositoryImpl>(
+    (i) => ProfileRepositoryImpl(i.get<AppHttpClientInterface>()),
+    isSingleton: true,
+  );
+  injector.map<GetProfileUseCase>(
+    (i) => GetProfileUseCase(i.get<ProfileRepositoryImpl>()),
+    isSingleton: true,
+  );
+
+  injector.map<ProfilePresenter>(
+    (i) => ProfilePresenter(getProfileUseCase: i.get<GetProfileUseCase>()),
+    isSingleton: true,
+  );
+
+  // return DependenciesContainer(
+  //   dependencies: {
+  //     GlobalKey: () => mainNavigatorKey,
+  //     AppHttpClientInterface: () => http,
+  //     AuthUseCase: () => authUseCase(http),
+  //     ProfileUseCase: () => profileUseCase(http),
+  //     FeedUseCase: () => feedUseCase(http),
+  //   },
+  // );
+
+  return injector;
 }
