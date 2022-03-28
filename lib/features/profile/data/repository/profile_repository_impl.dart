@@ -11,7 +11,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Cancelable<Profile> fetch() {
-    return _http.get(path: 'profile/').next(
+    return _http.get(path: 'profile/', handleOnUnauthorized: false).next(
           onValue: (response) {
             // Берётся первый дефолтный профиль. Обсудили что пока делаем так. Но в идеале как я вижу, нужно брать профиль под которым логинишься
             final defaultProfile = List.from(response.body['results']).firstWhere((element) => element['default']);

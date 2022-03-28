@@ -1,4 +1,4 @@
-import 'package:feed/src/domain/entities/feed_response_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/feed_response_entity.dart';
 import 'package:worker_manager/worker_manager.dart';
 
 abstract class FeedRepository {

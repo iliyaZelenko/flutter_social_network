@@ -1,9 +1,7 @@
-import 'package:feed/feed.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:rate_club/features/feed/widgets/post_card/post_card_content_carousel.dart';
-import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:flutter/widgets.dart';
+import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+
+import 'post_card_content_carousel.dart';
 
 class PostCardContent extends StatelessWidget {
   final PostEntity post;

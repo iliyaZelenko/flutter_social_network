@@ -7,6 +7,7 @@ import 'package:rate_club/resources/delays.dart';
 
 part 'auth_presenter.g.dart';
 
+// TODO Ilya: отдельный AuthFlowPresenter и AuthPresenter, где второй имеет главные методы аутентификации
 class AuthPresenter = AuthPresenterBase with _$AuthPresenter;
 
 abstract class AuthPresenterBase with Store {
@@ -61,11 +62,13 @@ abstract class AuthPresenterBase with Store {
       rethrow;
     }
 
-    // FocusManager.instance.primaryFocus?.unfocus();
-    // // Нужна задержка, иначе иногда баг вылазит
-    // Delays.defaultDelayCancelable.next(onValue: (_) {
-    //   // TODO Ilya: inject routes
-    //   _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
-    // });
+    FocusManager.instance.primaryFocus?.unfocus();
+    // Нужна задержка, иначе иногда баг вылазит
+    Delays.defaultDelayCancelable.next(onValue: (_) {
+      // TODO Ilya: inject routes
+      _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
+    });
   }
+
+  // TODO Ilya: logout?
 }

@@ -7,6 +7,11 @@ import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:rate_club/features/auth/domain/use_cases/log_out_use_case.dart';
+import 'package:rate_club/features/feed/data/repository/feed_repository_impl.dart';
+import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
+import 'package:rate_club/features/feed/presentation/feed_presenter.dart';
+import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:rate_club/features/profile/domain/use_cases/get_profile_use_case.dart';
 import 'features/auth/domain/use_cases/sign_in_use_case.dart';
@@ -24,15 +29,19 @@ Future<void> main() async {
 
   final mainNavigatorKey = GlobalKey<NavigatorState>();
   final injector = await _setupEnvironment(mainNavigatorKey: mainNavigatorKey);
-  // final profileUseCase = dc.dependency<ProfileUseCase>(existingInstance: true);
-  //
-  // await profileUseCase.fetch();
+  final profilePresenter = injector.get<ProfilePresenter>();
 
-  final initialRoute = AppRoutes.auth; // profileUseCase.loggedIn ? AppRoutes.home : AppRoutes.auth;
+  await injector.get<ProfilePresenter>().fetch();
+
+  // TODO Ilya: loggedIn ответстввенность на стороне AuthPresenter'а (отделённого от AuthFlowPresenter).
+  final initialRoute = profilePresenter.profile == null ? AppRoutes.auth : AppRoutes.home;
 
   runApp(
     MultiProvider(
-      providers: [Provider<Injector>(create: (_) => injector)],
+      providers: [
+        Provider<Injector>(create: (_) => injector),
+        Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
+      ],
       child: GestureDetector(
         onTap: () {
           if (kDebugMode) {
@@ -66,10 +75,6 @@ Future<void> main() async {
                       textScaleFactor: 1,
                     ),
                     widget!,
-                    // PresenterProvider(
-                    //   presenter: CorePresenter(profileUseCase),
-                    //   child: widget!,
-                    // ),
                   ],
                 );
               },
@@ -107,6 +112,7 @@ Future<Injector> _setupEnvironment({required GlobalKey<NavigatorState> mainNavig
   injector.map<AppHttpClientInterface>((i) => http, isSingleton: true);
 
   // TODO Ilya: каждая фича сама мапит нужные зависимости в инджектор
+  // Auth
   injector.map<AuthRepositoryImpl>(
     (i) => AuthRepositoryImpl(i.get<AppHttpClientInterface>()),
     isSingleton: true,
@@ -115,7 +121,12 @@ Future<Injector> _setupEnvironment({required GlobalKey<NavigatorState> mainNavig
     (i) => SignInUseCase(i.get<AuthRepositoryImpl>()),
     isSingleton: true,
   );
+  injector.map<LogOutUseCase>(
+    (i) => LogOutUseCase(i.get<AuthRepositoryImpl>()),
+    isSingleton: true,
+  );
 
+  // Profile
   injector.map<ProfileRepositoryImpl>(
     (i) => ProfileRepositoryImpl(i.get<AppHttpClientInterface>()),
     isSingleton: true,
@@ -124,21 +135,24 @@ Future<Injector> _setupEnvironment({required GlobalKey<NavigatorState> mainNavig
     (i) => GetProfileUseCase(i.get<ProfileRepositoryImpl>()),
     isSingleton: true,
   );
-
   injector.map<ProfilePresenter>(
     (i) => ProfilePresenter(getProfileUseCase: i.get<GetProfileUseCase>()),
     isSingleton: true,
   );
 
-  // return DependenciesContainer(
-  //   dependencies: {
-  //     GlobalKey: () => mainNavigatorKey,
-  //     AppHttpClientInterface: () => http,
-  //     AuthUseCase: () => authUseCase(http),
-  //     ProfileUseCase: () => profileUseCase(http),
-  //     FeedUseCase: () => feedUseCase(http),
-  //   },
-  // );
+  // Feed
+  injector.map<FeedRepositoryImpl>(
+        (i) => FeedRepositoryImpl(i.get<AppHttpClientInterface>()),
+    isSingleton: true,
+  );
+  injector.map<GetFeedUseCase>(
+        (i) => GetFeedUseCase(i.get<FeedRepositoryImpl>()),
+    isSingleton: true,
+  );
+  injector.map<FeedPresenter>(
+        (i) => FeedPresenter(getFeedUseCase: i.get<GetFeedUseCase>()),
+    isSingleton: true,
+  );
 
   return injector;
 }

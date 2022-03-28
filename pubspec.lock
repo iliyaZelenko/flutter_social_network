@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.4.1"
-  animations:
-    dependency: transitive
-    description:
-      name: animations
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   animator:
     dependency: "direct main"
     description:
@@ -57,20 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.1"
-  bolter:
-    dependency: transitive
-    description:
-      name: bolter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4"
-  bolter_flutter:
-    dependency: "direct main"
-    description:
-      name: bolter_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.4.5"
   boolean_selector:
     dependency: transitive
     description:
@@ -204,15 +183,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.2"
-  dependencies_container:
-    dependency: transitive
-    description:
-      name: dependencies_container
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   equatable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: equatable
       url: "https://pub.dartlang.org"
@@ -225,13 +197,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
-  feed:
-    dependency: "direct main"
-    description:
-      path: "features/feed"
-      relative: true
-    source: path
-    version: "1.0.0"
   ffi:
     dependency: transitive
     description:

@@ -1,3 +1,4 @@
+import 'package:app_http_client/app_http_client.dart';
 import 'package:mobx/mobx.dart';
 import 'package:rate_club/features/profile/domain/entities/profile.dart';
 import 'package:rate_club/features/profile/domain/use_cases/get_profile_use_case.dart';
@@ -23,8 +24,11 @@ abstract class ProfilePresenterBase with Store {
 
       print(profile);
     } catch (e) {
-      // TODO Ilya: 404
-      rethrow;
+      if (e is HttpUnauthorizedException) {
+        profile = null;
+      } else {
+        rethrow;
+      }
     }
   }
 }

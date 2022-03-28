@@ -1,6 +1,7 @@
-import 'package:bolter_flutter/bolter_flutter.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:rate_club/features/home/home_presenter.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
@@ -11,71 +12,67 @@ class TapBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homePresenter = context.presenter<HomePresenter>();
+    final homePresenter = Provider.of<HomePresenter>(context);
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: AppColors.white100,
-        boxShadow: [
-          BoxShadow (
-            color: AppColors.black100.withOpacity(0.1),
-            offset: const Offset(0, -2),
-            blurRadius: 8,
-          ),
-        ]
-      ),
+      decoration: BoxDecoration(color: AppColors.white100, boxShadow: [
+        BoxShadow(
+          color: AppColors.black100.withOpacity(0.1),
+          offset: const Offset(0, -2),
+          blurRadius: 8,
+        ),
+      ]),
       child: SizedBox(
         height: 55,
-        child: ValueListenableBuilder<int>(
-          valueListenable: homePresenter.index,
-          builder: (ctx, value, __) {
+        child: Observer(
+          builder: (_) {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TabBarBtn(
                   key: const ValueKey('home'),
-                  selected: value == 0,
+                  selected: homePresenter.tapBarNavigationIndex == 0,
                   unSelectedIcon: AppIcons.home_4_line,
                   selectedIcon: AppIcons.home_4_fill,
                   alignment: Alignment.center,
                   text: 'Лента',
-                  onPressed: () => homePresenter.index.value = 0,
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 0,
                 ),
                 TabBarBtn(
                   key: const ValueKey('invest'),
-                  selected: value == 1,
+                  selected: homePresenter.tapBarNavigationIndex == 1,
                   unSelectedIcon: AppIcons.chart_bar_line,
                   selectedIcon: AppIcons.chart_bar_line,
                   alignment: Alignment.center,
                   text: 'Инвест',
-                  onPressed: () => homePresenter.index.value = 1,
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 1,
                 ),
                 TabBarBtn(
                   key: const ValueKey('create'),
-                  selected: value == 2,
+                  selected: homePresenter.tapBarNavigationIndex == 2,
                   unSelectedIcon: AppIcons.add_circle_line,
                   selectedIcon: AppIcons.add_circle_fill,
                   alignment: Alignment.center,
                   text: 'Создать',
-                  onPressed: () => homePresenter.index.value = 2,
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 2,
                 ),
                 TabBarBtn(
                   key: const ValueKey('chats'),
-                  selected: value == 3,
+                  selected: homePresenter.tapBarNavigationIndex == 3,
                   unSelectedIcon: AppIcons.chat_1_line,
                   selectedIcon: AppIcons.chat_1_fill,
                   alignment: Alignment.center,
                   text: 'Чаты',
-                  onPressed: () => homePresenter.index.value = 3,
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 3,
                 ),
                 TabBarBtn(
                   key: const ValueKey('subscriptions'),
-                  selected: value == 4,
+                  selected: homePresenter.tapBarNavigationIndex == 4,
                   unSelectedIcon: AppIcons.user_4_line,
                   selectedIcon: AppIcons.user_4_fill,
                   alignment: Alignment.center,
                   text: 'Подписки',
-                  onPressed: () => homePresenter.index.value = 4,
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 4,
                 ),
               ],
             );

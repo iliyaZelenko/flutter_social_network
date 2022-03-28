@@ -1,8 +1,9 @@
-import 'package:feed/feed.dart';
-import 'package:feed/src/domain/entities/feed_response_entity.dart';
-import 'package:feed/src/domain/entities/post_creator_entity.dart';
-import 'package:feed/src/domain/entities/post_media_entity.dart';
-import 'package:feed/src/domain/repositories/feed_repository.dart';
+import 'package:rate_club/features/feed/domain/entities/feed_response_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_counters_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
+import 'package:rate_club/features/feed/domain/repositories/feed_repository.dart';
 import 'package:rate_club/rate_club.dart';
 
 class FeedRepositoryImpl implements FeedRepository {

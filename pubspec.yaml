@@ -31,7 +31,6 @@ dependencies:
     sdk: flutter
   nil: ^1.1.1
   after_layout: 1.1.0
-  bolter_flutter: ^6.4.5
   isolated_http_client: ^1.5.6
   flutter_simple_dependency_injection: ^2.0.0
   shared_preferences: 2.0.8
@@ -41,11 +40,10 @@ dependencies:
   flutter_mobx: ^2.0.4
   provider: ^6.0.2
   json_annotation: ^4.4.0
+  equatable: ^2.0.3
 
   app_http_client:
     path: features/app_http_client
-  feed:
-    path: features/feed
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

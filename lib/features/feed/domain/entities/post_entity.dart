@@ -1,7 +1,6 @@
-import 'package:feed/src/domain/entities/post_creator_entity.dart';
-import 'package:feed/src/domain/entities/post_media_entity.dart';
-
 import 'post_counters_entity.dart';
+import 'post_creator_entity.dart';
+import 'post_media_entity.dart';
 
 class PostEntity {
   final int id;

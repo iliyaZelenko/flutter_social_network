@@ -1,5 +1,3 @@
-import 'package:bolter_flutter/bolter_flutter.dart';
-import 'package:bolter_flutter/src/bolter_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

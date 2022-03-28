@@ -1,13 +1,15 @@
-import 'package:bolter_flutter/bolter_flutter.dart';
-import 'package:feed/feed.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:provider/provider.dart';
 import 'package:rate_club/features/chats/chats_screen.dart';
 import 'package:rate_club/features/create/create_screen.dart';
-import 'package:rate_club/features/feed/feed_presenter.dart';
+import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
 import 'package:rate_club/features/feed/feed_screen.dart';
+import 'package:rate_club/features/feed/presentation/feed_presenter.dart';
 import 'package:rate_club/features/invest/invest_screen.dart';
-import 'package:rate_club/features/home/home_presenter.dart';
-import 'package:rate_club/features/home/tap_bar.dart';
+import 'package:rate_club/features/home/presentation/home_presenter.dart';
+import 'package:rate_club/features/home/presentation/widgets/tap_bar.dart';
 import 'package:rate_club/features/subscriptions/subscriptions_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,27 +20,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomePresenter get homePresenter => context.presenter<HomePresenter>();
-
   @override
   Widget build(BuildContext context) {
+    final homePresenter = Provider.of<HomePresenter>(context);
+    final injector = Provider.of<Injector>(context);
+
     return Stack(
       alignment: Alignment.center,
       children: [
-        ValueListenableBuilder<int>(
-          valueListenable: homePresenter.index,
-          builder: (_, index, __) {
+        Observer(
+          builder: (_) {
             return Column(
               children: [
                 Expanded(
                   child: IndexedStack(
-                    index: index,
+                    index: homePresenter.tapBarNavigationIndex,
                     children: [
-                      PresenterProvider(
-                        presenter: FeedPresenter(
-                          BolterProvider.of(context).dependency<FeedUseCase>(existingInstance: true),
-                        ),
+                      Provider<FeedPresenter>(
                         child: const FeedScreen(),
+                        create: (_) => FeedPresenter(
+                          getFeedUseCase: injector.get<GetFeedUseCase>(),
+                        ),
                       ),
                       const InvestScreen(),
                       const CreateScreen(),
