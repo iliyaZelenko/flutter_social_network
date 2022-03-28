@@ -31,21 +31,19 @@ dependencies:
     sdk: flutter
   nil: ^1.1.1
   after_layout: 1.1.0
-  bolter_flutter: ^6.4.5
   isolated_http_client: ^1.5.6
-  dependencies_container: 1.0.1
+  flutter_simple_dependency_injection: ^2.0.0
   shared_preferences: 2.0.8
   worker_manager: 4.2.6
   animator: 3.1.0
+  mobx: ^2.0.6+1
+  flutter_mobx: ^2.0.4
+  provider: ^6.0.2
+  json_annotation: ^4.4.0
+  equatable: ^2.0.3
 
   app_http_client:
     path: features/app_http_client
-  auth:
-    path: features/auth
-  profile:
-    path: features/profile
-  feed:
-    path: features/feed
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,6 +52,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.1.7
+  mobx_codegen: ^2.0.5+2
+  json_serializable: ^6.1.5
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

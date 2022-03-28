@@ -1,12 +1,14 @@
-import 'package:bolter_flutter/bolter_flutter.dart';
-import 'package:feed/feed.dart';
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rate_club/features/feed/feed_presenter.dart';
-import 'package:rate_club/features/feed/widgets/post_card/post_card.dart';
-import 'package:rate_club/features/home/header.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:rate_club/features/home/presentation/widgets/header.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
+
+import 'presentation/feed_presenter.dart';
+import 'presentation/widgets/post_card/post_card.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
@@ -15,11 +17,16 @@ class FeedScreen extends StatefulWidget {
   _FeedScreenState createState() => _FeedScreenState();
 }
 
-class _FeedScreenState extends State<FeedScreen> {
+class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
+  FeedPresenter get feedPresenter => Provider.of<FeedPresenter>(context, listen: false);
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    feedPresenter.initFetch();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final feedPresenter = context.presenter<FeedPresenter>();
-
     return ColoredBox(
       color: AppColors.white80,
       child: SafeArea(
@@ -27,10 +34,9 @@ class _FeedScreenState extends State<FeedScreen> {
           children: [
             const Header(),
             Expanded(
-              child: ValueListenableBuilder<bool>(
-                valueListenable: feedPresenter.loading,
-                builder: (ctx, loading, _) {
-                  return loading
+              child: Observer(
+                builder: (_) {
+                  return feedPresenter.loading
                       ? const Center(
                         child: CircularProgressIndicator(),
                       )
@@ -50,18 +56,17 @@ class _FeedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = context.presenter<FeedPresenter>();
+    final feedPresenter = Provider.of<FeedPresenter>(context);
 
-    return ValueStreamBuilder<FeedResponseEntity?>(
-      valueStream: presenter.feed,
-      builder: (context, feed) {
-        if (feed == null) return const SizedBox.shrink();
+    return Observer(
+      builder: (_) {
+        if (feedPresenter.feed == null) return const SizedBox.shrink();
 
-        final posts = feed.results;
+        final posts = feedPresenter.feed!.results;
 
         return Refreshable(
           scrollPhysics: const AlwaysScrollableScrollPhysics(),
-          onRefresh: presenter.refresh,
+          onRefresh: feedPresenter.refresh,
           slivers: [
             SliverList(
               delegate: SliverChildBuilderDelegate(
