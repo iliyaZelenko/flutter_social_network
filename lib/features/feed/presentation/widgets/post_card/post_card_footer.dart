@@ -19,8 +19,19 @@ class PostCardFooter extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12, right: 12, top: 5, bottom: 20),
       child: Row(
         children: [
+          const Icon(AppIcons.heart_fill, color: AppColors.red100),
+          Text(post.counters.marks.toString()),
+          const Padding(
+            padding: EdgeInsets.only(left:20.0),
+            child: Icon(AppIcons.comment_fill, color: AppColors.white40),
+          ),
+
           Text(post.counters.comments.toString()),
-          const Spacer(),
+          const Padding(
+            padding: EdgeInsets.only(left:20.0),
+            child: Icon(AppIcons.save_line, color: AppColors.white40),
+          ),
+          const Spacer(flex: 1),
           const Icon(AppIcons.eye_line, color: AppColors.white40),
           Text(
             '${post.counters.viewed} тыс',
