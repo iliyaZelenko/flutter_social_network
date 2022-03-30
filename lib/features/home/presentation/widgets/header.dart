@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 
 class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profilePresenter = Provider.of<ProfilePresenter>(context);
-    final homePresenter = Provider.of<HomePresenter>(context);
+    final drawerController = Provider.of<AppDrawerController>(context);
 
     return SizedBox(
       width: double.infinity,
@@ -26,7 +26,7 @@ class Header extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  homePresenter.logOut();
+                  drawerController.open();
                 },
                 child: SizedBox(
                   width: 35,
@@ -57,7 +57,8 @@ class Header extends StatelessWidget {
                     child: SizedBox(
                       width: 8,
                       height: 8,
-                      child: DecoratedBox(decoration: BoxDecoration(
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(
                         color: AppColors.red100,
                         shape: BoxShape.circle,
                       )),

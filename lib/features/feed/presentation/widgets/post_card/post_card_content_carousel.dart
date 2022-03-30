@@ -41,17 +41,17 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: PageView(
+              child: PageView.builder(
                 controller: _pageController,
                 scrollDirection: Axis.horizontal,
                 onPageChanged: _onPageChanged,
-                children: [
-                  for (final media in widget.post.media)
-                    Image.network(
-                      media.url,
-                      fit: BoxFit.cover,
-                    ),
-                ],
+                itemBuilder: (context, index) {
+                  return Image.network(
+                    widget.post.media[index].url,
+                    fit: BoxFit.cover,
+                  );
+                },
+                itemCount: widget.post.media.length,
               ),
             ),
             if (widget.post.media.length > 1)

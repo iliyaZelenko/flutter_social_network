@@ -14,6 +14,8 @@ class Profile extends Equatable {
   final String username, avatar, firstName, lastName;
   final bool isVerified;
 
+  String get fullName => '$firstName $lastName';
+
   @override
   List<Object?> get props => [
         id,

@@ -65,7 +65,6 @@ abstract class AuthPresenterBase with Store {
     FocusManager.instance.primaryFocus?.unfocus();
     // Нужна задержка, иначе иногда баг вылазит
     Delays.defaultDelayCancelable.next(onValue: (_) {
-      // TODO Ilya: inject routes
       _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
     });
   }

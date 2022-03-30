@@ -18,6 +18,10 @@ mixin AppTextStyles {
     fontSize: 16,
     fontFamily: 'Inter Medium',
   );
+  static const medium15 = TextStyle(
+    fontSize: 15,
+    fontFamily: 'Inter Medium',
+  );
   static const medium14 = TextStyle(
     fontSize: 14,
     fontFamily: 'Inter Medium',
@@ -27,6 +31,10 @@ mixin AppTextStyles {
     fontFamily: 'Inter Medium',
   );
 
+  static const regular15 = TextStyle(
+    fontSize: 15,
+    fontFamily: 'Inter Regular',
+  );
   static const regular12 = TextStyle(
     fontSize: 12,
     fontFamily: 'Inter Regular',

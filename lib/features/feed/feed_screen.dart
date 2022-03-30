@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/home/presentation/widgets/header.dart';
 import 'package:rate_club/resources/app_colors.dart';
+import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 
 import 'presentation/feed_presenter.dart';
