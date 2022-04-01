@@ -7,6 +7,7 @@ import 'package:injector/injector.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/env/env_feature.dart';
 import 'package:rate_club/features/feed/feed_feature.dart';
 import 'package:rate_club/features/http/http_feature.dart';
 import 'package:rate_club/features/profile/profile_feature.dart';
@@ -97,8 +98,8 @@ Future<InjectorInterface> _setupEnvironment({required MainNavigatorKeyType mainN
     await Executor().warmUp();
   }
 
-  final injector = InjectorImpl()..map<MainNavigatorKeyType>((i) => mainNavigatorKey, isSingleton: true);
-  final featureInvoker = FeatureInvoker();
+  final injector = InjectorImpl().map<MainNavigatorKeyType>((i) => mainNavigatorKey, isSingleton: true);
+  final featureInvoker = FeatureInvoker()..use(EnvFeature(injector: injector));
 
   await featureInvoker.use(HttpFeature(injector: injector));
 

@@ -1,0 +1,1 @@
+enum EnvVariables { debug, APIBaseURL }
