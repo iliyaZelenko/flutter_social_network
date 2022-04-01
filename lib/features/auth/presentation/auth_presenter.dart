@@ -1,72 +1,47 @@
-import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
+import 'package:rate_club/features/auth/domain/use_cases/log_out_use_case.dart';
 import 'package:rate_club/features/auth/domain/use_cases/sign_in_use_case.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
-import 'package:rate_club/resources/app_routes.dart';
-import 'package:rate_club/resources/delays.dart';
-import 'package:rate_club/rate_club.dart';
 
 part 'auth_presenter.g.dart';
 
-// TODO Ilya: отдельный AuthFlowPresenter и AuthPresenter, где второй имеет главные методы аутентификации
+// Класс отвечает за базовые операции аутентификации: вход, выход, получение текущего юзера, статус loggedIn
 class AuthPresenter = AuthPresenterBase with _$AuthPresenter;
 
 abstract class AuthPresenterBase with Store {
-  final MainNavigatorKeyType _mainNavigatorKey;
   final SignInUseCase _signInUseCase;
+  final LogOutUseCase _logOutUseCase;
   final ProfilePresenter _profilePresenter;
 
   AuthPresenterBase({
-    required MainNavigatorKeyType mainNavigatorKey,
     required SignInUseCase signInUseCase,
     required ProfilePresenter profilePresenter,
-  })  : _mainNavigatorKey = mainNavigatorKey,
-        _signInUseCase = signInUseCase,
+    required LogOutUseCase logOutUseCase,
+  })  : _signInUseCase = signInUseCase,
+        _logOutUseCase = logOutUseCase,
         _profilePresenter = profilePresenter;
 
-  @readonly
-  bool _loading = false;
-
-  @readonly
-  String _username = 'email@zlat.ny';
-
-  @readonly
-  String _password = 'password666';
-
-  @observable
-  bool hidePassword = true;
-
-  @observable
-  bool rememberMe = false;
+  @computed
+  bool get loggedIn => _profilePresenter.profile != null;
 
   @action
-  setInput({
-    String? username,
-    String? password,
-  }) {
-    _username = username ?? _username;
-    _password = password ?? _password;
+  Future<void> signIn({
+    required String username,
+    required String password,
+  }) async {
+    await _signInUseCase.execute(
+      username: username,
+      password: password,
+    );
+    await fetchCurrentUser();
   }
 
   @action
-  Future<void> signIn() async {
-    _loading = true;
+  Future<void> fetchCurrentUser() async {
+    await _profilePresenter.fetch();
+  }
 
-    try {
-      await _signInUseCase.execute(
-        username: this._username,
-        password: this._password,
-      );
-      await _profilePresenter.fetch();
-    } catch (e) {
-      _loading = false;
-      rethrow;
-    }
-
-    FocusManager.instance.primaryFocus?.unfocus();
-    // Нужна задержка, иначе иногда баг вылазит
-    Delays.defaultDelayCancelable.next(onValue: (_) {
-      _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
-    });
+  void logOut() {
+    _logOutUseCase.execute();
   }
 }

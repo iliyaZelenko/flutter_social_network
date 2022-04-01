@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
@@ -10,12 +9,14 @@ import 'package:rate_club/resources/common_widgets/app_text_field.dart';
 import 'package:rate_club/resources/common_widgets/buttons/regular_app_btn.dart';
 import 'package:rate_club/resources/constants.dart';
 
+import 'auth_flow_presenter.dart';
+
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final authPresenter = Provider.of<AuthPresenter>(context);
+    final authPresenter = Provider.of<AuthFlowPresenter>(context);
 
     return ColoredBox(
       color: AppColors.white100,
@@ -116,5 +117,4 @@ class SignInScreen extends StatelessWidget {
       ),
     );
   }
-
 }

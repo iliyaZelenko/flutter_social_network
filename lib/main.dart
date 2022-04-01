@@ -7,7 +7,10 @@ import 'package:injector/injector.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/features/env/env_feature.dart';
+import 'package:rate_club/features/env/env_registry.dart';
+import 'package:rate_club/features/env/env_variables.dart';
 import 'package:rate_club/features/feed/feed_feature.dart';
 import 'package:rate_club/features/http/http_feature.dart';
 import 'package:rate_club/features/profile/profile_feature.dart';
@@ -21,25 +24,22 @@ import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
 import 'resources/emojis.dart';
 
-const debug = kDebugMode;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final MainNavigatorKeyType mainNavigatorKey = GlobalKey<NavigatorState>();
-  final injector = await _setupEnvironment(mainNavigatorKey: mainNavigatorKey);
-  final profilePresenter = injector.get<ProfilePresenter>();
+  final injector = await _setupEnvironment();
+  final authPresenter = injector.get<AuthPresenter>();
 
-  await injector.get<ProfilePresenter>().fetch();
+  await authPresenter.fetchCurrentUser();
 
-  // TODO Ilya: loggedIn ответстввенность на стороне AuthPresenter'а (отделённого от AuthFlowPresenter).
-  final initialRoute = profilePresenter.profile == null ? AppRoutes.auth : AppRoutes.home;
+  final initialRoute = authPresenter.loggedIn ? AppRoutes.home : AppRoutes.auth;
 
   runApp(
     MultiProvider(
       providers: [
         Provider<InjectorInterface>(create: (_) => injector),
         Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
+        Provider<AuthPresenter>(create: (_) => injector.get<AuthPresenter>()),
       ],
       child: GestureDetector(
         onTap: () {
@@ -53,7 +53,7 @@ Future<void> main() async {
           child: ScrollConfiguration(
             behavior: const _Bouncing(),
             child: CupertinoApp(
-              navigatorKey: mainNavigatorKey,
+              navigatorKey: injector.get<MainNavigatorKeyType>(),
               theme: const CupertinoThemeData(
                 brightness: Brightness.dark,
                 textTheme: CupertinoTextThemeData(
@@ -93,13 +93,17 @@ class _Bouncing extends ScrollBehavior {
   ScrollPhysics getScrollPhysics(BuildContext context) => const BouncingScrollPhysics();
 }
 
-Future<InjectorInterface> _setupEnvironment({required MainNavigatorKeyType mainNavigatorKey}) async {
-  if (!kDebugMode) {
+Future<InjectorInterface> _setupEnvironment() async {
+  final injector = InjectorImpl().map<MainNavigatorKeyType>(
+    (i) => GlobalKey<NavigatorState>(),
+    isSingleton: true,
+  );
+  final featureInvoker = FeatureInvoker()..use(EnvFeature(injector: injector));
+  final isDebug = injector.get<EnvRegistry>().get(EnvVariables.debug);
+
+  if (!isDebug) {
     await Executor().warmUp();
   }
-
-  final injector = InjectorImpl().map<MainNavigatorKeyType>((i) => mainNavigatorKey, isSingleton: true);
-  final featureInvoker = FeatureInvoker()..use(EnvFeature(injector: injector));
 
   await featureInvoker.use(HttpFeature(injector: injector));
 

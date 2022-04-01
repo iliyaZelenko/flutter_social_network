@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 mixin AppTextStyles {
+  // Semi Bold
   static const semiBold16 = TextStyle(
     fontSize: 16,
     fontFamily: 'Inter Semi Bold',
@@ -14,6 +15,7 @@ mixin AppTextStyles {
     fontFamily: 'Inter Semi Bold',
   );
 
+  // Medium
   static const medium16 = TextStyle(
     fontSize: 16,
     fontFamily: 'Inter Medium',
@@ -31,6 +33,7 @@ mixin AppTextStyles {
     fontFamily: 'Inter Medium',
   );
 
+  // Regular
   static const regular15 = TextStyle(
     fontSize: 15,
     fontFamily: 'Inter Regular',

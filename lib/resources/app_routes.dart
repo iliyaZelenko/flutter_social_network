@@ -1,12 +1,10 @@
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
-import 'package:rate_club/features/auth/domain/use_cases/log_out_use_case.dart';
-import 'package:rate_club/features/auth/domain/use_cases/sign_in_use_case.dart';
+import 'package:rate_club/features/auth/presentation/auth_flow_presenter.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/features/auth/presentation/sign_in_screen.dart';
 import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/home/presentation/home_screen.dart';
-import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 
 mixin AppRoutes {
@@ -20,15 +18,14 @@ getRoutesMap(InjectorInterface injector) {
           child: const HomeScreen(),
           create: (_) => HomePresenter(
             mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
-            logOutUseCase: injector.get<LogOutUseCase>(),
+            authPresenter: injector.get<AuthPresenter>(),
           ),
         ),
-    AppRoutes.auth: (_) => Provider<AuthPresenter>(
+    AppRoutes.auth: (_) => Provider<AuthFlowPresenter>(
           child: const SignInScreen(),
-          create: (_) => AuthPresenter(
+          create: (_) => AuthFlowPresenter(
             mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
-            signInUseCase: injector.get<SignInUseCase>(),
-            profilePresenter: injector.get<ProfilePresenter>(),
+            authPresenter: injector.get<AuthPresenter>(),
           ),
         ),
   };
