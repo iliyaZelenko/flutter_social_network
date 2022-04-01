@@ -1,15 +1,12 @@
-name: app_http_client
-description: Http client.
+name: injector
+description: DIP
 version: 1.0.0
 publish_to: none
 
 environment:
   sdk: ">=2.14.4 <3.0.0"
 
-dependency_overrides:
-  async: 2.6.1
-
 dependencies:
-  jwt_decoder: 2.0.1
+  flutter_simple_dependency_injection: ^2.0.0
   rate_club:
     path: "../../"

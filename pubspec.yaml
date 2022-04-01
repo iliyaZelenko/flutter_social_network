@@ -32,7 +32,6 @@ dependencies:
   nil: ^1.1.1
   after_layout: 1.1.0
   isolated_http_client: ^1.5.6
-  flutter_simple_dependency_injection: ^2.0.0
   shared_preferences: 2.0.8
   worker_manager: 4.2.6
   animator: 3.1.0
@@ -44,6 +43,8 @@ dependencies:
 
   app_http_client:
     path: features/app_http_client
+  injector:
+    path: features/injector
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

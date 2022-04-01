@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/create/create_screen.dart';
 import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homePresenter = Provider.of<HomePresenter>(context);
-    final injector = Provider.of<Injector>(context);
+    final injector = Provider.of<InjectorInterface>(context);
 
     return Stack(
       children: [

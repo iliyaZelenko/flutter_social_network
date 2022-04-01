@@ -3,31 +3,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:injector/injector.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
 import 'package:provider/provider.dart';
-import 'package:rate_club/features/auth/data/repositories/auth_repository_impl.dart';
-import 'package:rate_club/features/auth/domain/use_cases/log_out_use_case.dart';
-import 'package:rate_club/features/feed/data/repository/feed_repository_impl.dart';
-import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
-import 'package:rate_club/features/feed/presentation/feed_presenter.dart';
-import 'package:rate_club/features/home/presentation/home_presenter.dart';
-import 'package:rate_club/features/profile/data/repository/profile_repository_impl.dart';
-import 'package:rate_club/features/profile/domain/use_cases/get_profile_use_case.dart';
-import 'features/auth/domain/use_cases/sign_in_use_case.dart';
+import 'package:rate_club/features/feed/feed_feature.dart';
+import 'package:rate_club/features/http/http_feature.dart';
+import 'package:rate_club/features/profile/profile_feature.dart';
+import 'package:rate_club/rate_club.dart';
+
+import 'features/auth/auth_feature.dart';
+import 'features/feature_invoker.dart';
 import 'features/profile/presentation/profile_presenter.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
 import 'resources/emojis.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
 
 const debug = kDebugMode;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final mainNavigatorKey = GlobalKey<NavigatorState>();
+  final MainNavigatorKeyType mainNavigatorKey = GlobalKey<NavigatorState>();
   final injector = await _setupEnvironment(mainNavigatorKey: mainNavigatorKey);
   final profilePresenter = injector.get<ProfilePresenter>();
 
@@ -39,7 +37,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider<Injector>(create: (_) => injector),
+        Provider<InjectorInterface>(create: (_) => injector),
         Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
       ],
       child: GestureDetector(
@@ -94,65 +92,22 @@ class _Bouncing extends ScrollBehavior {
   ScrollPhysics getScrollPhysics(BuildContext context) => const BouncingScrollPhysics();
 }
 
-Future<Injector> _setupEnvironment({required GlobalKey<NavigatorState> mainNavigatorKey}) async {
+Future<InjectorInterface> _setupEnvironment({required MainNavigatorKeyType mainNavigatorKey}) async {
   if (!kDebugMode) {
     await Executor().warmUp();
   }
-  final http = AppHttpClient(
-    log: debug,
-    fakeIsolate: debug,
-    defaultHost: 'https://dev.easydev.group/api/',
-  );
-  await http.init();
 
-  final injector = Injector();
+  final injector = InjectorImpl()..map<MainNavigatorKeyType>((i) => mainNavigatorKey, isSingleton: true);
+  final featureInvoker = FeatureInvoker();
 
-  // abstract class MainNavigatorKeyInterface implements GlobalKey<NavigatorState> {}
-  injector.map<GlobalKey<NavigatorState>>((i) => mainNavigatorKey, isSingleton: true);
-  injector.map<AppHttpClientInterface>((i) => http, isSingleton: true);
+  await featureInvoker.use(HttpFeature(injector: injector));
 
-  // TODO Ilya: каждая фича сама мапит нужные зависимости в инджектор
-  // Auth
-  injector.map<AuthRepositoryImpl>(
-    (i) => AuthRepositoryImpl(i.get<AppHttpClientInterface>()),
-    isSingleton: true,
-  );
-  injector.map<SignInUseCase>(
-    (i) => SignInUseCase(i.get<AuthRepositoryImpl>()),
-    isSingleton: true,
-  );
-  injector.map<LogOutUseCase>(
-    (i) => LogOutUseCase(i.get<AuthRepositoryImpl>()),
-    isSingleton: true,
-  );
+  final http = injector.get<AppHttpClientInterface>();
 
-  // Profile
-  injector.map<ProfileRepositoryImpl>(
-    (i) => ProfileRepositoryImpl(i.get<AppHttpClientInterface>()),
-    isSingleton: true,
-  );
-  injector.map<GetProfileUseCase>(
-    (i) => GetProfileUseCase(i.get<ProfileRepositoryImpl>()),
-    isSingleton: true,
-  );
-  injector.map<ProfilePresenter>(
-    (i) => ProfilePresenter(getProfileUseCase: i.get<GetProfileUseCase>()),
-    isSingleton: true,
-  );
-
-  // Feed
-  injector.map<FeedRepositoryImpl>(
-        (i) => FeedRepositoryImpl(i.get<AppHttpClientInterface>()),
-    isSingleton: true,
-  );
-  injector.map<GetFeedUseCase>(
-        (i) => GetFeedUseCase(i.get<FeedRepositoryImpl>()),
-    isSingleton: true,
-  );
-  injector.map<FeedPresenter>(
-        (i) => FeedPresenter(getFeedUseCase: i.get<GetFeedUseCase>()),
-    isSingleton: true,
-  );
+  featureInvoker
+    ..use(AuthFeature(injector: injector, http: http))
+    ..use(ProfileFeature(injector: injector, http: http))
+    ..use(FeedFeature(injector: injector, http: http));
 
   return injector;
 }

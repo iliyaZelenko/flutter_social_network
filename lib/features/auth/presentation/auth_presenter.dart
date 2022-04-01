@@ -4,6 +4,7 @@ import 'package:rate_club/features/auth/domain/use_cases/sign_in_use_case.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/delays.dart';
+import 'package:rate_club/rate_club.dart';
 
 part 'auth_presenter.g.dart';
 
@@ -11,12 +12,12 @@ part 'auth_presenter.g.dart';
 class AuthPresenter = AuthPresenterBase with _$AuthPresenter;
 
 abstract class AuthPresenterBase with Store {
-  final GlobalKey<NavigatorState> _mainNavigatorKey;
+  final MainNavigatorKeyType _mainNavigatorKey;
   final SignInUseCase _signInUseCase;
   final ProfilePresenter _profilePresenter;
 
   AuthPresenterBase({
-    required GlobalKey<NavigatorState> mainNavigatorKey,
+    required MainNavigatorKeyType mainNavigatorKey,
     required SignInUseCase signInUseCase,
     required ProfilePresenter profilePresenter,
   })  : _mainNavigatorKey = mainNavigatorKey,
@@ -68,6 +69,4 @@ abstract class AuthPresenterBase with Store {
       _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
     });
   }
-
-  // TODO Ilya: logout?
 }

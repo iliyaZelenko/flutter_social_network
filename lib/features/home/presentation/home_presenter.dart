@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
 import 'package:rate_club/features/auth/domain/use_cases/log_out_use_case.dart';
 import 'package:rate_club/resources/app_routes.dart';
+import 'package:rate_club/rate_club.dart';
 
 part 'home_presenter.g.dart';
 
@@ -12,7 +13,7 @@ abstract class HomePresenterBase with Store {
   final LogOutUseCase _logOutUseCase;
 
   HomePresenterBase({
-    required GlobalKey<NavigatorState> mainNavigatorKey,
+    required MainNavigatorKeyType mainNavigatorKey,
     required LogOutUseCase logOutUseCase,
   })  : _mainNavigatorKey = mainNavigatorKey,
         _logOutUseCase = logOutUseCase;
