@@ -35,6 +35,7 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
     AppRoutes.post: (context) => Provider<PostPresenter>(
           child: PostScreen(
             postId: ModalRoute.of(context)?.settings.arguments as PostId,
+            mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
           ),
           create: (_) => PostPresenter(
             getPostUseCase: injector.get<GetPostUseCase>(),

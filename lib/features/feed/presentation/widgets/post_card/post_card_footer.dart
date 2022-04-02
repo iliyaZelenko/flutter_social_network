@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
+import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 
 class PostCardFooter extends StatelessWidget {
@@ -22,8 +23,17 @@ class PostCardFooter extends StatelessWidget {
           const Icon(AppIcons.heart_fill, color: AppColors.red100),
           Text(post.counters.marks.toString()),
           const SizedBox(width: 20),
-          const Icon(AppIcons.comment_fill, color: AppColors.white40),
-          Text(post.counters.comments.toString()),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.post, arguments: post.id);
+            },
+            child: Row(
+              children: [
+                const Icon(AppIcons.comment_fill, color: AppColors.white40),
+                Text(post.counters.comments.toString()),
+              ],
+            ),
+          ),
           const SizedBox(width: 20),
           const Icon(AppIcons.save_line, color: AppColors.white40),
           const Spacer(),

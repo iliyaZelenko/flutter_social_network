@@ -5,18 +5,24 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/home/presentation/widgets/header.dart';
+import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
+import 'package:rate_club/resources/app_icons.dart';
+import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 
 import 'presentation/post_presenter.dart';
 
 class PostScreen extends StatefulWidget {
   final PostId _postId;
+  final MainNavigatorKeyType _mainNavigatorKey;
 
   const PostScreen({
     Key? key,
     required PostId postId,
+    required MainNavigatorKeyType mainNavigatorKey,
   })  : _postId = postId,
+        _mainNavigatorKey = mainNavigatorKey,
         super(key: key);
 
   @override
@@ -38,7 +44,24 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
       child: SafeArea(
         child: Column(
           children: [
-            const Header(),
+            Header(
+              slot: GestureDetector(
+                onTap: () {
+                  // TODO Ilya: use Provider, really
+                  widget._mainNavigatorKey.currentState!.pop();
+                },
+                child: Row(
+                  children: [
+                    const Icon(AppIcons.arrow_left_line, color: AppColors.black100),
+                    const SizedBox(width: 15),
+                    Text(
+                      'Публикация',
+                      style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Expanded(
               child: Observer(
                 builder: (_) {

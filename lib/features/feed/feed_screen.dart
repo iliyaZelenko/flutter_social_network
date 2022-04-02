@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/home/presentation/widgets/header.dart';
+import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
+import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 
 import 'presentation/feed_presenter.dart';
@@ -27,12 +30,38 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final profilePresenter = Provider.of<ProfilePresenter>(context);
+    final drawerController = Provider.of<AppDrawerController>(context);
+
     return ColoredBox(
       color: AppColors.white80,
       child: SafeArea(
         child: Column(
           children: [
-            const Header(),
+            Header(
+              slot: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      drawerController.open();
+                    },
+                    child: SizedBox(
+                      width: 35,
+                      height: 35,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Text(
+                    'Лента',
+                    style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: Observer(
                 builder: (_) {

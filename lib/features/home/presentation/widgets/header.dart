@@ -1,20 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
-import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
+  final Widget? slot;
+
+  const Header({Key? key, this.slot}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final profilePresenter = Provider.of<ProfilePresenter>(context);
-    final drawerController = Provider.of<AppDrawerController>(context);
-
     return SizedBox(
       width: double.infinity,
       height: 55,
@@ -24,24 +19,7 @@ class Header extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  drawerController.open();
-                },
-                child: SizedBox(
-                  width: 35,
-                  height: 35,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 15),
-              Text(
-                'Лента',
-                style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
-              ),
+              if (slot != null) slot!,
               const Spacer(),
               const Icon(
                 AppIcons.search_line,
