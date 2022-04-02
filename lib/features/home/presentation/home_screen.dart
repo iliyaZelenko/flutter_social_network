@@ -43,10 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             create: (_) => FeedPresenter(
                               getFeedUseCase: injector.get<GetFeedUseCase>(),
                             ),
-                          ),
-                          Provider<AppDrawerController>(
-                            create: (_) => _drawerController,
-                          ),
+                          )
                         ],
                         child: const FeedScreen(),
                       ),
@@ -60,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
         ),
-        AppDrawer(controller: _drawerController),
       ],
     );
   }

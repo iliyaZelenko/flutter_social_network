@@ -53,6 +53,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  lint: ^1.7.2
   build_runner: ^2.1.7
   mobx_codegen: ^2.0.5+2
   json_serializable: ^6.1.5

@@ -1,6 +1,6 @@
-import 'package:rate_club/features/feed/domain/entities/feed_response_entity.dart';
+import 'package:rate_club/features/feed/domain/value_objects/feed_response.dart';
 import 'package:worker_manager/worker_manager.dart';
 
 abstract class FeedRepository {
-  Cancelable<FeedResponseEntity> fetch({String? next});
+  Cancelable<FeedResponse> get({String? next});
 }

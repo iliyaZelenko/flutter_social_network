@@ -1,10 +1,10 @@
-import 'post_entity.dart';
+import '../entities/post_entity.dart';
 
-class FeedResponseEntity {
+class FeedResponse {
   final String next;
   final List<PostEntity> results;
 
-  FeedResponseEntity({
+  FeedResponse({
     required this.next,
     required this.results,
   });

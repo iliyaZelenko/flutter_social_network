@@ -42,6 +42,7 @@ abstract class AuthPresenterBase with Store {
   }
 
   void logOut() {
+    _profilePresenter.profile = null;
     _logOutUseCase.execute();
   }
 }

@@ -15,14 +15,12 @@ abstract class ProfilePresenterBase with Store {
   }) : _getProfileUseCase = getProfileUseCase;
 
   @observable
-  Profile? profile = null;
+  Profile? profile;
 
   @action
   Future<void> fetch() async {
     try {
       profile = await _getProfileUseCase.execute();
-
-      print(profile);
     } catch (e) {
       if (e is HttpUnauthorizedException) {
         profile = null;

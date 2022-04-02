@@ -1,7 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:rate_club/features/feed/domain/entities/feed_response_entity.dart';
 import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
-import 'package:rate_club/features/profile/domain/entities/profile.dart';
+import 'package:rate_club/features/feed/domain/value_objects/feed_response.dart';
 
 part 'feed_presenter.g.dart';
 
@@ -18,10 +17,7 @@ abstract class FeedPresenterBase with Store {
   bool _loading = false;
 
   @readonly
-  FeedResponseEntity? _feed;
-
-  @observable
-  Profile? profile = null;
+  FeedResponse? _feed;
 
   @action
   Future<void> initFetch() async {

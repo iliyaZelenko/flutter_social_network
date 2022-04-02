@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:injector/injector.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
@@ -13,6 +14,7 @@ import 'package:rate_club/features/env/env_registry.dart';
 import 'package:rate_club/features/env/env_variables.dart';
 import 'package:rate_club/features/feed/feed_feature.dart';
 import 'package:rate_club/features/http/http_feature.dart';
+import 'package:rate_club/features/post/post_feature.dart';
 import 'package:rate_club/features/profile/profile_feature.dart';
 import 'package:rate_club/rate_club.dart';
 
@@ -22,12 +24,14 @@ import 'features/profile/presentation/profile_presenter.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
+import 'resources/common_widgets/app_drawer.dart';
 import 'resources/emojis.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final injector = await _setupEnvironment();
+  final navigatorKey = injector.get<MainNavigatorKeyType>();
   final authPresenter = injector.get<AuthPresenter>();
 
   await authPresenter.fetchCurrentUser();
@@ -40,6 +44,9 @@ Future<void> main() async {
         Provider<InjectorInterface>(create: (_) => injector),
         Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
         Provider<AuthPresenter>(create: (_) => injector.get<AuthPresenter>()),
+        Provider<AppDrawerController>(
+          create: (_) => AppDrawerController(),
+        ),
       ],
       child: GestureDetector(
         onTap: () {
@@ -53,7 +60,7 @@ Future<void> main() async {
           child: ScrollConfiguration(
             behavior: const _Bouncing(),
             child: CupertinoApp(
-              navigatorKey: injector.get<MainNavigatorKeyType>(),
+              navigatorKey: navigatorKey,
               theme: const CupertinoThemeData(
                 brightness: Brightness.dark,
                 textTheme: CupertinoTextThemeData(
@@ -74,6 +81,16 @@ Future<void> main() async {
                       textScaleFactor: 1,
                     ),
                     widget!,
+                    Observer(
+                      builder: (_) {
+                        return authPresenter.loggedIn
+                            ? AppDrawer(
+                                controller: Provider.of<AppDrawerController>(ctx),
+                                mainNavigatorKey: navigatorKey,
+                              )
+                            : const SizedBox.shrink();
+                      },
+                    ),
                   ],
                 );
               },
@@ -99,7 +116,7 @@ Future<InjectorInterface> _setupEnvironment() async {
     isSingleton: true,
   );
   final featureInvoker = FeatureInvoker()..use(EnvFeature(injector: injector));
-  final isDebug = injector.get<EnvRegistry>().get(EnvVariables.debug);
+  final isDebug = injector.get<EnvRegistry>().get<bool>(EnvVariables.debug);
 
   if (!isDebug) {
     await Executor().warmUp();
@@ -112,7 +129,8 @@ Future<InjectorInterface> _setupEnvironment() async {
   featureInvoker
     ..use(AuthFeature(injector: injector, http: http))
     ..use(ProfileFeature(injector: injector, http: http))
-    ..use(FeedFeature(injector: injector, http: http));
+    ..use(FeedFeature(injector: injector, http: http))
+    ..use(PostFeature(injector: injector, http: http));
 
   return injector;
 }

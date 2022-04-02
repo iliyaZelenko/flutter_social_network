@@ -17,8 +17,8 @@ class Refreshable extends StatelessWidget {
     this.slivers,
     this.scrollPhysics,
     this.scrollController,
-    this.refreshIndicatorExtent = 60,
-    this.refreshTriggerPullDistance = 100,
+    this.refreshIndicatorExtent = 100,
+    this.refreshTriggerPullDistance = 140,
   }) : super(key: key);
 
   @override

@@ -1,45 +1,38 @@
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
-import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
-import 'package:rate_club/features/feed/domain/repositories/feed_repository.dart';
-import 'package:rate_club/features/feed/domain/value_objects/feed_response.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
+import 'package:rate_club/features/post/domain/entities/post_screen_entity.dart';
+import 'package:rate_club/features/post/domain/repositories/post_repository.dart';
 import 'package:rate_club/rate_club.dart';
 
-class FeedRepositoryImpl implements FeedRepository {
+class PostRepositoryImpl implements PostRepository {
   final AppHttpClientInterface _http;
 
-  FeedRepositoryImpl(this._http);
+  PostRepositoryImpl(this._http);
 
   @override
-  Cancelable<FeedResponse> get({String? next}) {
+  Cancelable<PostScreenEntity> get(PostId id) {
     return _http
         .get(
-      host: next == null ? null : '',
-      path: next ?? 'article/',
+      path: '/article/$id',
     )
         .next(
       onValue: (response) {
-        return FeedResponse(
-          next: response.body['next'] as String,
-          results: List<Map<String, dynamic>>.from(response.body['results'] as Iterable<dynamic>)
-              .map(_fromPostDtoToPostEntity)
-              .toList(),
-        );
+        return _fromPostDtoToPostEntity(response.body);
       },
     );
   }
 
-  PostEntity _fromPostDtoToPostEntity(Map<String, dynamic> dto) {
+  PostScreenEntity _fromPostDtoToPostEntity(Map<String, dynamic> dto) {
     final creator = dto['creator'];
     // const mediaMock = [
     //   PostMediaEntity(id: 1, url: 'https://i.imgur.com/nhuOytU.jpeg'),
     //   PostMediaEntity(id: 2, url: 'https://i.imgur.com/NErzmhn.jpeg'),
     // ];
 
-    return PostEntity(
-      id: PostId(dto['id'] as int),
+    return PostScreenEntity(
+      id: PostId(dto['id']),
       content: dto['content'] ?? '',
       counters: PostCounters(
         viewed: dto['viewed'] ?? 0,

@@ -28,33 +28,18 @@ mixin _$FeedPresenter on FeedPresenterBase, Store {
 
   final _$_feedAtom = Atom(name: 'FeedPresenterBase._feed');
 
-  FeedResponseEntity? get feed {
+  FeedResponse? get feed {
     _$_feedAtom.reportRead();
     return super._feed;
   }
 
   @override
-  FeedResponseEntity? get _feed => feed;
+  FeedResponse? get _feed => feed;
 
   @override
-  set _feed(FeedResponseEntity? value) {
+  set _feed(FeedResponse? value) {
     _$_feedAtom.reportWrite(value, super._feed, () {
       super._feed = value;
-    });
-  }
-
-  final _$profileAtom = Atom(name: 'FeedPresenterBase.profile');
-
-  @override
-  Profile? get profile {
-    _$profileAtom.reportRead();
-    return super.profile;
-  }
-
-  @override
-  set profile(Profile? value) {
-    _$profileAtom.reportWrite(value, super.profile, () {
-      super.profile = value;
     });
   }
 
@@ -82,7 +67,7 @@ mixin _$FeedPresenter on FeedPresenterBase, Store {
   @override
   String toString() {
     return '''
-profile: ${profile}
+
     ''';
   }
 }

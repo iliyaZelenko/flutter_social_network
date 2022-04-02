@@ -1,20 +1,30 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rate_club/features/home/presentation/home_presenter.dart';
+import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
+import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
+import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 
+// TODO Ilya: ValueListenable
 class AppDrawerController {
-  late final void Function() open;
+  // ...and don't use final until refactor
+  late void Function() open;
 }
 
 class AppDrawer extends StatefulWidget {
   final AppDrawerController controller;
+  final MainNavigatorKeyType mainNavigatorKey;
 
-  const AppDrawer({Key? key, required this.controller}) : super(key: key);
+  const AppDrawer({
+    Key? key,
+    required this.controller,
+    required this.mainNavigatorKey,
+  }) : super(key: key);
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
@@ -36,7 +46,7 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    final homePresenter = Provider.of<HomePresenter>(context);
+    final authPresenter = Provider.of<AuthPresenter>(context);
     final profilePresenter = Provider.of<ProfilePresenter>(context);
 
     return DrawerController(
@@ -130,7 +140,9 @@ class _AppDrawerState extends State<AppDrawer> {
                         ],
                       ),
                       onTap: () {
-                        homePresenter.logOut();
+                        authPresenter.logOut();
+
+                        widget.mainNavigatorKey.currentState!.pushNamedAndRemoveUntil(AppRoutes.auth, (_) => false);
                       },
                     ),
                   ],

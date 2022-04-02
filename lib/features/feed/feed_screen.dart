@@ -5,7 +5,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/home/presentation/widgets/header.dart';
 import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 
 import 'presentation/feed_presenter.dart';
@@ -39,8 +38,8 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
                 builder: (_) {
                   return feedPresenter.loading
                       ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                          child: CircularProgressIndicator(),
+                        )
                       : const _FeedBody();
                 },
               ),
@@ -66,23 +65,18 @@ class _FeedBody extends StatelessWidget {
         final posts = feedPresenter.feed!.results;
 
         return Refreshable(
-          scrollPhysics: const AlwaysScrollableScrollPhysics(),
-          onRefresh: feedPresenter.refresh,
-          slivers: [
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (ctx, index) {
-                  return PostCard(post: posts[index]);
-                },
-                childCount: posts.length,
-                addAutomaticKeepAlives: false,
-                addSemanticIndexes: false,
-              ),
-            )
-          ],
-          refreshIndicatorExtent: 100,
-          refreshTriggerPullDistance: 140,
-        );
+            scrollPhysics: const AlwaysScrollableScrollPhysics(),
+            onRefresh: feedPresenter.refresh,
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (ctx, index) => PostCard(post: posts[index]),
+                  childCount: posts.length,
+                  addAutomaticKeepAlives: false,
+                  addSemanticIndexes: false,
+                ),
+              )
+            ]);
       },
     );
   }

@@ -1,11 +1,12 @@
-import 'post_counters_entity.dart';
+import '../value_objects/post_counters.dart';
+import '../value_objects/post_id.dart';
 import 'post_creator_entity.dart';
 import 'post_media_entity.dart';
 
 class PostEntity {
-  final int id;
+  final PostId id;
   final String content;
-  final PostCountersEntity counters;
+  final PostCounters counters;
   final PostCreatorEntity creator;
   final List<PostMediaEntity> media;
 
