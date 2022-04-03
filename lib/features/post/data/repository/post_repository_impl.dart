@@ -34,6 +34,7 @@ class PostRepositoryImpl implements PostRepository {
     return PostScreenEntity(
       id: PostId(dto['id']),
       content: dto['content'] ?? '',
+      title: dto['title'],
       counters: PostCounters(
         viewed: dto['viewed'] ?? 0,
         comments: dto['comments'] ?? 0,

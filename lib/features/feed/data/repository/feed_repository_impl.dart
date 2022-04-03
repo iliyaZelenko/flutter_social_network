@@ -41,7 +41,8 @@ class FeedRepositoryImpl implements FeedRepository {
 
     return PostEntity(
       id: PostId(article['id'] as int),
-      content: article['content'] ?? '',
+      content: article['content'] ?? '<Нет контента>',
+      title: article['title'],
       counters: PostCounters(
         viewed: article['counters']['viewed'] ?? 0,
         comments: article['counters']['comments'] ?? 0,

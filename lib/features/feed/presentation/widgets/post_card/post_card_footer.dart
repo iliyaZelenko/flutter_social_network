@@ -39,7 +39,7 @@ class PostCardFooter extends StatelessWidget {
           const Spacer(),
           const Icon(AppIcons.eye_line, color: AppColors.white40),
           Text(
-            '${post.counters.viewed} тыс',
+            '${post.counters.viewed}',
             style: AppTextStyles.medium12.apply(color: AppColors.black20),
           )
         ],

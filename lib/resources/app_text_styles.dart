@@ -6,6 +6,10 @@ mixin AppTextStyles {
     fontSize: 25,
     fontFamily: 'Inter Semi Bold',
   );
+  static const semiBold20 = TextStyle(
+    fontSize: 20,
+    fontFamily: 'Inter Semi Bold',
+  );
   static const semiBold16 = TextStyle(
     fontSize: 16,
     fontFamily: 'Inter Semi Bold',

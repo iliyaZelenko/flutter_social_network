@@ -6,6 +6,7 @@ import 'post_media_entity.dart';
 class PostEntity {
   final PostId id;
   final String content;
+  final String? title;
   final PostCounters counters;
   final PostCreatorEntity creator;
   final List<PostMediaEntity> media;
@@ -13,6 +14,7 @@ class PostEntity {
   PostEntity({
     required this.id,
     required this.content,
+    required this.title,
     required this.counters,
     required this.creator,
     required this.media,

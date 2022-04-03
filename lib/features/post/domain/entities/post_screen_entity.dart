@@ -8,12 +8,14 @@ class PostScreenEntity extends PostEntity {
   PostScreenEntity({
     required PostId id,
     required String content,
+    required String? title,
     required PostCounters counters,
     required PostCreatorEntity creator,
     required List<PostMediaEntity> media,
   }) : super(
           id: id,
           content: content,
+          title: title,
           counters: counters,
           creator: creator,
           media: media,
