@@ -1,12 +1,16 @@
+import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
+import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
+import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 
 class PostScreenEntity extends PostEntity {
   PostScreenEntity({
-    required id,
-    required content,
-    required counters,
-    required creator,
-    required media,
+    required PostId id,
+    required String content,
+    required PostCounters counters,
+    required PostCreatorEntity creator,
+    required List<PostMediaEntity> media,
   }) : super(
           id: id,
           content: content,

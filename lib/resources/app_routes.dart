@@ -8,8 +8,8 @@ import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/home/presentation/home_screen.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
-import 'package:rate_club/features/post/post_screen.dart';
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
+import 'package:rate_club/features/post/presentation/post_screen.dart';
 import 'package:rate_club/rate_club.dart';
 
 mixin AppRoutes {

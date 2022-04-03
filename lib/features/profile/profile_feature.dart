@@ -15,6 +15,7 @@ class ProfileFeature extends FeatureInterface {
   })  : _injector = injector,
         _http = http;
 
+  @override
   void execute() {
     _injector
       ..map<ProfileRepositoryImpl>(

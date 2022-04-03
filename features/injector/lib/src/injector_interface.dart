@@ -1,3 +1,5 @@
+import 'package:flutter_simple_dependency_injection/injector.dart' as injectorImport;
+
 typedef ObjectFactoryFn<T, I> = T Function(I injector);
 
 abstract class InjectorInterface {
@@ -36,7 +38,7 @@ abstract class InjectorInterface {
   //                       ..map(String, (injector) => "https://api.com/", key: "ApiUrl");
   // ```
   InjectorInterface map<T>(
-    ObjectFactoryFn<T, dynamic> factoryFn, {
+    ObjectFactoryFn<T, injectorImport.Injector> factoryFn, {
     bool isSingleton = false,
     String? key,
     bool allowFutureReassignment = false,

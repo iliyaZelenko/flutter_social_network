@@ -23,7 +23,7 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
 
   int _currentPageIndex = 0;
 
-  _onPageChanged(int index) {
+  void _onPageChanged(int index) {
     setState(() {
       _currentPageIndex = index;
     });
@@ -32,7 +32,7 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
       child: SizedBox(
         width: double.infinity,
         height: 300,
@@ -43,7 +43,6 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
               borderRadius: BorderRadius.circular(8),
               child: PageView.builder(
                 controller: _pageController,
-                scrollDirection: Axis.horizontal,
                 onPageChanged: _onPageChanged,
                 itemBuilder: (context, index) {
                   return Image.network(
@@ -56,7 +55,13 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
             ),
             if (widget.post.media.length > 1)
               Positioned(
+                top: 10,
+                right: 10,
                 child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: AppColors.black100.withOpacity(0.5),
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: Text(
@@ -64,16 +69,11 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
                       style: AppTextStyles.medium14.apply(color: AppColors.white100),
                     ),
                   ),
-                  decoration: BoxDecoration(
-                    color: AppColors.black100.withOpacity(0.5),
-                    borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  ),
                 ),
-                top: 10,
-                right: 10,
               ),
             if (_currentPageIndex != 0)
               Positioned(
+                left: -5,
                 child: MaterialButton(
                   height: 24,
                   minWidth: 24,
@@ -82,34 +82,33 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
                   },
                   color: AppColors.white100,
                   textColor: Colors.white,
+                  shape: const CircleBorder(),
                   child: const Icon(
                     AppIcons.arrow_left_line,
                     color: AppColors.black100,
                     size: 20,
                   ),
-                  shape: const CircleBorder(),
                 ),
-                left: -5,
               ),
             if (_currentPageIndex != widget.post.media.length - 1)
               Positioned(
-              child: MaterialButton(
-                height: 24,
-                minWidth: 24,
-                onPressed: () {
-                  _pageController.nextPage(duration: Delays.delay300, curve: Curves.easeInOut);
-                },
-                color: AppColors.white100,
-                textColor: Colors.white,
-                child: const Icon(
-                  AppIcons.arrow_right_line,
-                  color: AppColors.black100,
-                  size: 20,
+                right: -5,
+                child: MaterialButton(
+                  height: 24,
+                  minWidth: 24,
+                  onPressed: () {
+                    _pageController.nextPage(duration: Delays.delay300, curve: Curves.easeInOut);
+                  },
+                  color: AppColors.white100,
+                  textColor: Colors.white,
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    AppIcons.arrow_right_line,
+                    color: AppColors.black100,
+                    size: 20,
+                  ),
                 ),
-                shape: const CircleBorder(),
               ),
-              right: -5,
-            ),
           ],
         ),
       ),

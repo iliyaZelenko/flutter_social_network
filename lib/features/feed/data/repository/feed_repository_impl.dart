@@ -17,7 +17,7 @@ class FeedRepositoryImpl implements FeedRepository {
     return _http
         .get(
       host: next == null ? null : '',
-      path: next ?? 'article/',
+      path: next ?? 'wall/',
     )
         .next(
       onValue: (response) {
@@ -33,18 +33,19 @@ class FeedRepositoryImpl implements FeedRepository {
 
   PostEntity _fromPostDtoToPostEntity(Map<String, dynamic> dto) {
     final creator = dto['creator'];
+    final article = dto['article'];
     // const mediaMock = [
     //   PostMediaEntity(id: 1, url: 'https://i.imgur.com/nhuOytU.jpeg'),
     //   PostMediaEntity(id: 2, url: 'https://i.imgur.com/NErzmhn.jpeg'),
     // ];
 
     return PostEntity(
-      id: PostId(dto['id'] as int),
-      content: dto['content'] ?? '',
+      id: PostId(article['id'] as int),
+      content: article['content'] ?? '',
       counters: PostCounters(
-        viewed: dto['viewed'] ?? 0,
-        comments: dto['comments'] ?? 0,
-        marks: dto['marks'] ?? 0,
+        viewed: article['counters']['viewed'] ?? 0,
+        comments: article['counters']['comments'] ?? 0,
+        marks: article['counters']['marks'] ?? 0,
       ),
       creator: PostCreatorEntity(
         id: creator['pid'],
@@ -54,7 +55,7 @@ class FeedRepositoryImpl implements FeedRepository {
         lastName: creator['last_name'] ?? 'no last name',
         isVerified: creator['is_verified'] ?? false,
       ),
-      media: (dto['media'] as List<dynamic>)
+      media: (article['media'] as List<dynamic>)
           .cast<Map<String, dynamic>>()
           .map((e) => PostMediaEntity(
                 id: e['id'],

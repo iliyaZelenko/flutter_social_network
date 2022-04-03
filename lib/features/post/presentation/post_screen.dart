@@ -3,15 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
+import 'package:rate_club/features/feed/presentation/widgets/post_card/post_card_footer.dart';
 import 'package:rate_club/features/home/presentation/widgets/header.dart';
+import 'package:rate_club/features/post/presentation/widgets/post_screen_content.dart';
+import 'package:rate_club/features/post/presentation/widgets/post_screen_header.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 
-import 'presentation/post_presenter.dart';
+import 'post_presenter.dart';
 
 class PostScreen extends StatefulWidget {
   final PostId _postId;
@@ -96,7 +100,29 @@ class _PostBody extends StatelessWidget {
           onRefresh: postPresenter.refresh,
           slivers: [
             SliverToBoxAdapter(
-              child: Text(postPresenter.post!.content),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: AppColors.white100,
+                    border: Border(
+                      top: BorderSide(width: 0.7, color: AppColors.white60),
+                      bottom: BorderSide(width: 0.7, color: AppColors.white60),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const PostScreenHeader(),
+                      const PostScreenContent(),
+                      Provider<PostEntity>(
+                        create: (_) => postPresenter.post!,
+                        child: const PostCardFooter(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             )
           ],
         );
