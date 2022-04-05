@@ -19,5 +19,5 @@ mixin AppColors {
   static const purple80 = Color.fromRGBO(0x38, 0x5f, 0xea, 1);
 
   static const red100 = Color.fromRGBO(0xb6, 0x14, 0x14, 1);
+  static const red80 = Color.fromRGBO(0xeb, 0x5b, 0x52, 1);
 }
-

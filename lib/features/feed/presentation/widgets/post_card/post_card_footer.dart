@@ -2,15 +2,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/post/presentation/widgets/post_like.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 
-class PostCardFooter extends StatelessWidget {
+class PostCardFooter extends StatefulWidget {
   const PostCardFooter({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<PostCardFooter> createState() => _PostCardFooterState();
+}
+
+class _PostCardFooterState extends State<PostCardFooter> {
+  ValueNotifier<bool> _isLiked = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +28,68 @@ class PostCardFooter extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12, right: 12, top: 5, bottom: 20),
       child: Row(
         children: [
-          const Icon(AppIcons.heart_fill, color: AppColors.red100),
-          Text(post.counters.marks.toString()),
-          const SizedBox(width: 20),
+          // Likes
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
-              Navigator.of(context).pushNamed(AppRoutes.post, arguments: post.id);
+              _isLiked.value = !_isLiked.value;
             },
             child: Row(
               children: [
-                const Icon(AppIcons.comment_fill, color: AppColors.white40),
-                Text(post.counters.comments.toString()),
+                PostLike(
+                  isLiked: _isLiked,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  post.counters.marks.toString(),
+                  style: AppTextStyles.semiBold15,
+                ),
               ],
             ),
           ),
           const SizedBox(width: 20),
-          const Icon(AppIcons.save_line, color: AppColors.white40),
+
+          // Comments
+          GestureDetector(
+            onTap: () {
+              if (ModalRoute.of(context)!.settings.name == AppRoutes.post) {
+                return;
+              }
+
+              Navigator.of(context).pushNamed(AppRoutes.post, arguments: post.id);
+            },
+            child: Row(
+              children: [
+                const Icon(
+                  AppIcons.comment_fill,
+                  color: AppColors.white40,
+                  size: 24,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  post.counters.comments.toString(),
+                  style: AppTextStyles.semiBold16.apply(color: AppColors.black60),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 20),
+
+          // Bookmarks
+          const Icon(
+            AppIcons.bookmark_line,
+            color: AppColors.white40,
+            size: 24,
+          ),
           const Spacer(),
-          const Icon(AppIcons.eye_line, color: AppColors.white40),
+
+          // Views
+          const Icon(
+            AppIcons.eye_line,
+            color: AppColors.white40,
+            size: 24,
+          ),
+          const SizedBox(width: 4),
           Text(
             '${post.counters.viewed}',
             style: AppTextStyles.medium12.apply(color: AppColors.black20),

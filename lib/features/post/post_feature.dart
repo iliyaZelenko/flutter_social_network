@@ -32,6 +32,7 @@ class PostFeature extends FeatureInterface {
         (i) => GetPostUseCase(i.get<PostRepository>()),
         isSingleton: true,
       )
+      // TODO Ilya(optimization): dynamically map with "key" or parameters based on postId? And then dispose (remove instance from Injector)
       ..map<PostPresenter>(
         (i) => PostPresenter(getPostUseCase: i.get<GetPostUseCase>()),
       );
