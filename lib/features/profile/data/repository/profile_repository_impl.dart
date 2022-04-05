@@ -12,22 +12,21 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Cancelable<Profile> fetch() {
     return _http.get(path: 'profile/', handleOnUnauthorized: false).next(
-          onValue: (response) {
-            // Берётся первый дефолтный профиль. Обсудили что пока делаем так. Но в идеале как я вижу, нужно брать профиль под которым логинишься
-            final defaultProfile = List.from(response.body['results']).firstWhere((element) => element['default']);
+      onValue: (response) {
+        final resDto = ProfileResponseDto.fromJson(response.body);
+        // Берётся первый дефолтный профиль. Обсудили что пока делаем так. Но в идеале как я вижу, нужно брать профиль под которым логинишься
+        final defaultProfileDto = resDto.results.firstWhere((profile) => profile.isDefault);
 
-            return _fromProfileDtoToProfile(
-              ProfileDto.fromJson(defaultProfile),
-            );
-          },
-        );
+        return _fromProfileDtoToProfile(defaultProfileDto);
+      },
+    );
   }
 
   Profile _fromProfileDtoToProfile(ProfileDto model) {
     return Profile(
       id: model.id,
       username: model.username!,
-      avatar: model.avatar.defaultSet,
+      avatar: model.avatar?.defaultType,
       firstName: model.firstName!,
       lastName: model.lastName!,
       isVerified: model.isVerified!,

@@ -9,6 +9,6 @@ class EnvRegistry {
   }
 
   T get<T>(EnvVariables key) {
-    return registry[key];
+    return registry[key] as T;
   }
 }

@@ -3,29 +3,45 @@ import 'package:json_annotation/json_annotation.dart';
 part 'profile_models.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
+class ProfileResponseDto {
+  final List<ProfileDto> results;
+
+  ProfileResponseDto(this.results);
+
+  factory ProfileResponseDto.fromJson(Map<String, dynamic> json) => _$ProfileResponseDtoFromJson(json);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class ProfileDto {
+  final int id;
+  final String? username, firstName, lastName;
+  final bool? isVerified;
+  final ProfileAvatarDto? avatar;
+
+  @JsonKey(name: 'default')
+  final bool isDefault;
+
   ProfileDto(
     this.id,
     this.username,
     this.firstName,
     this.lastName,
     this.isVerified,
+    this.avatar,
+    this.isDefault,
   );
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
-
-  final int id;
-  final String? username, firstName, lastName;
-  final bool? isVerified;
-  late ProfileAvatarDto avatar;
 }
 
+@JsonSerializable(createToJson: false)
 class ProfileAvatarDto {
-  final String defaultSet;
+  @JsonKey(name: 'default', readValue: _readTypeUrl)
+  String defaultType;
 
-  ProfileAvatarDto(this.defaultSet);
+  ProfileAvatarDto(this.defaultType);
 
-  factory ProfileAvatarDto.fromJson(Map<String, dynamic> json) {
-    return ProfileAvatarDto('https://' + json['default']['url']);
-  }
+  factory ProfileAvatarDto.fromJson(Map<String, dynamic> json) => _$ProfileAvatarDtoFromJson(json);
+
+  static String _readTypeUrl(dynamic json, key) => 'https://' + (json[key]['url'] as String);
 }

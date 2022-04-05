@@ -22,8 +22,9 @@ class FeedRepositoryImpl implements FeedRepository {
         .next(
       onValue: (response) {
         return FeedResponse(
-          next: response.body['next'] as String,
+          next: response.body['next'] as String?,
           results: List<Map<String, dynamic>>.from(response.body['results'] as Iterable<dynamic>)
+              .where((element) => element['article']['content_type'] == 'article')
               .map(_fromPostDtoToPostEntity)
               .toList(),
         );
@@ -34,6 +35,7 @@ class FeedRepositoryImpl implements FeedRepository {
   PostEntity _fromPostDtoToPostEntity(Map<String, dynamic> dto) {
     final creator = dto['creator'];
     final article = dto['article'];
+
     // const mediaMock = [
     //   PostMediaEntity(id: 1, url: 'https://i.imgur.com/nhuOytU.jpeg'),
     //   PostMediaEntity(id: 2, url: 'https://i.imgur.com/NErzmhn.jpeg'),

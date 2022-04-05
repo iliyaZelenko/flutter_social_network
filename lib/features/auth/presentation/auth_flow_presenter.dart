@@ -23,11 +23,13 @@ abstract class AuthFlowPresenterBase with Store {
   @readonly
   bool _loading = false;
 
+  // na1se_one/223322Aa
+  // email@zlat.ny/password666
   @readonly
-  String _username = 'email@zlat.ny';
+  String _username = 'na1se_one';
 
   @readonly
-  String _password = 'password666';
+  String _password = '223322Aa';
 
   @observable
   bool hidePassword = true;
