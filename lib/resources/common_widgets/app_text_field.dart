@@ -22,7 +22,7 @@ class AppTextField extends StatefulWidget {
   final bool capitalize;
   final TextInputAction? action;
   final void Function(String value)? onDone;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final Widget? suffix;
   final List<TextInputFormatter>? formatters;
   final TextStyle textStyle;
@@ -55,7 +55,7 @@ class AppTextField extends StatefulWidget {
     this.capitalize = false,
     this.action,
     this.onDone,
-    FocusNode? focusNode,
+    this.focusNode,
     this.suffix,
     this.formatters,
     TextStyle? textStyle,
@@ -70,7 +70,6 @@ class AppTextField extends StatefulWidget {
     this.hintColor = AppColors.black60,
     this.initialValue = '',
   })  : textStyle = textStyle ?? AppTextStyles.medium16.apply(color: AppColors.black100),
-        focusNode = focusNode ?? FocusNode(),
         super(key: key);
 
   @override
@@ -82,6 +81,7 @@ class _AppTextFieldState extends State<AppTextField> {
 
   Timer? _timer;
   TextEditingController? _inputController;
+  late FocusNode _focusNode;
 
   @override
   void dispose() {
@@ -91,7 +91,9 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   void initState() {
-    this._inputController = widget.controller ?? TextEditingController();
+    _focusNode = widget.focusNode ?? FocusNode();
+
+    _inputController = widget.controller ?? TextEditingController();
     _inputController!.text = widget.initialValue;
 
     super.initState();
@@ -114,7 +116,7 @@ class _AppTextFieldState extends State<AppTextField> {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              widget.focusNode.requestFocus();
+              _focusNode.requestFocus();
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +147,7 @@ class _AppTextFieldState extends State<AppTextField> {
 
           // Focus
           autofocus: widget.autoFocus,
-          focusNode: widget.focusNode,
+          focusNode: _focusNode,
 
           enabled: widget.enabled,
           onSubmitted: widget.onDone,

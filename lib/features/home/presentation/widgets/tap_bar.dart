@@ -90,7 +90,7 @@ class TabBarBtn extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 7),
+          padding: const EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 6),
           child: Align(
             alignment: alignment,
             child: Column(
