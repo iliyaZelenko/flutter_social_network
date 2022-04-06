@@ -6,7 +6,7 @@ import 'package:worker_manager/worker_manager.dart';
 class GetPostUseCase {
   final PostRepository _postRepo;
 
-  GetPostUseCase(PostRepository this._postRepo);
+  GetPostUseCase(this._postRepo);
 
   Cancelable<PostScreenEntity> execute(PostId id) {
     return _postRepo.get(id);

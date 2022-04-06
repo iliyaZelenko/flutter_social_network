@@ -7,6 +7,9 @@ import 'package:rate_club/features/auth/presentation/sign_in_screen.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/home/presentation/home_screen.dart';
+import 'package:rate_club/features/other_profile/domain/use_cases/get_other_profile_use_case.dart';
+import 'package:rate_club/features/other_profile/presentation/other_profile_presenter.dart';
+import 'package:rate_club/features/other_profile/presentation/other_profile_screen.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
 import 'package:rate_club/features/post/presentation/post_screen.dart';
@@ -16,9 +19,10 @@ mixin AppRoutes {
   static const home = 'home';
   static const auth = 'auth';
   static const post = 'post';
+  static const otherProfile = 'other-profile';
 }
 
-// TODO Ilya: фича сама добавляет свои роуты
+// TODO Ilya: фича сама регистрирует свои роуты
 Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
   return {
     AppRoutes.home: (_) => Provider<HomePresenter>(
@@ -39,6 +43,15 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
           ),
           create: (_) => PostPresenter(
             getPostUseCase: injector.get<GetPostUseCase>(),
+          ),
+        ),
+    AppRoutes.otherProfile: (context) => Provider<OtherProfilePresenter>(
+          child: OtherProfileScreen(
+            username: ModalRoute.of(context)?.settings.arguments as String,
+            mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
+          ),
+          create: (_) => OtherProfilePresenter(
+            getOtherProfileUseCase: injector.get<GetOtherProfileUseCase>(),
           ),
         ),
   };

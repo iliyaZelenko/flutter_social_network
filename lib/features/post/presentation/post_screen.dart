@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/feed/presentation/widgets/post_card/post_card_footer.dart';
-import 'package:rate_club/features/home/presentation/widgets/header.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_screen_content.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_screen_header.dart';
 import 'package:rate_club/rate_club.dart';
@@ -14,6 +13,7 @@ import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
+import 'package:rate_club/resources/header.dart';
 
 import 'post_presenter.dart';
 

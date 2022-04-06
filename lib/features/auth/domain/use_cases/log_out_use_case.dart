@@ -3,9 +3,9 @@ import '../repositories/auth_repository.dart';
 class LogOutUseCase {
   final AuthRepository _authRepo;
 
-  LogOutUseCase (AuthRepository this._authRepo);
+  LogOutUseCase(this._authRepo);
 
-  void execute () {
+  void execute() {
     _authRepo.logOut();
   }
 }

@@ -11,6 +11,7 @@ import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/payments/domain/entities/currency_entity.dart';
 import 'package:rate_club/features/payments/domain/value_objects/currency_id.dart';
 import 'package:rate_club/features/payments/domain/value_objects/money.dart';
+import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart';
 import 'package:rate_club/features/subscriptions/domain/entities/subscription_plan.dart';
 import 'package:rate_club/features/subscriptions/domain/value_objects/subscription_plan_id.dart';
 import 'package:rate_club/rate_club.dart';
@@ -32,7 +33,6 @@ class FeedRepositoryImpl implements FeedRepository {
         return FeedResponse(
           next: response.body['next'] as String?,
           results: List<Map<String, dynamic>>.from(response.body['results'] as Iterable<dynamic>)
-              // .where((element) => element['article']['content_type'] == 'article')
               .map(_fromPostDtoToPostEntity)
               .toList(),
         );
@@ -44,7 +44,7 @@ class FeedRepositoryImpl implements FeedRepository {
     final creator = dto['creator'];
     final article = dto['article'];
     final creatorEntity = PostCreatorEntity(
-      id: creator['pid'],
+      id: ProfileId(creator['pid']),
       username: creator['username'] ?? 'nousername',
       avatar: 'https://' + (creator['avatar']?['default']?['url'] ?? 'i.imgur.com/QHyTGKE.png'),
       firstName: creator['first_name'] ?? 'no first name',

@@ -2,15 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
+import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 
 class PostCardHeader extends StatelessWidget {
   const PostCardHeader({
     Key? key,
   }) : super(key: key);
+
+  void _goToProfile(BuildContext context, PostCreatorEntity profile) {
+    Navigator.of(context).pushNamed(AppRoutes.otherProfile, arguments: profile.username);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,38 +28,50 @@ class PostCardHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              SizedBox(
-                width: 35,
-                height: 35,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(post.creator.avatar),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  _goToProfile(context, post.creator);
+                },
+                child: SizedBox(
+                  width: 35,
+                  height: 35,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(post.creator.avatar),
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        post.creator.username,
-                        style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
-                      ),
-                      if (post.creator.isVerified) ...const [
-                        SizedBox(width: 5),
-                        Icon(
-                          AppIcons.check_circle_fill,
-                          size: 17,
-                        )
-                      ]
-                    ],
-                  ),
-                  Text(
-                    'недавно',
-                    style: AppTextStyles.medium12.apply(color: AppColors.black40),
-                  ),
-                ],
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  _goToProfile(context, post.creator);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          post.creator.username,
+                          style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                        ),
+                        if (post.creator.isVerified) ...const [
+                          SizedBox(width: 5),
+                          Icon(
+                            AppIcons.check_circle_fill,
+                            size: 17,
+                          )
+                        ]
+                      ],
+                    ),
+                    Text(
+                      'недавно',
+                      style: AppTextStyles.medium12.apply(color: AppColors.black40),
+                    ),
+                  ],
+                ),
               ),
               const Spacer(),
 

@@ -1,8 +1,8 @@
 import 'package:rate_club/features/profile/domain/entities/profile_entity.dart';
 import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart';
 
-class PostCreatorEntity extends ProfileEntity {
-  const PostCreatorEntity({
+class OtherProfileEntity extends ProfileEntity {
+  const OtherProfileEntity({
     required ProfileId id,
     required String username,
     required String firstName,

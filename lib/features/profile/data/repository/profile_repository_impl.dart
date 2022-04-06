@@ -1,6 +1,7 @@
 import 'package:rate_club/features/profile/data/models/profile_models.dart';
 import 'package:rate_club/features/profile/domain/entities/profile_entity.dart';
 import 'package:rate_club/features/profile/domain/repositories/profile_repository.dart';
+import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:worker_manager/worker_manager.dart';
 
@@ -24,7 +25,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   ProfileEntity _fromProfileDtoToProfile(ProfileDto model) {
     return ProfileEntity(
-      id: model.id,
+      id: ProfileId(model.id),
       username: model.username!,
       avatar: model.avatar?.defaultType,
       firstName: model.firstName!,

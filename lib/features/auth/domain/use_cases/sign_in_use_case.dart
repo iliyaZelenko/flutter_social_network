@@ -5,9 +5,9 @@ import '../repositories/auth_repository.dart';
 class SignInUseCase {
   final AuthRepository _authRepo;
 
-  SignInUseCase (AuthRepository this._authRepo);
+  SignInUseCase(this._authRepo);
 
-  Cancelable<void> execute ({
+  Cancelable<void> execute({
     required String username,
     required String password,
   }) {

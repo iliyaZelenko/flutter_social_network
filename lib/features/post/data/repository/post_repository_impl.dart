@@ -5,6 +5,7 @@ import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart'
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/post/domain/entities/post_screen_entity.dart';
 import 'package:rate_club/features/post/domain/repositories/post_repository.dart';
+import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart';
 import 'package:rate_club/rate_club.dart';
 
 class PostRepositoryImpl implements PostRepository {
@@ -42,7 +43,7 @@ class PostRepositoryImpl implements PostRepository {
         marks: dto['marks'] ?? 0,
       ),
       creator: PostCreatorEntity(
-        id: creator['pid'],
+        id: ProfileId(creator['pid']),
         username: creator['username'] ?? 'nousername',
         avatar: 'https://' + (creator['avatar']?['default']?['url'] ?? 'i.imgur.com/QHyTGKE.png'),
         firstName: creator['first_name'] ?? 'no first name',
