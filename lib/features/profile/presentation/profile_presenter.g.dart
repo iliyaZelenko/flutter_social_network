@@ -12,13 +12,13 @@ mixin _$ProfilePresenter on ProfilePresenterBase, Store {
   final _$profileAtom = Atom(name: 'ProfilePresenterBase.profile');
 
   @override
-  Profile? get profile {
+  ProfileEntity? get profile {
     _$profileAtom.reportRead();
     return super.profile;
   }
 
   @override
-  set profile(Profile? value) {
+  set profile(ProfileEntity? value) {
     _$profileAtom.reportWrite(value, super.profile, () {
       super.profile = value;
     });

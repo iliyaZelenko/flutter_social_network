@@ -1,5 +1,5 @@
 import 'package:rate_club/features/profile/data/models/profile_models.dart';
-import 'package:rate_club/features/profile/domain/entities/profile.dart';
+import 'package:rate_club/features/profile/domain/entities/profile_entity.dart';
 import 'package:rate_club/features/profile/domain/repositories/profile_repository.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:worker_manager/worker_manager.dart';
@@ -10,7 +10,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl(this._http);
 
   @override
-  Cancelable<Profile> fetch() {
+  Cancelable<ProfileEntity> fetch() {
     return _http.get(path: 'profile/', handleOnUnauthorized: false).next(
       onValue: (response) {
         final resDto = ProfileResponseDto.fromJson(response.body);
@@ -22,8 +22,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     );
   }
 
-  Profile _fromProfileDtoToProfile(ProfileDto model) {
-    return Profile(
+  ProfileEntity _fromProfileDtoToProfile(ProfileDto model) {
+    return ProfileEntity(
       id: model.id,
       username: model.username!,
       avatar: model.avatar?.defaultType,

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/resources/app_colors.dart';
 
 import 'post_card_content.dart';
@@ -32,10 +33,10 @@ class PostCard extends StatelessWidget {
           create: (_) => post,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              PostCardHeader(),
-              PostCardContent(),
-              PostCardFooter(),
+            children: [
+              const PostCardHeader(),
+              const PostCardContent(),
+              if (post is PostOpenByPlanEntity) const PostCardFooter(),
             ],
           ),
         ),

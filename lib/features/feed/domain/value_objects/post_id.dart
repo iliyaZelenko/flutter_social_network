@@ -1,16 +1,5 @@
-class PostId {
-  final int _value;
+import 'package:rate_club/resources/domain_common/abstract_id.dart';
 
-  PostId(int value) : _value = value;
-
-  @override
-  int get hashCode => _value.hashCode;
-
-  @override
-  bool operator ==(covariant PostId other) => other._value == _value;
-
-  @override
-  String toString() {
-    return _value.toString();
-  }
+class PostId extends AbstractId<int> {
+  PostId(int value) : super(value);
 }

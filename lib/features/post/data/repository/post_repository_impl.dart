@@ -1,5 +1,6 @@
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
+import 'package:rate_club/features/feed/domain/value_objects/media_id.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/post/domain/entities/post_screen_entity.dart';
@@ -51,7 +52,7 @@ class PostRepositoryImpl implements PostRepository {
       media: (dto['media'] as List<dynamic>)
           .cast<Map<String, dynamic>>()
           .map((e) => PostMediaEntity(
-                id: e['id'],
+                id: MediaId(e['id']),
                 url: 'https://' + e['url'],
               ))
           .toList(),

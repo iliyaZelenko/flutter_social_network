@@ -1,10 +1,10 @@
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
-import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 
-class PostScreenEntity extends PostEntity {
+class PostScreenEntity extends PostOpenByPlanEntity {
   PostScreenEntity({
     required PostId id,
     required String content,

@@ -1,23 +1,14 @@
-import '../value_objects/post_counters.dart';
-import '../value_objects/post_id.dart';
-import 'post_creator_entity.dart';
-import 'post_media_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 
-class PostEntity {
+import '../value_objects/post_id.dart';
+
+abstract class PostEntity {
   final PostId id;
-  final String content;
-  final String? title;
-  final PostCounters counters;
   final PostCreatorEntity creator;
-  final List<PostMediaEntity> media;
 
   PostEntity({
     required this.id,
-    required this.content,
-    required this.title,
-    required this.counters,
     required this.creator,
-    required this.media,
   });
 
   @override

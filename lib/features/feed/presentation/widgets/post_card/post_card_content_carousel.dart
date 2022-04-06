@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/delays.dart';
 
 class PostCardContentCarousel extends StatefulWidget {
-  final PostEntity post;
+  final PostOpenByPlanEntity post;
 
   const PostCardContentCarousel({
     Key? key,

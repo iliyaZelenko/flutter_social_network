@@ -1,4 +1,4 @@
-import 'package:rate_club/features/profile/domain/entities/profile.dart';
+import 'package:rate_club/features/profile/domain/entities/profile_entity.dart';
 import 'package:rate_club/features/profile/domain/repositories/profile_repository.dart';
 import 'package:worker_manager/worker_manager.dart';
 
@@ -7,7 +7,7 @@ class GetProfileUseCase {
 
   GetProfileUseCase(ProfileRepository this._profileRepo);
 
-  Cancelable<Profile> execute() {
+  Cancelable<ProfileEntity> execute() {
     return _profileRepo.fetch();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_like.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
@@ -22,7 +23,7 @@ class _PostCardFooterState extends State<PostCardFooter> {
 
   @override
   Widget build(BuildContext context) {
-    final post = Provider.of<PostEntity>(context);
+    final post = Provider.of<PostEntity>(context) as PostOpenByPlanEntity;
 
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 12, top: 5, bottom: 20),

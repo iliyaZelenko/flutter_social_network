@@ -34,9 +34,20 @@ class PostCardHeader extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    post.creator.username,
-                    style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                  Row(
+                    children: [
+                      Text(
+                        post.creator.username,
+                        style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                      ),
+                      if (post.creator.isVerified) ...const [
+                        SizedBox(width: 5),
+                        Icon(
+                          AppIcons.check_circle_fill,
+                          size: 17,
+                        )
+                      ]
+                    ],
                   ),
                   Text(
                     'недавно',
