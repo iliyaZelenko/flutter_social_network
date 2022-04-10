@@ -21,12 +21,8 @@ abstract class ProfilePresenterBase with Store {
   Future<void> fetch() async {
     try {
       profile = await _getProfileUseCase.execute();
-    } catch (e) {
-      if (e is HttpUnauthorizedException) {
-        profile = null;
-      } else {
-        rethrow;
-      }
+    } on AppHttpException401 {
+      profile = null;
     }
   }
 }

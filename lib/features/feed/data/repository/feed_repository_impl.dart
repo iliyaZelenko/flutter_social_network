@@ -24,15 +24,15 @@ class FeedRepositoryImpl implements FeedRepository {
   @override
   Cancelable<FeedResponse> get({String? next}) {
     return _http
-        .get(
+        .get<Map<String, dynamic>>(
       host: next == null ? null : '',
       path: next ?? 'wall/',
     )
         .next(
       onValue: (response) {
         return FeedResponse(
-          next: response.body['next'] as String?,
-          results: List<Map<String, dynamic>>.from(response.body['results'] as Iterable<dynamic>)
+          next: response.data!['next'] as String?,
+          results: List<Map<String, dynamic>>.from(response.data!['results'] as Iterable<dynamic>)
               .map(_fromPostDtoToPostEntity)
               .toList(),
         );
@@ -85,7 +85,8 @@ class FeedRepositoryImpl implements FeedRepository {
           id: SubscriptionPlanId(article['recommend'] as int),
           title: article['plan_details']['title'] as String,
           cost: Money(
-            amountInCents: (article['plan_details']['cost'] as int) * 100,
+            // TODO Ilya: remove toInt after backend fix
+            amountInCents: (article['plan_details']['cost'] as double).toInt() * 100,
             currency: CurrencyEntity(id: CurrencyId(article['plan_details']['currency'] as int)),
           ),
         ),

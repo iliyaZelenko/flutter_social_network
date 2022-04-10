@@ -12,9 +12,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Cancelable<ProfileEntity> fetch() {
-    return _http.get(path: 'profile/', handleOnUnauthorized: false).next(
+    return _http.get<Map<String, dynamic>>(path: 'profile/', handleOnUnauthorized: false).next(
       onValue: (response) {
-        final resDto = ProfileResponseDto.fromJson(response.body);
+        final resDto = ProfileResponseDto.fromJson(response.data!);
         // Берётся первый дефолтный профиль. Обсудили что пока делаем так. Но в идеале как я вижу, нужно брать профиль под которым логинишься
         final defaultProfileDto = resDto.results.firstWhere((profile) => profile.isDefault);
 

@@ -12,9 +12,9 @@ class OtherProfileRepositoryImpl implements OtherProfileRepository {
 
   @override
   Cancelable<OtherProfileEntity> fetch(String username) {
-    return _http.get(path: 'profile/$username').next(
+    return _http.get<Map<String, dynamic>>(path: 'profile/$username').next(
       onValue: (response) {
-        return _fromProfileDtoToProfile(OtherProfileDto.fromJson(response.body));
+        return _fromProfileDtoToProfile(OtherProfileDto.fromJson(response.data!));
       },
     );
   }

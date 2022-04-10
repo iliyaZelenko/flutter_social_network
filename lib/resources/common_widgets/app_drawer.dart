@@ -37,6 +37,10 @@ class _AppDrawerState extends State<AppDrawer> {
     _drawerKey.currentState?.open();
   }
 
+  void _close() {
+    _drawerKey.currentState?.close();
+  }
+
   @override
   void initState() {
     widget.controller.open = _open;
@@ -57,33 +61,39 @@ class _AppDrawerState extends State<AppDrawer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
+              GestureDetector(
+                onTap: () {
+                  _close();
+                  widget.mainNavigatorKey.currentState!.pushNamed(AppRoutes.myProfile);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          profilePresenter.profile!.username,
-                          style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
-                        ),
-                        Text(
-                          profilePresenter.profile!.fullName,
-                          style: AppTextStyles.regular12.apply(color: AppColors.black60),
-                        ),
-                      ],
-                    )
-                  ],
+                      const SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            profilePresenter.profile!.username,
+                            style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                          ),
+                          Text(
+                            profilePresenter.profile!.fullName,
+                            style: AppTextStyles.regular12.apply(color: AppColors.black60),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               const Padding(

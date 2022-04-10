@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-import 'package:rate_club/features/other_profile/presentation/other_profile_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
@@ -11,28 +10,27 @@ import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 import 'package:rate_club/resources/header.dart';
 
-class OtherProfileScreen extends StatefulWidget {
-  final String _username;
+import 'abstract_profile_screen_presenter.dart';
+
+class ProfileScreen extends StatefulWidget {
   final MainNavigatorKeyType _mainNavigatorKey;
 
-  const OtherProfileScreen({
+  const ProfileScreen({
     Key? key,
-    required String username,
     required MainNavigatorKeyType mainNavigatorKey,
-  })  : _username = username,
-        _mainNavigatorKey = mainNavigatorKey,
+  })  : _mainNavigatorKey = mainNavigatorKey,
         super(key: key);
 
   @override
-  _OtherProfileScreenState createState() => _OtherProfileScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _OtherProfileScreenState extends State<OtherProfileScreen> with AfterLayoutMixin {
-  OtherProfilePresenter get presenter => Provider.of<OtherProfilePresenter>(context, listen: false);
+class _ProfileScreenState extends State<ProfileScreen> with AfterLayoutMixin {
+  AbstractProfileScreenPresenter get presenter => Provider.of<AbstractProfileScreenPresenter>(context, listen: false);
 
   @override
   void afterFirstLayout(BuildContext context) {
-    presenter.fetch(widget._username);
+    presenter.fetch();
   }
 
   @override
@@ -54,9 +52,14 @@ class _OtherProfileScreenState extends State<OtherProfileScreen> with AfterLayou
                       const Icon(AppIcons.arrow_left_line, color: AppColors.black100),
                       const SizedBox(width: 15),
                       if (presenter.profile != null) ...[
-                        Text(
-                          presenter.profile!.fullName,
-                          style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 150),
+                          child: Text(
+                            presenter.profile!.fullName,
+                            style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
                         ),
                         if (presenter.profile!.isVerified) ...const [
                           SizedBox(width: 5),
@@ -94,7 +97,7 @@ class _ProfileBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final presenter = Provider.of<OtherProfilePresenter>(context);
+    final presenter = Provider.of<AbstractProfileScreenPresenter>(context);
 
     return Observer(
       builder: (_) {

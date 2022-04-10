@@ -16,12 +16,12 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Cancelable<PostScreenEntity> get(PostId id) {
     return _http
-        .get(
+        .get<Map<String, dynamic>>(
       path: '/article/$id',
     )
         .next(
       onValue: (response) {
-        return _fromPostDtoToPostEntity(response.body);
+        return _fromPostDtoToPostEntity(response.data!);
       },
     );
   }

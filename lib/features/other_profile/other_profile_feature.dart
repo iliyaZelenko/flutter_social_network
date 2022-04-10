@@ -1,5 +1,4 @@
 import 'package:injector/injector.dart';
-import 'package:rate_club/features/other_profile/presentation/other_profile_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'data/repository/other_profile_repository_impl.dart';
@@ -27,10 +26,6 @@ class OtherProfileFeature extends FeatureInterface {
       )
       ..map<GetOtherProfileUseCase>(
         (i) => getOtherProfileUseCase,
-        isSingleton: true,
-      )
-      ..map<OtherProfilePresenter>(
-        (i) => OtherProfilePresenter(getOtherProfileUseCase: getOtherProfileUseCase),
         isSingleton: true,
       );
   }

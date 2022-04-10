@@ -1,0 +1,41 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'my_profile_screen_presenter.dart';
+
+// **************************************************************************
+// StoreGenerator
+// **************************************************************************
+
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+
+mixin _$MyProfileScreenPresenter on MyProfileScreenPresenterBase, Store {
+  Computed<ProfileEntity>? _$profileComputed;
+
+  @override
+  ProfileEntity get profile =>
+      (_$profileComputed ??= Computed<ProfileEntity>(() => super.profile,
+              name: 'MyProfileScreenPresenterBase.profile'))
+          .value;
+
+  final _$fetchAsyncAction = AsyncAction('MyProfileScreenPresenterBase.fetch');
+
+  @override
+  Future<void> fetch() {
+    return _$fetchAsyncAction.run(() => super.fetch());
+  }
+
+  final _$refreshAsyncAction =
+      AsyncAction('MyProfileScreenPresenterBase.refresh');
+
+  @override
+  Future<void> refresh() {
+    return _$refreshAsyncAction.run(() => super.refresh());
+  }
+
+  @override
+  String toString() {
+    return '''
+profile: ${profile}
+    ''';
+  }
+}

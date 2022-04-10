@@ -13,15 +13,20 @@ class HttpFeature extends FeatureInterface {
   Future<void> execute() async {
     final reg = _injector.get<EnvRegistry>();
     final isDebug = reg.get<bool>(EnvVariables.debug);
-    final http = AppHttpClient(
-      log: isDebug,
-      fakeIsolate: isDebug,
+    final http = AppDioHttpClient(
       // TODO Ilya: take from getter to depend dynamically
       defaultHost: reg.get<String>(EnvVariables.APIBaseURL),
     );
 
+    // AppHttpClient(
+    //   log: isDebug,
+    //   fakeIsolate: isDebug,
+    //   // TODO Ilya: take from getter to depend dynamically
+    //   defaultHost: reg.get<String>(EnvVariables.APIBaseURL),
+    // );
+
     await http.init();
 
-    _injector..map<AppHttpClientInterface>((i) => http, isSingleton: true);
+    _injector.map<AppHttpClientInterface>((i) => http, isSingleton: true);
   }
 }
