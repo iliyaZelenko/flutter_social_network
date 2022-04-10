@@ -1,9 +1,9 @@
 import 'package:mobx/mobx.dart';
-import 'package:rate_club/features/profile/domain/entities/profile_entity.dart';
+import 'package:rate_club/features/profile_screen/domain/entities/other_profile_entity.dart';
 
 abstract class AbstractProfileScreenPresenter with Store {
   @computed
-  ProfileEntity? get profile;
+  ProfileScreenEntity? get profile;
 
   // Profile fetch/refresh status
   bool get loading;

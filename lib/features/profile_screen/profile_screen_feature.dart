@@ -1,14 +1,14 @@
 import 'package:injector/injector.dart';
 import 'package:rate_club/rate_club.dart';
 
-import 'data/repository/other_profile_repository_impl.dart';
-import 'domain/use_cases/get_other_profile_use_case.dart';
+import 'data/repository/profile_screen_repository_impl.dart';
+import 'domain/use_cases/get_profile_screen_use_case.dart';
 
-class OtherProfileFeature extends FeatureInterface {
+class ProfileScreenFeature extends FeatureInterface {
   late final InjectorInterface _injector;
   late final AppHttpClientInterface _http;
 
-  OtherProfileFeature({
+  ProfileScreenFeature({
     required InjectorInterface injector,
     required AppHttpClientInterface http,
   })  : _injector = injector,
@@ -16,16 +16,16 @@ class OtherProfileFeature extends FeatureInterface {
 
   @override
   void execute() {
-    final repo = OtherProfileRepositoryImpl(_http);
-    final getOtherProfileUseCase = GetOtherProfileUseCase(repo);
+    final repo = ProfileScreenRepositoryImpl(_http);
+    final getProfileScreenUseCase = GetProfileScreenUseCase(repo);
 
     _injector
-      ..map<OtherProfileRepositoryImpl>(
+      ..map<ProfileScreenRepositoryImpl>(
         (i) => repo,
         isSingleton: true,
       )
-      ..map<GetOtherProfileUseCase>(
-        (i) => getOtherProfileUseCase,
+      ..map<GetProfileScreenUseCase>(
+        (i) => getProfileScreenUseCase,
         isSingleton: true,
       );
   }

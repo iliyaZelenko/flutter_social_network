@@ -7,15 +7,15 @@ import 'package:rate_club/features/auth/presentation/sign_in_screen.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/home/presentation/home_screen.dart';
-import 'package:rate_club/features/other_profile/domain/use_cases/get_other_profile_use_case.dart';
-import 'package:rate_club/features/other_profile/presentation/other_profile_screen_presenter.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
 import 'package:rate_club/features/post/presentation/post_screen.dart';
-import 'package:rate_club/features/profile/presentation/abstract_profile_screen_presenter.dart';
-import 'package:rate_club/features/profile/presentation/my_profile_screen_presenter.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
-import 'package:rate_club/features/profile/presentation/profile_screen.dart';
+import 'package:rate_club/features/profile_screen/domain/use_cases/get_profile_screen_use_case.dart';
+import 'package:rate_club/features/profile_screen/presentation/abstract_profile_screen_presenter.dart';
+import 'package:rate_club/features/profile_screen/presentation/my_profile/my_profile_screen_presenter.dart';
+import 'package:rate_club/features/profile_screen/presentation/other_profile/other_profile_screen_presenter.dart';
+import 'package:rate_club/features/profile_screen/presentation/profile_screen.dart';
 import 'package:rate_club/rate_club.dart';
 
 mixin AppRoutes {
@@ -66,16 +66,19 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
         ),
         create: (_) => OtherProfileScreenPresenter(
           username: username,
-          getOtherProfileUseCase: injector.get<GetOtherProfileUseCase>(),
+          getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
         ),
       );
     },
     AppRoutes.myProfile: (context) => Provider<AbstractProfileScreenPresenter>(
+          key: UniqueKey(),
           child: ProfileScreen(
+            key: UniqueKey(),
             mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
           ),
           create: (_) => MyProfileScreenPresenter(
             profilePresenter: injector.get<ProfilePresenter>(),
+            getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
           ),
         ),
   };

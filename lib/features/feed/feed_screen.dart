@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
+import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
@@ -58,6 +59,36 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
                   Text(
                     'Лента',
                     style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                  ),
+                  const Spacer(),
+                  const Icon(
+                    AppIcons.search_line,
+                    color: AppColors.black60,
+                    size: 30,
+                  ),
+                  const SizedBox(width: 20),
+                  // Bell with indicator
+                  Stack(
+                    children: const [
+                      Positioned(
+                        right: 1,
+                        child: SizedBox(
+                          width: 8,
+                          height: 8,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: AppColors.red100,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        AppIcons.notification_line,
+                        color: AppColors.black60,
+                        size: 30,
+                      ),
+                    ],
                   ),
                 ],
               ),

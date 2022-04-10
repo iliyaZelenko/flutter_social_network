@@ -10,9 +10,9 @@ abstract class TokensStorage {
 
   factory TokensStorage.test() = _TokensTestStorage;
 
-  String get token;
+  String? get token;
 
-  String get refreshToken;
+  String? get refreshToken;
 
   Future<void> init();
 
@@ -22,16 +22,16 @@ abstract class TokensStorage {
 }
 
 class _TokensStorageImpl implements TokensStorage {
-  late SharedPreferences _storage;
+  late final SharedPreferences _storage;
 
   String? _token;
   String? _refreshToken;
 
   @override
-  String get token => _token ?? '';
+  String? get token => _token;
 
   @override
-  String get refreshToken => _refreshToken ?? '';
+  String? get refreshToken => _refreshToken;
 
   @override
   Future<void> init() async {
@@ -63,22 +63,27 @@ class _TokensStorageImpl implements TokensStorage {
 
 class _TokensTestStorage implements TokensStorage {
   @override
-  String token = '';
+  String? token;
+
   @override
-  String refreshToken = '';
+  String? refreshToken;
 
   @override
   Future<void> init() async {}
 
   @override
   Future<void> clear() async {
-    token = '';
-    refreshToken = '';
+    token = null;
+    refreshToken = null;
   }
 
   @override
   Future<void> save(String? token, String? refreshToken) async {
-    this.token = token ?? '';
-    this.refreshToken = refreshToken ?? '';
+    if (token != null) {
+      this.token = token;
+    }
+    if (refreshToken != null) {
+      this.refreshToken = refreshToken;
+    }
   }
 }

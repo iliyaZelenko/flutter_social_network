@@ -9,27 +9,27 @@ part of 'other_profile_screen_presenter.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
-  Computed<OtherProfileEntity?>? _$profileComputed;
+  Computed<ProfileScreenEntity?>? _$profileComputed;
 
   @override
-  OtherProfileEntity? get profile =>
-      (_$profileComputed ??= Computed<OtherProfileEntity?>(() => super.profile,
+  ProfileScreenEntity? get profile =>
+      (_$profileComputed ??= Computed<ProfileScreenEntity?>(() => super.profile,
               name: 'OtherProfileScreenPresenterBase.profile'))
           .value;
 
   final _$_fetchedProfileAtom =
       Atom(name: 'OtherProfileScreenPresenterBase._fetchedProfile');
 
-  OtherProfileEntity? get fetchedProfile {
+  ProfileScreenEntity? get fetchedProfile {
     _$_fetchedProfileAtom.reportRead();
     return super._fetchedProfile;
   }
 
   @override
-  OtherProfileEntity? get _fetchedProfile => fetchedProfile;
+  ProfileScreenEntity? get _fetchedProfile => fetchedProfile;
 
   @override
-  set _fetchedProfile(OtherProfileEntity? value) {
+  set _fetchedProfile(ProfileScreenEntity? value) {
     _$_fetchedProfileAtom.reportWrite(value, super._fetchedProfile, () {
       super._fetchedProfile = value;
     });

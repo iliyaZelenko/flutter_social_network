@@ -1,11 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rate_club/features/profile/data/models/profile_models.dart';
 
-part 'other_profile_models.g.dart';
+part 'profile_screen_models.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
-class OtherProfileDto extends ProfileDto {
-  OtherProfileDto(
+class ProfileScreenDto extends ProfileDto {
+  final String? about;
+
+  ProfileScreenDto(
     int id,
     String? username,
     String? firstName,
@@ -13,6 +15,7 @@ class OtherProfileDto extends ProfileDto {
     bool? isVerified,
     ProfileAvatarDto? avatar,
     bool isDefault,
+    this.about,
   ) : super(
           id,
           username,
@@ -23,5 +26,5 @@ class OtherProfileDto extends ProfileDto {
           isDefault,
         );
 
-  factory OtherProfileDto.fromJson(Map<String, dynamic> json) => _$OtherProfileDtoFromJson(json);
+  factory ProfileScreenDto.fromJson(Map<String, dynamic> json) => _$ProfileScreenDtoFromJson(json);
 }

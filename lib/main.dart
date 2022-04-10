@@ -14,9 +14,9 @@ import 'package:rate_club/features/env/env_registry.dart';
 import 'package:rate_club/features/env/env_variables.dart';
 import 'package:rate_club/features/feed/feed_feature.dart';
 import 'package:rate_club/features/http/http_feature.dart';
-import 'package:rate_club/features/other_profile/other_profile_feature.dart';
 import 'package:rate_club/features/post/post_feature.dart';
 import 'package:rate_club/features/profile/profile_feature.dart';
+import 'package:rate_club/features/profile_screen/profile_screen_feature.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'features/auth/auth_feature.dart';
@@ -130,7 +130,7 @@ Future<InjectorInterface> _setupEnvironment() async {
   featureInvoker
     ..use(AuthFeature(injector: injector, http: http))
     ..use(ProfileFeature(injector: injector, http: http))
-    ..use(OtherProfileFeature(injector: injector, http: http))
+    ..use(ProfileScreenFeature(injector: injector, http: http))
     ..use(FeedFeature(injector: injector, http: http))
     ..use(PostFeature(injector: injector, http: http));
 

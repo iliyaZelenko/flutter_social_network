@@ -29,6 +29,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
   Future<void> init() async {
     // See https://stackoverflow.com/a/62911616/5286034
     _dio.transformer = FlutterTransformer();
+    await _tokensStorage.init();
   }
 
   Cancelable<Response<T>> _performRequest<T>({
@@ -48,9 +49,11 @@ class AppDioHttpClient implements AppHttpClientInterface {
       final internalHeaders = <String, String>{}
         ..addAll(headers ?? {})
         ..addAll({
-          HttpHeaders.authorizationHeader: 'Bearer ${_tokensStorage.token}',
+          if (_tokensStorage.token != null) HttpHeaders.authorizationHeader: 'Bearer ${_tokensStorage.token}',
           HttpHeaders.contentTypeHeader: ContentType('application', 'json', charset: 'utf-8').toString(),
         });
+
+      print(internalHeaders);
 
       return Cancelable.fromFuture(
         _dio
@@ -126,7 +129,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
   }
 
   @override
-  Cancelable<Response> post({
+  Cancelable<Response<T>> post<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -148,7 +151,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
   }
 
   @override
-  Cancelable<Response> put({
+  Cancelable<Response<T>> put<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -170,7 +173,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
   }
 
   @override
-  Cancelable<Response> delete({
+  Cancelable<Response<T>> delete<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -192,7 +195,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
   }
 
   @override
-  Cancelable<Response> patch({
+  Cancelable<Response<T>> patch<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -211,7 +214,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     );
   }
 
-  Cancelable<Response> filesPost({
+  Cancelable<Response<T>> filesPost<T>({
     String? host,
     String path = '',
     Map<String, String>? headers,
@@ -233,13 +236,15 @@ class AppDioHttpClient implements AppHttpClientInterface {
     );
   }
 
-  Map<String, dynamic>? get authInfo => _tokensStorage.token.isEmpty ? null : JwtDecoder.decode(_tokensStorage.token);
+  Map<String, dynamic>? get authInfo => _tokensStorage.token == null ? null : JwtDecoder.decode(_tokensStorage.token!);
 
   Future<void> clearTokens() => _tokensStorage.clear();
 
   Future<void> _rememberTokens(Response value) async {
     try {
       final data = value.data;
+
+      print(data);
 
       await _tokensStorage.save(
         data[TokensStorageKeys.token],

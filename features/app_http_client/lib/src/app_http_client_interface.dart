@@ -22,7 +22,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  post({
+  Cancelable<Response<T>> post<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -32,7 +32,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  put({
+  Cancelable<Response<T>> put<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -42,7 +42,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  delete({
+  Cancelable<Response<T>> delete<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -52,7 +52,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  patch({
+  Cancelable<Response<T>> patch<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -61,7 +61,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  filesPost({
+  Cancelable<Response<T>> filesPost<T>({
     String? host,
     String path = '',
     Map<String, String>? headers,
