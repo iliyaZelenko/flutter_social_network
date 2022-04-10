@@ -1,6 +1,9 @@
 import 'dart:async';
-import 'package:app_http_client/app_http_client.dart';
 
+import 'package:dio/dio.dart';
+import 'package:worker_manager/worker_manager.dart';
+
+// @throws AppHttpException if http error
 abstract class AppHttpClientInterface {
   String? get tokenStr;
 
@@ -10,9 +13,7 @@ abstract class AppHttpClientInterface {
 
   Future<void> clearTokens();
 
-  Map<String, String> getHeaders();
-
-  Cancelable<Response> get({
+  Cancelable<Response<T>> get<T>({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -21,7 +22,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  Cancelable<Response> post({
+  post({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -31,7 +32,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  Cancelable<Response> put({
+  put({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -41,7 +42,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  Cancelable<Response> delete({
+  delete({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -51,7 +52,7 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  Cancelable<Response> patch({
+  patch({
     String? host,
     String path = '',
     Map<String, String>? query,
@@ -60,14 +61,14 @@ abstract class AppHttpClientInterface {
     bool? fakeIsolate,
   });
 
-  Cancelable<Response> filesPost({
+  filesPost({
     String? host,
     String path = '',
     Map<String, String>? headers,
     Map<String, String>? query,
     bool handleOnUnauthorized = true,
     bool? fakeIsolate,
-    required Iterable<MultipartBundleFile>? files,
+    required files,
     Map<String, String>? fields,
   });
 }
