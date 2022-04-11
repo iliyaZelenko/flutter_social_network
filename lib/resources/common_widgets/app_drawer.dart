@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
+import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
@@ -52,6 +54,7 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     final authPresenter = Provider.of<AuthPresenter>(context);
     final profilePresenter = Provider.of<ProfilePresenter>(context);
+    final homePresenter = Provider.of<HomePresenter>(context);
 
     return DrawerController(
       key: _drawerKey,
@@ -61,6 +64,7 @@ class _AppDrawerState extends State<AppDrawer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Profile info
               GestureDetector(
                 onTap: () {
                   _close();
@@ -68,34 +72,48 @@ class _AppDrawerState extends State<AppDrawer> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
-                        ),
+                  child: Column(children: [
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: AppColors.white60,
                       ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Text(
-                            profilePresenter.profile!.username,
-                            style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                          SizedBox(
+                            width: 55,
+                            height: 55,
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
+                            ),
                           ),
-                          Text(
-                            profilePresenter.profile!.fullName,
-                            style: AppTextStyles.regular12.apply(color: AppColors.black60),
+                          const SizedBox(width: 15),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                profilePresenter.profile!.fullName,
+                                style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                '@${profilePresenter.profile!.username}',
+                                style: AppTextStyles.regular12.apply(color: AppColors.black60),
+                              ),
+                            ],
                           ),
+                          const SizedBox(width: 50),
+                          const Icon(AppIcons.arrow_right_line, color: AppColors.black80),
+                          const SizedBox(width: 5),
                         ],
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                  ]),
                 ),
               ),
+
+              // Divider
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Divider(
@@ -103,40 +121,60 @@ class _AppDrawerState extends State<AppDrawer> {
                   color: AppColors.white40,
                 ),
               ),
+
+              // Menu items
               Expanded(
                 child: ListView(
                   children: [
-                    ListTile(
-                      title: Row(
-                        children: [
-                          const Icon(
-                            AppIcons.home_4_fill,
-                            color: AppColors.purple80,
-                            size: 30,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Лента',
-                            style: AppTextStyles.medium15.apply(color: AppColors.black100),
-                          ),
-                        ],
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      title: Row(
-                        children: const [
-                          Icon(
-                            AppIcons.star_line,
-                            color: AppColors.black60,
-                            size: 30,
-                          ),
-                          SizedBox(width: 10),
-                          Text('Рекомендации', style: AppTextStyles.regular15),
-                        ],
-                      ),
-                      onTap: () {},
-                    ),
+                    Observer(builder: (_) {
+                      final isSelected = homePresenter.tapBarNavigationIndex == 0;
+
+                      return ListTile(
+                        title: Row(
+                          children: [
+                            Icon(
+                              isSelected ? AppIcons.home_4_fill : AppIcons.home_4_line,
+                              color: isSelected ? AppColors.purple100 : AppColors.black60,
+                              size: 30,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'Лента',
+                              style: AppTextStyles.medium15.apply(color: AppColors.black100),
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          _close();
+                          homePresenter.tapBarNavigationIndex = 0;
+                          widget.mainNavigatorKey.currentState!
+                              .popUntil((route) => route.settings.name == AppRoutes.home);
+                        },
+                      );
+                    }),
+                    Observer(builder: (_) {
+                      final isSelected = homePresenter.tapBarNavigationIndex == 2;
+
+                      return ListTile(
+                        title: Row(
+                          children: [
+                            Icon(
+                              isSelected ? AppIcons.user_4_fill : AppIcons.user_4_line,
+                              color: isSelected ? AppColors.purple100 : AppColors.black60,
+                              size: 30,
+                            ),
+                            const SizedBox(width: 10),
+                            Text('Подписки', style: AppTextStyles.regular15.apply(color: AppColors.black100)),
+                          ],
+                        ),
+                        onTap: () {
+                          _close();
+                          homePresenter.tapBarNavigationIndex = 2;
+                          widget.mainNavigatorKey.currentState!
+                              .popUntil((route) => route.settings.name == AppRoutes.home);
+                        },
+                      );
+                    }),
                     ListTile(
                       title: Row(
                         children: const [

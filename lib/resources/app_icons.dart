@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/MyFlutterApp.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -20,7 +20,6 @@ class AppIcons {
 
   static const _kFontFam = 'AppIcons';
   static const String? _kFontPkg = null;
-
   static const IconData arrow_left_line = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData arrow_right_fill = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData arrow_right_line = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -415,8 +414,10 @@ class AppIcons {
   static const IconData asterisk_line = IconData(0xe987, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData at_fill = IconData(0xe988, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData at_line = IconData(0xe989, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData az_sort_ascending_letters_fill = IconData(0xe98a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData az_sort_ascending_letters_line = IconData(0xe98b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData az_sort_ascending_letters_fill =
+      IconData(0xe98a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData az_sort_ascending_letters_line =
+      IconData(0xe98b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData bold_fill = IconData(0xe98c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData bold_line = IconData(0xe98d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData dividing_line_fill = IconData(0xe98e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -485,8 +486,10 @@ class AppIcons {
   static const IconData translate_line = IconData(0xe9cd, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData underline_fill = IconData(0xe9ce, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData underline_line = IconData(0xe9cf, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData za_sort_descending_letters_fill = IconData(0xe9d0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData za_sort_descending_letters_line = IconData(0xe9d1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData za_sort_descending_letters_fill =
+      IconData(0xe9d0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData za_sort_descending_letters_line =
+      IconData(0xe9d1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData align_center_fill = IconData(0xe9d2, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData align_center_line = IconData(0xe9d3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData book_4_fill = IconData(0xe9d4, fontFamily: _kFontFam, fontPackage: _kFontPkg);

@@ -5,7 +5,6 @@ import 'package:rate_club/features/auth/presentation/auth_flow_presenter.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/features/auth/presentation/sign_in_screen.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
-import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/home/presentation/home_screen.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
@@ -29,10 +28,7 @@ mixin AppRoutes {
 // TODO Ilya: фича сама регистрирует свои роуты
 Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
   return {
-    AppRoutes.home: (_) => Provider<HomePresenter>(
-          child: const HomeScreen(),
-          create: (_) => HomePresenter(),
-        ),
+    AppRoutes.home: (_) => const HomeScreen(),
     AppRoutes.auth: (_) => Provider<AuthFlowPresenter>(
           child: const SignInScreen(),
           create: (_) => AuthFlowPresenter(

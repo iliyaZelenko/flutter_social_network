@@ -67,7 +67,7 @@ class ProfileScreenHeader extends StatelessWidget {
                         // Username
                         Row(
                           children: [
-                            Expanded(
+                            Flexible(
                               child: Text(
                                 profile.username,
                                 style: AppTextStyles.semiBold20.apply(color: AppColors.black100),
@@ -90,7 +90,7 @@ class ProfileScreenHeader extends StatelessWidget {
                         if (profile.about != null)
                           Row(
                             children: [
-                              Expanded(
+                              Flexible(
                                 child: Text(
                                   profile.about!,
                                   style: AppTextStyles.medium14.apply(color: AppColors.black60),

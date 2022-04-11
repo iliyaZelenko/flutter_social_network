@@ -24,6 +24,8 @@ import 'package:rate_club/rate_club.dart';
 
 import 'features/auth/auth_feature.dart';
 import 'features/feature_invoker.dart';
+import 'features/home/home_feature.dart';
+import 'features/home/presentation/home_presenter.dart';
 import 'features/profile/presentation/profile_presenter.dart';
 import 'features/tools/plural/plural_interface.dart';
 import 'resources/app_colors.dart';
@@ -50,6 +52,7 @@ Future<void> main() async {
         Provider<InjectorInterface>(create: (_) => injector),
         Provider<PluralInterface>(create: (_) => injector.get<PluralInterface>()),
         Provider<NumberFormatterInterface>(create: (_) => injector.get<NumberFormatterInterface>()),
+        Provider<HomePresenter>(create: (_) => injector.get<HomePresenter>()),
         Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
         Provider<AuthPresenter>(create: (_) => injector.get<AuthPresenter>()),
         Provider<AppDrawerController>(
@@ -137,6 +140,7 @@ Future<InjectorInterface> _setupEnvironment() async {
   featureInvoker
     ..use(ToolsFeature(injector: injector))
     ..use(AuthFeature(injector: injector, http: http))
+    ..use(HomeFeature(injector: injector))
     ..use(ProfileFeature(injector: injector, http: http))
     ..use(ProfileScreenFeature(injector: injector, http: http))
     ..use(FeedFeature(injector: injector, http: http))
