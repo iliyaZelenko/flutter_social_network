@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:rate_club/resources/app_colors.dart';
 
 import 'abstract_app_btn.dart';
 
@@ -11,9 +10,10 @@ class RegularAppBtn extends AbstractAppBtn {
     Widget? child,
     String? text,
     Color? color,
-    Color textColor = AppColors.white80,
+    Color? textColor,
     VoidCallback? onTap,
     bool? loading,
+    bool? outlined,
   }) : super(
           key: key,
           tapped: tapped,
@@ -27,5 +27,6 @@ class RegularAppBtn extends AbstractAppBtn {
           centered: false,
           onTap: onTap,
           loading: loading,
+          outlined: outlined,
         );
 }

@@ -36,7 +36,8 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  final GlobalKey<DrawerControllerState> _drawerKey = GlobalKey<DrawerControllerState>();
+  final int currentYear = DateTime.now().year;
+  late final GlobalKey<DrawerControllerState> _drawerKey = GlobalKey<DrawerControllerState>();
 
   void _open() {
     _drawerKey.currentState?.open();
@@ -149,18 +150,33 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
 
+              Padding(
+                padding: const EdgeInsets.only(left: 23, right: 37),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RegularAppBtn(
+                        text: 'СОЗДАТЬ ПОСТ',
+                        useMinPadding: true,
+                        outlined: true,
+                        onTap: () {
+                          _close();
+                          homePresenter.tapBarNavigationIndex = 1;
+                          widget.mainNavigatorKey.currentState!
+                              .popUntil((route) => route.settings.name == AppRoutes.home);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 37, bottom: 8),
+                  padding: const EdgeInsets.only(left: 10, right: 6, bottom: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Center(
-                        child: RegularAppBtn(
-                          text: 'СОЗДАТЬ ПОСТ',
-                          useMinPadding: true,
-                        ),
-                      ),
                       const SizedBox(height: 8),
                       drawerDivider,
                       // Menu items
@@ -253,7 +269,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                 'Условия использования\n'
                                 'Реклама\n'
                                 'Файлы cookie\n'
-                                '© RateClub, 2022',
+                                '© RateClub, ${currentYear}',
                                 style: AppTextStyles.regular15.apply(color: AppColors.black80),
                               ),
                             ),

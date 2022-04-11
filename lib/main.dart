@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io' as io;
+import 'dart:io';
 
 import 'package:app_http_client/app_http_client.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +23,7 @@ import 'package:rate_club/features/profile_screen/profile_screen_feature.dart';
 import 'package:rate_club/features/tools/number_formatter/number_formatter_interface.dart';
 import 'package:rate_club/features/tools/tools_feature.dart';
 import 'package:rate_club/rate_club.dart';
+import 'package:worker_manager/worker_manager.dart';
 
 import 'features/auth/auth_feature.dart';
 import 'features/feature_invoker.dart';
@@ -34,7 +37,79 @@ import 'resources/app_text_styles.dart';
 import 'resources/common_widgets/app_drawer.dart';
 import 'resources/emojis.dart';
 
+late final _mainNavigatorKey = GlobalKey<NavigatorState>();
+
 Future<void> main() async {
+  await runZonedGuarded(() async {
+    await _runRateClub();
+  }, (error, stackTrace) {
+    if (error is AppHttpException401) {
+      _mainNavigatorKey.currentState?.pushNamedAndRemoveUntil(AppRoutes.auth, (route) => false);
+    } else if (error is! CanceledError) {
+      // TODO Ilya: show notification
+      _showErrorMsg(error);
+
+      if (kDebugMode) {
+        debugPrint('ERROR: $error');
+
+        throw error;
+      } else {
+        // FirebaseCrashlytics.instance.recordError(error, st);
+      }
+    }
+  });
+}
+
+// TODO Ilya: refactor
+void _showErrorMsg(Object error) {
+  late final String msg;
+
+  if (error is SocketException) {
+    msg = 'Нет подключения к интернету';
+  } else if (error is AppHttpException) {
+    if (error.response != null) {
+      final defaultMsg = error.response?.data is String
+          ? (error.response?.data as String).substring(0, 200)
+          : error.response?.data?['message']?.toString();
+
+      if (error.response!.statusCode! >= 500 && error.response!.statusCode! < 600) {
+        // Server error
+        msg = defaultMsg ?? 'Ошибка сервера';
+      } else if (error.response!.statusCode! >= 400 && error.response!.statusCode! < 500) {
+        // Client error
+        msg = defaultMsg ?? 'Ошибка клиента при запросе на сервер';
+      } else {
+        msg = defaultMsg ?? 'HTTP ошибка $error';
+      }
+    } else if (error.error != null) {
+      msg = error.error.toString();
+    }
+  } else if (error is TimeoutException) {
+    msg = 'Сервер не отвечает';
+  } else if (error is Exception) {
+    msg = 'Что-то пошло не так.\n$error';
+  } else {
+    msg = 'Что-то пошло не так.\n$error';
+  }
+
+  if (_mainNavigatorKey.currentContext != null) {
+    showDialog<String>(
+      context: _mainNavigatorKey.currentContext!,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Ошибка'),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () => _mainNavigatorKey.currentState?.pop(),
+            child: const Text('Ок'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+Future<void> _runRateClub() async {
   WidgetsFlutterBinding.ensureInitialized();
   _fixCertificateError();
 
@@ -123,7 +198,7 @@ class _Bouncing extends ScrollBehavior {
 
 Future<InjectorInterface> _setupEnvironment() async {
   final injector = InjectorImpl().map<MainNavigatorKeyType>(
-    (i) => GlobalKey<NavigatorState>(),
+    (i) => _mainNavigatorKey,
     isSingleton: true,
   );
   final featureInvoker = FeatureInvoker()..use(EnvFeature(injector: injector));

@@ -246,8 +246,6 @@ class AppDioHttpClient implements AppHttpClientInterface {
     try {
       final data = value.data;
 
-      print(data);
-
       await _tokensStorage.save(
         data[TokensStorageKeys.token],
         data[TokensStorageKeys.refreshToken],
