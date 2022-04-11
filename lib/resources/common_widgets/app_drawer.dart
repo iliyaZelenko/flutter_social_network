@@ -11,6 +11,9 @@ import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/assets.dart';
+
+import 'buttons/regular_app_btn.dart';
 
 // TODO Ilya: ValueListenable
 class AppDrawerController {
@@ -55,6 +58,15 @@ class _AppDrawerState extends State<AppDrawer> {
     final authPresenter = Provider.of<AuthPresenter>(context);
     final profilePresenter = Provider.of<ProfilePresenter>(context);
     final homePresenter = Provider.of<HomePresenter>(context);
+    const drawerDivider = Center(
+      child: SizedBox(
+        width: 180,
+        child: Divider(
+          thickness: 0.7,
+          color: AppColors.white40,
+        ),
+      ),
+    );
 
     return DrawerController(
       key: _drawerKey,
@@ -64,6 +76,30 @@ class _AppDrawerState extends State<AppDrawer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 21, top: 14),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      Assets.logo,
+                      width: 112,
+                    ),
+                    InkWell(
+                      customBorder: const CircleBorder(),
+                      onTap: () {
+                        _close();
+                      },
+                      child: const Icon(
+                        AppIcons.close_line,
+                        color: AppColors.black100,
+                        size: 30,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
               // Profile info
               GestureDetector(
                 onTap: () {
@@ -71,7 +107,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   widget.mainNavigatorKey.currentState!.pushNamed(AppRoutes.myProfile);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
+                  padding: const EdgeInsets.only(top: 15, left: 15, right: 21, bottom: 20),
                   child: Column(children: [
                     DecoratedBox(
                       decoration: BoxDecoration(
@@ -113,87 +149,119 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
 
-              // Divider
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
-                child: Divider(
-                  thickness: 0.7,
-                  color: AppColors.white40,
-                ),
-              ),
-
-              // Menu items
-              Expanded(
-                child: ListView(
-                  children: [
-                    Observer(builder: (_) {
-                      final isSelected = homePresenter.tapBarNavigationIndex == 0;
-
-                      return ListTile(
-                        title: Row(
-                          children: [
-                            Icon(
-                              isSelected ? AppIcons.home_4_fill : AppIcons.home_4_line,
-                              color: isSelected ? AppColors.purple100 : AppColors.black60,
-                              size: 30,
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Лента',
-                              style: AppTextStyles.medium15.apply(color: AppColors.black100),
-                            ),
-                          ],
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 37, bottom: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Center(
+                        child: RegularAppBtn(
+                          text: 'СОЗДАТЬ ПОСТ',
+                          useMinPadding: true,
                         ),
-                        onTap: () {
-                          _close();
-                          homePresenter.tapBarNavigationIndex = 0;
-                          widget.mainNavigatorKey.currentState!
-                              .popUntil((route) => route.settings.name == AppRoutes.home);
-                        },
-                      );
-                    }),
-                    Observer(builder: (_) {
-                      final isSelected = homePresenter.tapBarNavigationIndex == 2;
-
-                      return ListTile(
-                        title: Row(
-                          children: [
-                            Icon(
-                              isSelected ? AppIcons.user_4_fill : AppIcons.user_4_line,
-                              color: isSelected ? AppColors.purple100 : AppColors.black60,
-                              size: 30,
-                            ),
-                            const SizedBox(width: 10),
-                            Text('Подписки', style: AppTextStyles.regular15.apply(color: AppColors.black100)),
-                          ],
-                        ),
-                        onTap: () {
-                          _close();
-                          homePresenter.tapBarNavigationIndex = 2;
-                          widget.mainNavigatorKey.currentState!
-                              .popUntil((route) => route.settings.name == AppRoutes.home);
-                        },
-                      );
-                    }),
-                    ListTile(
-                      title: Row(
-                        children: const [
-                          Icon(
-                            AppIcons.door_line,
-                            color: AppColors.black60,
-                            size: 30,
-                          ),
-                          SizedBox(width: 10),
-                          Text('Выйти', style: AppTextStyles.regular15),
-                        ],
                       ),
-                      onTap: () {
-                        authPresenter.logOut();
+                      const SizedBox(height: 8),
+                      drawerDivider,
+                      // Menu items
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Observer(builder: (_) {
+                              final isSelected = homePresenter.tapBarNavigationIndex == 0;
 
-                        widget.mainNavigatorKey.currentState!.pushNamedAndRemoveUntil(AppRoutes.auth, (_) => false);
-                      },
-                    ),
-                  ],
+                              return ListTile(
+                                title: Row(
+                                  children: [
+                                    Icon(
+                                      isSelected ? AppIcons.home_4_fill : AppIcons.home_4_line,
+                                      color: isSelected ? AppColors.purple100 : AppColors.black60,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      'Лента',
+                                      style: AppTextStyles.regular15.apply(
+                                        color: isSelected ? AppColors.black100 : AppColors.black80,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  _close();
+                                  homePresenter.tapBarNavigationIndex = 0;
+                                  widget.mainNavigatorKey.currentState!
+                                      .popUntil((route) => route.settings.name == AppRoutes.home);
+                                },
+                              );
+                            }),
+                            Observer(builder: (_) {
+                              final isSelected = homePresenter.tapBarNavigationIndex == 2;
+
+                              return ListTile(
+                                title: Row(
+                                  children: [
+                                    Icon(
+                                      isSelected ? AppIcons.user_4_fill : AppIcons.user_4_line,
+                                      color: isSelected ? AppColors.purple100 : AppColors.black60,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      'Подписки',
+                                      style: AppTextStyles.regular15.apply(
+                                        color: isSelected ? AppColors.black100 : AppColors.black80,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  _close();
+                                  homePresenter.tapBarNavigationIndex = 2;
+                                  widget.mainNavigatorKey.currentState!
+                                      .popUntil((route) => route.settings.name == AppRoutes.home);
+                                },
+                              );
+                            }),
+                            const Spacer(),
+                            drawerDivider,
+                            ListTile(
+                              title: Row(
+                                children: [
+                                  const Icon(
+                                    AppIcons.door_line,
+                                    color: AppColors.black40,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text('Выйти', style: AppTextStyles.regular15.apply(color: AppColors.black80)),
+                                ],
+                              ),
+                              onTap: () {
+                                authPresenter.logOut();
+
+                                widget.mainNavigatorKey.currentState!
+                                    .pushNamedAndRemoveUntil(AppRoutes.auth, (_) => false);
+                              },
+                            ),
+                            drawerDivider,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 22, top: 9, bottom: 9),
+                              child: Text(
+                                'Конфиденциальность\n'
+                                'Условия использования\n'
+                                'Реклама\n'
+                                'Файлы cookie\n'
+                                '© RateClub, 2022',
+                                style: AppTextStyles.regular15.apply(color: AppColors.black80),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
