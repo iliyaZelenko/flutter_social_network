@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:app_http_client/app_http_client.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:injector/injector.dart';
-import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:nil/nil.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
@@ -17,11 +18,14 @@ import 'package:rate_club/features/http/http_feature.dart';
 import 'package:rate_club/features/post/post_feature.dart';
 import 'package:rate_club/features/profile/profile_feature.dart';
 import 'package:rate_club/features/profile_screen/profile_screen_feature.dart';
+import 'package:rate_club/features/tools/number_formatter/number_formatter_interface.dart';
+import 'package:rate_club/features/tools/tools_feature.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'features/auth/auth_feature.dart';
 import 'features/feature_invoker.dart';
 import 'features/profile/presentation/profile_presenter.dart';
+import 'features/tools/plural/plural_interface.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
@@ -30,6 +34,7 @@ import 'resources/emojis.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  _fixCertificateError();
 
   final injector = await _setupEnvironment();
   final navigatorKey = injector.get<MainNavigatorKeyType>();
@@ -43,6 +48,8 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         Provider<InjectorInterface>(create: (_) => injector),
+        Provider<PluralInterface>(create: (_) => injector.get<PluralInterface>()),
+        Provider<NumberFormatterInterface>(create: (_) => injector.get<NumberFormatterInterface>()),
         Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
         Provider<AuthPresenter>(create: (_) => injector.get<AuthPresenter>()),
         Provider<AppDrawerController>(
@@ -128,6 +135,7 @@ Future<InjectorInterface> _setupEnvironment() async {
   final http = injector.get<AppHttpClientInterface>();
 
   featureInvoker
+    ..use(ToolsFeature(injector: injector))
     ..use(AuthFeature(injector: injector, http: http))
     ..use(ProfileFeature(injector: injector, http: http))
     ..use(ProfileScreenFeature(injector: injector, http: http))
@@ -135,4 +143,17 @@ Future<InjectorInterface> _setupEnvironment() async {
     ..use(PostFeature(injector: injector, http: http));
 
   return injector;
+}
+
+void _fixCertificateError() {
+  io.HttpOverrides.global = _MyHttpOverrides();
+}
+
+// TODO Ilya: use real certificate https://stackoverflow.com/a/69481863/5286034
+class _MyHttpOverrides extends io.HttpOverrides {
+  @override
+  io.HttpClient createHttpClient(io.SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (io.X509Certificate cert, String host, int port) => true;
+  }
 }

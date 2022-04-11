@@ -53,8 +53,6 @@ class AppDioHttpClient implements AppHttpClientInterface {
           HttpHeaders.contentTypeHeader: ContentType('application', 'json', charset: 'utf-8').toString(),
         });
 
-      print(internalHeaders);
-
       return Cancelable.fromFuture(
         _dio
             .request<T>(
@@ -67,18 +65,22 @@ class AppDioHttpClient implements AppHttpClientInterface {
           ),
         )
             .catchError((e) {
-          final exception = AppHttpException(
-            requestOptions: e.requestOptions,
-            error: e.error,
-            response: e.response,
-            type: _dioExceptionsAdapter(e.type),
-          );
+          if (e is DioError && e.response != null) {
+            final exception = AppHttpException(
+              requestOptions: e.requestOptions,
+              error: e.error,
+              response: e.response,
+              type: _dioExceptionsAdapter(e.type),
+            );
 
-          if (e.response!.statusCode == 401) {
-            throw AppHttpException401(exception);
+            if (e.response!.statusCode == 401) {
+              throw AppHttpException401(exception);
+            }
+
+            throw exception;
           }
 
-          throw exception;
+          throw e;
         }),
       );
     }

@@ -1,11 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rate_club/features/profile/data/models/profile_models.dart';
 
-part 'profile_screen_models.g.dart';
+part 'profile_screen_dto.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class ProfileScreenDto extends ProfileDto {
   final String? about;
+  final ProfileScreenCountersDto? counters;
 
   ProfileScreenDto(
     int id,
@@ -16,6 +17,7 @@ class ProfileScreenDto extends ProfileDto {
     ProfileAvatarDto? avatar,
     bool isDefault,
     this.about,
+    this.counters,
   ) : super(
           id,
           username,
@@ -27,4 +29,23 @@ class ProfileScreenDto extends ProfileDto {
         );
 
   factory ProfileScreenDto.fromJson(Map<String, dynamic> json) => _$ProfileScreenDtoFromJson(json);
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
+class ProfileScreenCountersDto {
+  final int? articles;
+  final int? comments;
+  // TODO Ilya: бэкенд пока возвращал пустой массив, там это не готово. Поэтому пока заглушка.
+  final int? tokens = 0;
+  final int? contracts;
+  final int? subscribers;
+
+  ProfileScreenCountersDto(
+    this.articles,
+    this.comments,
+    this.contracts,
+    this.subscribers,
+  );
+
+  factory ProfileScreenCountersDto.fromJson(Map<String, dynamic> json) => _$ProfileScreenCountersDtoFromJson(json);
 }

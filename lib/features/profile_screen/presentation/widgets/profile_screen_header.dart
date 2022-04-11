@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/tools/number_formatter/number_formatter_interface.dart';
+import 'package:rate_club/features/tools/plural/plural_interface.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
@@ -8,13 +10,28 @@ import 'package:rate_club/resources/common_widgets/buttons/regular_app_btn.dart'
 
 import '../abstract_profile_screen_presenter.dart';
 
+class _CounterData {
+  final int count;
+  final Set<String> plural;
+
+  _CounterData(this.count, this.plural);
+}
+
 class ProfileScreenHeader extends StatelessWidget {
   const ProfileScreenHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final plural = Provider.of<PluralInterface>(context);
+    final formatter = Provider.of<NumberFormatterInterface>(context);
     final presenter = Provider.of<AbstractProfileScreenPresenter>(context);
     final profile = presenter.profile!;
+    final List<_CounterData> countersToDisplay = [
+      _CounterData(profile.counters.subscribers, {'подписчик', 'подписчика', 'подписчиков'}),
+      _CounterData(profile.counters.articles, {'публикация', 'публикации', 'публикаций'}),
+      _CounterData(profile.counters.contracts, {'подписка', 'подписки', 'подписок'}),
+      _CounterData(profile.counters.tokens, {'токен', 'токена', 'токенов'}),
+    ];
 
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -50,9 +67,13 @@ class ProfileScreenHeader extends StatelessWidget {
                         // Username
                         Row(
                           children: [
-                            Text(
-                              profile.username,
-                              style: AppTextStyles.semiBold20.apply(color: AppColors.black100),
+                            Expanded(
+                              child: Text(
+                                profile.username,
+                                style: AppTextStyles.semiBold20.apply(color: AppColors.black100),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                             ),
                             // Verified
                             if (presenter.profile!.isVerified) ...const [
@@ -94,58 +115,23 @@ class ProfileScreenHeader extends StatelessWidget {
                     spacing: 20,
                     runSpacing: 10,
                     children: [
-                      // TODO Ilya: iterate (counters)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '11,5 млн ',
-                            style: AppTextStyles.medium15.apply(color: AppColors.black100),
-                          ),
-                          Text(
-                            'подписчиков',
-                            style: AppTextStyles.regular15.apply(color: AppColors.black80),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '42 ',
-                            style: AppTextStyles.medium15.apply(color: AppColors.black100),
-                          ),
-                          Text(
-                            'публицкации',
-                            style: AppTextStyles.regular15.apply(color: AppColors.black80),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '105 ',
-                            style: AppTextStyles.medium15.apply(color: AppColors.black100),
-                          ),
-                          Text(
-                            'подписок',
-                            style: AppTextStyles.regular15.apply(color: AppColors.black80),
-                          )
-                        ],
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            '22 ',
-                            style: AppTextStyles.medium15.apply(color: AppColors.black100),
-                          ),
-                          Text(
-                            'токена',
-                            style: AppTextStyles.regular15.apply(color: AppColors.black80),
-                          )
-                        ],
+                      ...countersToDisplay.map(
+                        (counter) => Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              '${formatter.formatWithWord(counter.count)} ',
+                              style: AppTextStyles.medium15.apply(color: AppColors.black100),
+                            ),
+                            Text(
+                              plural.pluralIterable(
+                                counter.count,
+                                counter.plural,
+                              ),
+                              style: AppTextStyles.regular15.apply(color: AppColors.black80),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

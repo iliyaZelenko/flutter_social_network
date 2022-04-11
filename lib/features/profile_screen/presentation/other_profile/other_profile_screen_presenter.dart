@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:rate_club/features/profile_screen/domain/entities/other_profile_entity.dart';
+import 'package:rate_club/features/profile_screen/domain/entities/profile_screen_entity.dart';
 import 'package:rate_club/features/profile_screen/domain/use_cases/get_profile_screen_use_case.dart';
 import 'package:rate_club/features/profile_screen/presentation/abstract_profile_screen_presenter.dart';
 
