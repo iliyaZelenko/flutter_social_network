@@ -15,12 +15,23 @@
 ///
 import 'package:flutter/widgets.dart';
 
+
+
+
+class AppIconsArrow {
+  AppIconsArrow._();
+
+  static const _kFontFam = 'AppIconsArrow';
+  static const String? _kFontPkg = null;
+  static const IconData right_open = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+
+}
+
 class AppIcons {
   AppIcons._();
 
   static const _kFontFam = 'AppIcons';
   static const String? _kFontPkg = null;
-
   static const IconData arrow_left_line = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData arrow_right_fill = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData arrow_right_line = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);

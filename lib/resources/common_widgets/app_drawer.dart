@@ -21,7 +21,8 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  final GlobalKey<DrawerControllerState> _drawerKey = GlobalKey<DrawerControllerState>();
+  final GlobalKey<DrawerControllerState> _drawerKey =
+      GlobalKey<DrawerControllerState>();
 
   void _open() {
     _drawerKey.currentState?.open();
@@ -48,30 +49,66 @@ class _AppDrawerState extends State<AppDrawer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 20),
-                child: Row(
+                padding: const EdgeInsets.only(
+                    top: 15, left: 15, right: 15, bottom: 20),
+                child: Column(
                   children: [
-                    SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
+                    Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: const Color.fromARGB(100, 125, 186, 224),
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 55,
+                            height: 55,
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage: NetworkImage(
+                                  profilePresenter.profile!.avatar),
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                profilePresenter.profile!.username,
+                                style: AppTextStyles.semiBold15
+                                    .apply(color: AppColors.black100),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                profilePresenter.profile!.fullName,
+                                style: AppTextStyles.regular12
+                                    .apply(color: AppColors.black60),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 50),
+                          const Icon(AppIconsArrow.right_open,
+                              color: AppColors.black80),
+                          const SizedBox(width: 5),
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          profilePresenter.profile!.username,
-                          style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
-                        ),
-                        Text(
-                          profilePresenter.profile!.fullName,
-                          style: AppTextStyles.regular12.apply(color: AppColors.black60),
-                        ),
-                      ],
+                    const SizedBox(height: 15),
+                    OutlinedButton(
+                      onPressed: () => {},
+                      child: const Text(
+                        "Создать Пост",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        primary: Colors.blue,
+                        backgroundColor: Colors.white,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50))),
+                      ),
                     )
                   ],
                 ),
@@ -97,7 +134,8 @@ class _AppDrawerState extends State<AppDrawer> {
                           const SizedBox(width: 10),
                           Text(
                             'Лента',
-                            style: AppTextStyles.medium15.apply(color: AppColors.black100),
+                            style: AppTextStyles.medium15
+                                .apply(color: AppColors.black100),
                           ),
                         ],
                       ),

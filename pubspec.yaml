@@ -109,4 +109,7 @@ flutter:
     - family: AppIcons
       fonts:
         - asset: fonts/MingCuteIcons.ttf
+    - family: AppIconsArrow
+      fonts:
+        - asset: fonts/AppIcon.ttf
 
