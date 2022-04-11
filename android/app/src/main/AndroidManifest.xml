@@ -2,8 +2,9 @@
     package="rate.club.rate_club">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="rate_club"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Rate Club"
+        android:icon="@mipmap/ic_launcher"
+    >
         <activity
             android:exported="true"
 

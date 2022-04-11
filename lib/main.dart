@@ -77,7 +77,7 @@ void _showErrorMsg(Object error) {
         msg = defaultMsg ?? 'Ошибка сервера';
       } else if (error.response!.statusCode! >= 400 && error.response!.statusCode! < 500) {
         // Client error
-        msg = defaultMsg ?? 'Ошибка клиента при запросе на сервер';
+        msg = defaultMsg ?? 'Ошибка клиента при запросе на сервер $error';
       } else {
         msg = defaultMsg ?? 'HTTP ошибка $error';
       }
