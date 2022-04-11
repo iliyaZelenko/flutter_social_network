@@ -16,22 +16,43 @@ mixin _$MyProfileScreenPresenter on MyProfileScreenPresenterBase, Store {
       (_$profileComputed ??= Computed<ProfileScreenEntity?>(() => super.profile,
               name: 'MyProfileScreenPresenterBase.profile'))
           .value;
+  Computed<List<PostEntity>?>? _$postsComputed;
+
+  @override
+  List<PostEntity>? get posts =>
+      (_$postsComputed ??= Computed<List<PostEntity>?>(() => super.posts,
+              name: 'MyProfileScreenPresenterBase.posts'))
+          .value;
 
   final _$_fetchedProfileAtom =
       Atom(name: 'MyProfileScreenPresenterBase._fetchedProfile');
 
-  ProfileScreenEntity? get fetchedProfile {
+  @override
+  ProfileScreenEntity? get _fetchedProfile {
     _$_fetchedProfileAtom.reportRead();
     return super._fetchedProfile;
   }
 
   @override
-  ProfileScreenEntity? get _fetchedProfile => fetchedProfile;
-
-  @override
   set _fetchedProfile(ProfileScreenEntity? value) {
     _$_fetchedProfileAtom.reportWrite(value, super._fetchedProfile, () {
       super._fetchedProfile = value;
+    });
+  }
+
+  final _$_feedResponseAtom =
+      Atom(name: 'MyProfileScreenPresenterBase._feedResponse');
+
+  @override
+  FeedResponse? get _feedResponse {
+    _$_feedResponseAtom.reportRead();
+    return super._feedResponse;
+  }
+
+  @override
+  set _feedResponse(FeedResponse? value) {
+    _$_feedResponseAtom.reportWrite(value, super._feedResponse, () {
+      super._feedResponse = value;
     });
   }
 
@@ -59,6 +80,14 @@ mixin _$MyProfileScreenPresenter on MyProfileScreenPresenterBase, Store {
     return _$fetchAsyncAction.run(() => super.fetch());
   }
 
+  final _$fetchFeedAsyncAction =
+      AsyncAction('MyProfileScreenPresenterBase.fetchFeed');
+
+  @override
+  Future<void> fetchFeed() {
+    return _$fetchFeedAsyncAction.run(() => super.fetchFeed());
+  }
+
   final _$refreshAsyncAction =
       AsyncAction('MyProfileScreenPresenterBase.refresh');
 
@@ -70,7 +99,8 @@ mixin _$MyProfileScreenPresenter on MyProfileScreenPresenterBase, Store {
   @override
   String toString() {
     return '''
-profile: ${profile}
+profile: ${profile},
+posts: ${posts}
     ''';
   }
 }

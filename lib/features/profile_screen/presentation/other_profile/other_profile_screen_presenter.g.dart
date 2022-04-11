@@ -16,22 +16,43 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
       (_$profileComputed ??= Computed<ProfileScreenEntity?>(() => super.profile,
               name: 'OtherProfileScreenPresenterBase.profile'))
           .value;
+  Computed<List<PostEntity>?>? _$postsComputed;
+
+  @override
+  List<PostEntity>? get posts =>
+      (_$postsComputed ??= Computed<List<PostEntity>?>(() => super.posts,
+              name: 'OtherProfileScreenPresenterBase.posts'))
+          .value;
 
   final _$_fetchedProfileAtom =
       Atom(name: 'OtherProfileScreenPresenterBase._fetchedProfile');
 
-  ProfileScreenEntity? get fetchedProfile {
+  @override
+  ProfileScreenEntity? get _fetchedProfile {
     _$_fetchedProfileAtom.reportRead();
     return super._fetchedProfile;
   }
 
   @override
-  ProfileScreenEntity? get _fetchedProfile => fetchedProfile;
-
-  @override
   set _fetchedProfile(ProfileScreenEntity? value) {
     _$_fetchedProfileAtom.reportWrite(value, super._fetchedProfile, () {
       super._fetchedProfile = value;
+    });
+  }
+
+  final _$_feedResponseAtom =
+      Atom(name: 'OtherProfileScreenPresenterBase._feedResponse');
+
+  @override
+  FeedResponse? get _feedResponse {
+    _$_feedResponseAtom.reportRead();
+    return super._feedResponse;
+  }
+
+  @override
+  set _feedResponse(FeedResponse? value) {
+    _$_feedResponseAtom.reportWrite(value, super._feedResponse, () {
+      super._feedResponse = value;
     });
   }
 
@@ -60,6 +81,14 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
     return _$fetchAsyncAction.run(() => super.fetch());
   }
 
+  final _$fetchFeedAsyncAction =
+      AsyncAction('OtherProfileScreenPresenterBase.fetchFeed');
+
+  @override
+  Future<void> fetchFeed() {
+    return _$fetchFeedAsyncAction.run(() => super.fetchFeed());
+  }
+
   final _$refreshAsyncAction =
       AsyncAction('OtherProfileScreenPresenterBase.refresh');
 
@@ -71,7 +100,8 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
   @override
   String toString() {
     return '''
-profile: ${profile}
+profile: ${profile},
+posts: ${posts}
     ''';
   }
 }

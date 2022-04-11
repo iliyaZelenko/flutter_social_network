@@ -11,8 +11,9 @@ import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 import 'package:rate_club/resources/header.dart';
 
-import 'presentation/feed_presenter.dart';
-import 'presentation/widgets/post_card/post_card.dart';
+import 'feed_presenter.dart';
+import 'widgets/feed_posts_list.dart';
+import 'widgets/feed_tags.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
@@ -117,8 +118,6 @@ class _FeedBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final feedPresenter = Provider.of<FeedPresenter>(context);
-    final Set<String> tags = {'Name', 'Pictures', 'Clubs_and_Cultures', 'Cars', 'Food', 'Trips', 'Sport', 'Games'};
-    final String selectedTag = tags.elementAt(2);
 
     return Observer(
       builder: (_) {
@@ -130,49 +129,11 @@ class _FeedBody extends StatelessWidget {
           scrollPhysics: const AlwaysScrollableScrollPhysics(),
           onRefresh: feedPresenter.refresh,
           slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              sliver: SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 30,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: tags.length,
-                    itemBuilder: (context, index) {
-                      final tag = tags.elementAt(index);
-
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: tag == selectedTag ? AppColors.purple80 : AppColors.white100,
-                            border: Border.all(width: 0.7, color: AppColors.white60),
-                            borderRadius: const BorderRadius.all(Radius.circular(24)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                            child: Text(
-                              '#$tag',
-                              style: AppTextStyles.medium14.apply(
-                                color: tag == selectedTag ? AppColors.white100 : AppColors.black100,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
+            const SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              sliver: SliverToBoxAdapter(child: FeedTags()),
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (ctx, index) => PostCard(post: posts[index]),
-                childCount: posts.length,
-                addAutomaticKeepAlives: false,
-                addSemanticIndexes: false,
-              ),
-            )
+            FeedPostsList(posts: posts),
           ],
         );
       },

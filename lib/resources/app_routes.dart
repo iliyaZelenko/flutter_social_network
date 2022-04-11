@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:rate_club/features/auth/presentation/auth_flow_presenter.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/features/auth/presentation/sign_in_screen.dart';
+import 'package:rate_club/features/feed/domain/use_cases/get_profile_feed_use_case.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/home/presentation/home_screen.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
@@ -63,6 +64,7 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
         create: (_) => OtherProfileScreenPresenter(
           username: username,
           getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
+          getProfileFeedUseCase: injector.get<GetProfileFeedUseCase>(),
         ),
       );
     },
@@ -75,6 +77,7 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
           create: (_) => MyProfileScreenPresenter(
             profilePresenter: injector.get<ProfilePresenter>(),
             getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
+            getProfileFeedUseCase: injector.get<GetProfileFeedUseCase>(),
           ),
         ),
   };

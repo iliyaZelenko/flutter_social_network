@@ -49,9 +49,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   void initState() {
-    widget.controller.open = _open;
-
     super.initState();
+
+    widget.controller.open = _open;
   }
 
   @override

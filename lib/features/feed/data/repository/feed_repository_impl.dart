@@ -22,11 +22,14 @@ class FeedRepositoryImpl implements FeedRepository {
   FeedRepositoryImpl(this._http);
 
   @override
-  Cancelable<FeedResponse> get({String? next}) {
+  Cancelable<FeedResponse> get({
+    String? username,
+    String? next,
+  }) {
     return _http
         .get<Map<String, dynamic>>(
       host: next == null ? null : '',
-      path: next ?? 'wall/',
+      path: next ?? 'wall/${username ?? ''}',
     )
         .next(
       onValue: (response) {

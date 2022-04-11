@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/feed/presentation/widgets/feed_posts_list.dart';
 import 'package:rate_club/features/profile_screen/presentation/widgets/profile_screen_header.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
@@ -32,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AfterLayoutMixin {
   @override
   void afterFirstLayout(BuildContext context) {
     presenter.fetch();
+    presenter.fetchFeed();
   }
 
   @override
@@ -104,15 +106,24 @@ class _ProfileBody extends StatelessWidget {
       builder: (_) {
         if (presenter.profile == null) return const SizedBox.shrink();
 
-        final profile = presenter.profile!;
-
         return Refreshable(
           scrollPhysics: const AlwaysScrollableScrollPhysics(),
           onRefresh: presenter.refresh,
-          slivers: const [
-            SliverToBoxAdapter(
+          slivers: [
+            const SliverToBoxAdapter(
               child: ProfileScreenHeader(),
-            )
+            ),
+            if (presenter.posts == null)
+              const SliverFillRemaining(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            else
+              SliverPadding(
+                padding: const EdgeInsets.only(top: 5),
+                sliver: FeedPostsList(posts: presenter.posts!),
+              ),
           ],
         );
       },

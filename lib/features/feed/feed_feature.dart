@@ -4,6 +4,7 @@ import 'package:rate_club/rate_club.dart';
 import 'data/repository/feed_repository_impl.dart';
 import 'domain/repositories/feed_repository.dart';
 import 'domain/use_cases/get_feed_use_case.dart';
+import 'domain/use_cases/get_profile_feed_use_case.dart';
 import 'presentation/feed_presenter.dart';
 
 class FeedFeature extends FeatureInterface {
@@ -25,6 +26,10 @@ class FeedFeature extends FeatureInterface {
       )
       ..map<GetFeedUseCase>(
         (i) => GetFeedUseCase(i.get<FeedRepository>()),
+        isSingleton: true,
+      )
+      ..map<GetProfileFeedUseCase>(
+        (i) => GetProfileFeedUseCase(i.get<FeedRepository>()),
         isSingleton: true,
       )
       ..map<FeedPresenter>(

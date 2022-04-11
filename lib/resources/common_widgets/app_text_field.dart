@@ -91,12 +91,12 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   void initState() {
+    super.initState();
+
     _focusNode = widget.focusNode ?? FocusNode();
 
     _inputController = widget.controller ?? TextEditingController();
     _inputController!.text = widget.initialValue;
-
-    super.initState();
   }
 
   @override
