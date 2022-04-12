@@ -44,7 +44,7 @@ class PostRepositoryImpl implements PostRepository {
       ),
       creator: PostCreatorEntity(
         id: ProfileId(creator['pid']),
-        username: creator['username'] ?? 'nousername',
+        nickname: creator['nickname'] ?? 'nonickname',
         avatar: 'https://' + (creator['avatar']?['default']?['url'] ?? 'i.imgur.com/QHyTGKE.png'),
         firstName: creator['first_name'] ?? 'no first name',
         lastName: creator['last_name'] ?? 'no last name',

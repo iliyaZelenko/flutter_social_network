@@ -2,5 +2,5 @@ import 'package:rate_club/features/profile_screen/domain/entities/profile_screen
 import 'package:worker_manager/worker_manager.dart';
 
 abstract class ProfileScreenRepository {
-  Cancelable<ProfileScreenEntity> fetch(String username);
+  Cancelable<ProfileScreenEntity> fetch(String nickname);
 }

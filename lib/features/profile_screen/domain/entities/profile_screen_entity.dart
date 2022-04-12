@@ -8,7 +8,7 @@ class ProfileScreenEntity extends ProfileEntity {
 
   const ProfileScreenEntity({
     required ProfileId id,
-    required String username,
+    required String nickname,
     required String firstName,
     required String lastName,
     required bool isVerified,
@@ -17,7 +17,7 @@ class ProfileScreenEntity extends ProfileEntity {
     this.about,
   }) : super(
           id: id,
-          username: username,
+          nickname: nickname,
           firstName: firstName,
           lastName: lastName,
           isVerified: isVerified,

@@ -31,7 +31,7 @@ abstract class MyProfileScreenPresenterBase with Store implements AbstractProfil
   @observable
   FeedResponse? _feedResponse;
 
-  String get _username => _profilePresenter.profile!.username;
+  String get _nickname => _profilePresenter.profile!.nickname;
 
   @override
   @computed
@@ -48,19 +48,19 @@ abstract class MyProfileScreenPresenterBase with Store implements AbstractProfil
   @action
   Future<void> fetch() async {
     _loading = true;
-    _fetchedProfile = await _getProfileScreenUseCase.execute(_username);
+    _fetchedProfile = await _getProfileScreenUseCase.execute(_nickname);
     _loading = false;
   }
 
   @override
   @action
   Future<void> fetchFeed() async {
-    _feedResponse = await _getProfileFeedUseCase.execute(username: _username);
+    _feedResponse = await _getProfileFeedUseCase.execute(nickname: _nickname);
   }
 
   @override
   @action
   Future<void> refresh() async {
-    _fetchedProfile = await _getProfileScreenUseCase.execute(_username);
+    _fetchedProfile = await _getProfileScreenUseCase.execute(_nickname);
   }
 }

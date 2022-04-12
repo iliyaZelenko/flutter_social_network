@@ -135,7 +135,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                '@${profilePresenter.profile!.username}',
+                                '@${profilePresenter.profile!.nickname}',
                                 style: AppTextStyles.regular12.apply(color: AppColors.black60),
                               ),
                             ],

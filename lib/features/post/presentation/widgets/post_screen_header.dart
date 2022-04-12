@@ -30,7 +30,7 @@ class PostScreenHeader extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                postPresenter.post!.creator.username,
+                postPresenter.post!.creator.nickname,
                 style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
               ),
             ],

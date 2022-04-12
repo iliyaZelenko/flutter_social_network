@@ -53,16 +53,16 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
       );
     },
     AppRoutes.otherProfile: (context) {
-      final username = ModalRoute.of(context)?.settings.arguments as String;
+      final nickname = ModalRoute.of(context)?.settings.arguments as String;
 
       return Provider<AbstractProfileScreenPresenter>(
-        key: ValueKey('provider$username'),
+        key: ValueKey('provider$nickname'),
         child: ProfileScreen(
-          key: ValueKey(username),
+          key: ValueKey(nickname),
           mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
         ),
         create: (_) => OtherProfileScreenPresenter(
-          username: username,
+          nickname: nickname,
           getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
           getProfileFeedUseCase: injector.get<GetProfileFeedUseCase>(),
         ),

@@ -10,7 +10,7 @@ class ProfileScreenDto extends ProfileDto {
 
   ProfileScreenDto(
     int id,
-    String? username,
+    String? nickname,
     String? firstName,
     String? lastName,
     bool? isVerified,
@@ -20,7 +20,7 @@ class ProfileScreenDto extends ProfileDto {
     this.counters,
   ) : super(
           id,
-          username,
+          nickname,
           firstName,
           lastName,
           isVerified,

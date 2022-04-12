@@ -14,7 +14,7 @@ class ProfileResponseDto {
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class ProfileDto {
   final int id;
-  final String? username, firstName, lastName;
+  final String? nickname, firstName, lastName;
   final bool? isVerified;
   final ProfileAvatarDto? avatar;
 
@@ -23,7 +23,7 @@ class ProfileDto {
 
   ProfileDto(
     this.id,
-    this.username,
+    this.nickname,
     this.firstName,
     this.lastName,
     this.isVerified,

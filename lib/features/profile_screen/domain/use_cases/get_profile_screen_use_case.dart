@@ -7,7 +7,7 @@ class GetProfileScreenUseCase {
 
   GetProfileScreenUseCase(this._repo);
 
-  Cancelable<ProfileScreenEntity> execute(String username) {
-    return _repo.fetch(username);
+  Cancelable<ProfileScreenEntity> execute(String nickname) {
+    return _repo.fetch(nickname);
   }
 }

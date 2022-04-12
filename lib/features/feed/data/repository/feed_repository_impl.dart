@@ -23,13 +23,13 @@ class FeedRepositoryImpl implements FeedRepository {
 
   @override
   Cancelable<FeedResponse> get({
-    String? username,
+    String? nickname,
     String? next,
   }) {
     return _http
         .get<Map<String, dynamic>>(
       host: next == null ? null : '',
-      path: next ?? 'wall/${username ?? ''}',
+      path: next ?? 'wall/${nickname ?? ''}',
     )
         .next(
       onValue: (response) {
@@ -48,7 +48,7 @@ class FeedRepositoryImpl implements FeedRepository {
     final article = dto['article'];
     final creatorEntity = PostCreatorEntity(
       id: ProfileId(creator['pid']),
-      username: creator['username'] ?? 'nousername',
+      nickname: creator['nickname'] ?? 'nonickname',
       avatar: 'https://' + (creator['avatar']?['default']?['url'] ?? 'i.imgur.com/QHyTGKE.png'),
       firstName: creator['first_name'] ?? 'no first name',
       lastName: creator['last_name'] ?? 'no last name',

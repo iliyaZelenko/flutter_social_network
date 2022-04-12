@@ -8,9 +8,9 @@ class GetProfileFeedUseCase {
   GetProfileFeedUseCase(this._feedRepo);
 
   Cancelable<FeedResponse> execute({
-    required String username,
+    required String nickname,
     String? next,
   }) {
-    return _feedRepo.get(username: username, next: next);
+    return _feedRepo.get(nickname: nickname, next: next);
   }
 }

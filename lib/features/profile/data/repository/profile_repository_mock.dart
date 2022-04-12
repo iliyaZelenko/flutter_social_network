@@ -10,7 +10,7 @@ class ProfileRepositoryMock implements ProfileRepository {
     return Delays.defaultDelayCancelable.next(onValue: (_) {
       return ProfileEntity(
         id: ProfileId(3525235),
-        username: 'Jhon',
+        nickname: 'Jhon',
         avatar: 'https://dev.easydev.group/public/13/34/2022/3/11/1.jpg',
         firstName: 'Петя',
         lastName: 'Пупкин',

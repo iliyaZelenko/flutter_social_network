@@ -11,15 +11,15 @@ part 'other_profile_screen_presenter.g.dart';
 class OtherProfileScreenPresenter = OtherProfileScreenPresenterBase with _$OtherProfileScreenPresenter;
 
 abstract class OtherProfileScreenPresenterBase with Store implements AbstractProfileScreenPresenter {
-  final String _username;
+  final String _nickname;
   final GetProfileScreenUseCase _getProfileScreenUseCase;
   final GetProfileFeedUseCase _getProfileFeedUseCase;
 
   OtherProfileScreenPresenterBase({
-    required String username,
+    required String nickname,
     required GetProfileScreenUseCase getProfileScreenUseCase,
     required GetProfileFeedUseCase getProfileFeedUseCase,
-  })  : _username = username,
+  })  : _nickname = nickname,
         _getProfileScreenUseCase = getProfileScreenUseCase,
         _getProfileFeedUseCase = getProfileFeedUseCase;
 
@@ -44,21 +44,21 @@ abstract class OtherProfileScreenPresenterBase with Store implements AbstractPro
   @action
   Future<void> fetch() async {
     _loading = true;
-    _fetchedProfile = await _getProfileScreenUseCase.execute(_username);
+    _fetchedProfile = await _getProfileScreenUseCase.execute(_nickname);
     _loading = false;
   }
 
   @override
   @action
   Future<void> fetchFeed() async {
-    _feedResponse = await _getProfileFeedUseCase.execute(username: _username);
+    _feedResponse = await _getProfileFeedUseCase.execute(nickname: _nickname);
   }
 
   @override
   @action
   Future<void> refresh() async {
     await Future.wait([
-      _getProfileScreenUseCase.execute(_fetchedProfile!.username),
+      _getProfileScreenUseCase.execute(_fetchedProfile!.nickname),
       fetchFeed(),
     ]);
   }

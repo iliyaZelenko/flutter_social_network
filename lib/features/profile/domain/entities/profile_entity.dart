@@ -3,12 +3,13 @@ import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart'
 
 class ProfileEntity extends Equatable {
   final ProfileId id;
-  final String username, firstName, lastName, avatar;
+  final String nickname, firstName, lastName, avatar;
   final bool isVerified;
 
   const ProfileEntity({
     required this.id,
-    required this.username,
+    // Объяснение о https://i.imgur.com/Dn9qmGw.png
+    required this.nickname,
     required this.firstName,
     required this.lastName,
     required this.isVerified,
@@ -20,7 +21,7 @@ class ProfileEntity extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        username,
+        nickname,
         avatar,
         firstName,
         lastName,

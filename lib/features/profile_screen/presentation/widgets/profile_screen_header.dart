@@ -64,12 +64,12 @@ class ProfileScreenHeader extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Username
+                        // Nickname
                         Row(
                           children: [
                             Flexible(
                               child: Text(
-                                profile.username,
+                                profile.nickname,
                                 style: AppTextStyles.semiBold20.apply(color: AppColors.black100),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,

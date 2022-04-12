@@ -12,8 +12,8 @@ class ProfileScreenRepositoryImpl implements ProfileScreenRepository {
   ProfileScreenRepositoryImpl(this._http);
 
   @override
-  Cancelable<ProfileScreenEntity> fetch(String username) {
-    return _http.get<Map<String, dynamic>>(path: 'profile/$username').next(
+  Cancelable<ProfileScreenEntity> fetch(String nickname) {
+    return _http.get<Map<String, dynamic>>(path: 'profile/$nickname').next(
       onValue: (response) {
         return _fromProfileScreenDtoToEntity(ProfileScreenDto.fromJson(response.data!));
       },
@@ -23,7 +23,7 @@ class ProfileScreenRepositoryImpl implements ProfileScreenRepository {
   ProfileScreenEntity _fromProfileScreenDtoToEntity(ProfileScreenDto model) {
     return ProfileScreenEntity(
       id: ProfileId(model.id),
-      username: model.username!,
+      nickname: model.nickname!,
       avatar: model.avatar?.defaultType,
       firstName: model.firstName!,
       lastName: model.lastName!,

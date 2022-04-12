@@ -15,7 +15,7 @@ class PostCardHeader extends StatelessWidget {
   }) : super(key: key);
 
   void _goToProfile(BuildContext context, PostCreatorEntity profile) {
-    Navigator.of(context).pushNamed(AppRoutes.otherProfile, arguments: profile.username);
+    Navigator.of(context).pushNamed(AppRoutes.otherProfile, arguments: profile.nickname);
   }
 
   @override
@@ -54,7 +54,7 @@ class PostCardHeader extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          post.creator.username,
+                          post.creator.nickname,
                           style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
                         ),
                         if (post.creator.isVerified) ...const [
