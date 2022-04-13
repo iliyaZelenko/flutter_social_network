@@ -5,7 +5,7 @@ part 'feed_dto.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class FeedResponseDto {
-  final String next;
+  final String? next;
 
   @JsonKey(fromJson: _readResults)
   final List<FeedResponseItemDto?> results;
@@ -22,7 +22,6 @@ class FeedResponseDto {
       try {
         return FeedResponseItemDto.fromJson(e);
       } catch (e) {
-        print(e);
         // null if error post
         return null;
       }

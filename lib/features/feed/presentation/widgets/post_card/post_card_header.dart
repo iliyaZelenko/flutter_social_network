@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/profile_screen/presentation/abstract_profile_screen_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_routes.dart';
@@ -15,7 +16,11 @@ class PostCardHeader extends StatelessWidget {
   }) : super(key: key);
 
   void _goToProfile(BuildContext context, PostCreatorEntity profile) {
-    Navigator.of(context).pushNamed(AppRoutes.otherProfile, arguments: profile.nickname);
+    final notProfileScreen = Provider.of<AbstractProfileScreenPresenter?>(context, listen: false) == null;
+
+    if (notProfileScreen) {
+      Navigator.of(context).pushNamed(AppRoutes.otherProfile, arguments: profile.nickname);
+    }
   }
 
   @override

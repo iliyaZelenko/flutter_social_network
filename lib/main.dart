@@ -87,7 +87,7 @@ void _showErrorMsg(Object error) {
   } else if (error is TimeoutException) {
     msg = 'Сервер не отвечает';
   } else if (error is Exception) {
-    msg = 'Что-то пошло не так.\n$error';
+    msg = '$error';
   } else {
     msg = 'Что-то пошло не так.\n$error';
   }
