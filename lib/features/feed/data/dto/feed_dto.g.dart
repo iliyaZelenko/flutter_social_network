@@ -9,9 +9,7 @@ part of 'feed_dto.dart';
 FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
     FeedResponseDto(
       json['next'] as String,
-      (json['results'] as List<dynamic>)
-          .map((e) => FeedResponseItemDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      FeedResponseDto._readResults(json['results']),
     );
 
 FeedResponseItemDto _$FeedResponseItemDtoFromJson(Map<String, dynamic> json) =>
@@ -65,5 +63,5 @@ PostCountersDto _$PostCountersDtoFromJson(Map<String, dynamic> json) =>
 
 PostMediaDto _$PostMediaDtoFromJson(Map<String, dynamic> json) => PostMediaDto(
       json['id'] as int,
-      PostMediaDto._readUrl(json, 'url') as String,
+      PostMediaDto._readUrl(json['url'] as String),
     );

@@ -27,5 +27,5 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) => ProfileDto(
 
 ProfileAvatarDto _$ProfileAvatarDtoFromJson(Map<String, dynamic> json) =>
     ProfileAvatarDto(
-      ProfileAvatarDto._readTypeUrl(json, 'default') as String,
+      ProfileAvatarDto._readTypeUrl(json['default']),
     );

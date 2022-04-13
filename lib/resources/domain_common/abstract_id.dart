@@ -1,7 +1,7 @@
 abstract class AbstractId<T> {
   final T _value;
 
-  AbstractId(T value) : _value = value;
+  const AbstractId(T value) : _value = value;
 
   @override
   int get hashCode => _value.hashCode;

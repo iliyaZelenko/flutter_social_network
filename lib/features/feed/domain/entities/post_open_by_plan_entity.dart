@@ -11,7 +11,7 @@ class PostOpenByPlanEntity extends PostEntity {
   final PostCounters counters;
   final List<PostMediaEntity> media;
 
-  PostOpenByPlanEntity({
+  const PostOpenByPlanEntity({
     required PostId id,
     required PostCreatorEntity creator,
     required this.content,

@@ -6,7 +6,9 @@ part 'feed_dto.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class FeedResponseDto {
   final String next;
-  final List<FeedResponseItemDto> results;
+
+  @JsonKey(fromJson: _readResults)
+  final List<FeedResponseItemDto?> results;
 
   FeedResponseDto(
     this.next,
@@ -14,6 +16,18 @@ class FeedResponseDto {
   );
 
   factory FeedResponseDto.fromJson(Map<String, dynamic> json) => _$FeedResponseDtoFromJson(json);
+
+  static List<FeedResponseItemDto?> _readResults(dynamic json) {
+    return (json as List).cast<Map<String, dynamic>>().map((e) {
+      try {
+        return FeedResponseItemDto.fromJson(e);
+      } catch (e) {
+        print(e);
+        // null if error post
+        return null;
+      }
+    }).toList();
+  }
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
@@ -107,7 +121,7 @@ class PostCountersDto {
 class PostMediaDto {
   final int id;
 
-  @JsonKey(readValue: _readUrl)
+  @JsonKey(fromJson: _readUrl)
   final String url;
 
   const PostMediaDto(
@@ -117,5 +131,5 @@ class PostMediaDto {
 
   factory PostMediaDto.fromJson(Map<String, dynamic> json) => _$PostMediaDtoFromJson(json);
 
-  static String _readUrl(dynamic json, key) => 'https://' + (json[key] as String);
+  static String _readUrl(String value) => 'https://' + value;
 }

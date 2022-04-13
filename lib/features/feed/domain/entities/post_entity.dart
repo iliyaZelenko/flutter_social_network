@@ -6,7 +6,7 @@ abstract class PostEntity {
   final PostId id;
   final PostCreatorEntity creator;
 
-  PostEntity({
+  const PostEntity({
     required this.id,
     required this.creator,
   });

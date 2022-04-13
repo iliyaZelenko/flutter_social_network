@@ -39,12 +39,12 @@ class ProfileDto {
 
 @JsonSerializable(createToJson: false)
 class ProfileAvatarDto {
-  @JsonKey(name: 'default', readValue: _readTypeUrl)
+  @JsonKey(name: 'default', fromJson: _readTypeUrl)
   String defaultType;
 
   ProfileAvatarDto(this.defaultType);
 
   factory ProfileAvatarDto.fromJson(Map<String, dynamic> json) => _$ProfileAvatarDtoFromJson(json);
 
-  static String _readTypeUrl(dynamic json, key) => 'https://' + (json[key]['url'] as String);
+  static String _readTypeUrl(dynamic value) => 'https://' + (value['url'] as String);
 }
