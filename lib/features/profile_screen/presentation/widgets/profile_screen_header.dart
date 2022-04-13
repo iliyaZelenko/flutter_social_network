@@ -95,7 +95,7 @@ class ProfileScreenHeader extends StatelessWidget {
                                   profile.about!,
                                   style: AppTextStyles.medium14.apply(color: AppColors.black60),
                                   overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
+                                  maxLines: 3,
                                 ),
                               ),
                             ],

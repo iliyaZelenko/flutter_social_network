@@ -1,3 +1,4 @@
+import 'package:rate_club/features/feed/data/dto/feed_dto.dart';
 import 'package:rate_club/features/feed/domain/entities/post_closed_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
@@ -33,26 +34,26 @@ class FeedRepositoryImpl implements FeedRepository {
     )
         .next(
       onValue: (response) {
+        final responseDto = FeedResponseDto.fromJson(response.data!);
+
         return FeedResponse(
-          next: response.data!['next'] as String?,
-          results: List<Map<String, dynamic>>.from(response.data!['results'] as Iterable<dynamic>)
-              .map(_fromPostDtoToPostEntity)
-              .toList(),
+          next: responseDto.next,
+          results: responseDto.results.map(_fromFeedItemDtoToPostEntity).toList(),
         );
       },
     );
   }
 
-  PostEntity _fromPostDtoToPostEntity(Map<String, dynamic> dto) {
-    final creator = dto['creator'];
-    final article = dto['article'];
+  PostEntity _fromFeedItemDtoToPostEntity(FeedResponseItemDto dto) {
+    final creator = dto.creator;
+    final article = dto.article;
     final creatorEntity = PostCreatorEntity(
-      id: ProfileId(creator['pid']),
-      nickname: creator['nickname'] ?? 'nonickname',
-      avatar: 'https://' + (creator['avatar']?['default']?['url'] ?? 'i.imgur.com/QHyTGKE.png'),
-      firstName: creator['first_name'] ?? 'no first name',
-      lastName: creator['last_name'] ?? 'no last name',
-      isVerified: creator['is_verified'] ?? false,
+      id: ProfileId(creator.pid),
+      nickname: creator.nickname,
+      avatar: creator.avatar?.defaultType ?? 'i.imgur.com/QHyTGKE.png',
+      firstName: creator.firstName ?? 'Без имени',
+      lastName: creator.lastName ?? 'Без фамилии',
+      isVerified: creator.isVerified,
     );
 
     // const mediaMock = [
@@ -60,37 +61,40 @@ class FeedRepositoryImpl implements FeedRepository {
     //   PostMediaEntity(id: 2, url: 'https://i.imgur.com/NErzmhn.jpeg'),
     // ];
 
-    if (article['recommend'] == null) {
+    if (article.recommend == null) {
       return PostOpenByPlanEntity(
-        id: PostId(article['id'] as int),
-        content: article['content'] ?? '<Нет контента>',
-        title: article['title'],
+        id: PostId(article.id),
+        // content тут приходит всегда
+        content: article.content!,
+        title: article.title,
         counters: PostCounters(
-          viewed: article['counters']['viewed'] ?? 0,
-          comments: article['counters']['comments'] ?? 0,
-          marks: article['counters']['marks'] ?? 0,
+          viewed: article.counters!.viewed,
+          comments: article.counters!.comments,
+          marks: article.counters!.marks,
         ),
         creator: creatorEntity,
-        media: (article['media'] as List<dynamic>)
-            .cast<Map<String, dynamic>>()
+        media: (article.media ?? [])
             .map(
-              (e) => PostMediaEntity(
-                id: MediaId(e['id']),
-                url: 'https://' + e['url'],
+              (media) => PostMediaEntity(
+                id: MediaId(media.id),
+                url: media.url,
               ),
             )
             .toList(),
       );
     } else {
+      // Информация для такого поста содержится в article.recommend и article.planDetails
       return PostClosedByPlanEntity(
-        id: PostId(article['id'] as int),
+        id: PostId(article.id),
         needBuyPlan: SubscriptionPlanEntity(
-          id: SubscriptionPlanId(article['recommend'] as int),
-          title: article['plan_details']['title'] as String,
+          id: SubscriptionPlanId(article.recommend!),
+          title: article.planDetails!.title,
           cost: Money(
             // TODO Ilya: remove toInt after backend fix
-            amountInCents: (article['plan_details']['cost'] as double).toInt() * 100,
-            currency: CurrencyEntity(id: CurrencyId(article['plan_details']['currency'] as int)),
+            amountInCents: article.planDetails!.cost.toInt() * 100,
+            currency: CurrencyEntity(
+              id: CurrencyId(article.planDetails!.currency),
+            ),
           ),
         ),
         creator: creatorEntity,

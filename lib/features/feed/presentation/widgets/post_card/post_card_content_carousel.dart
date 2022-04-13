@@ -47,6 +47,7 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
                 itemBuilder: (context, index) {
                   return Image.network(
                     widget.post.media[index].url,
+                    key: ValueKey('media${widget.post.media[index].id}'),
                     fit: BoxFit.cover,
                   );
                 },

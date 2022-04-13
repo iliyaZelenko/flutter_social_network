@@ -24,6 +24,7 @@ class _FeedTagsState extends State<FeedTags> {
           final tag = tags.elementAt(index);
 
           return Padding(
+            key: ValueKey('tag_${tag}'),
             padding: const EdgeInsets.only(right: 5),
             child: GestureDetector(
               onTap: () {

@@ -10,10 +10,10 @@ class ProfileScreenDto extends ProfileDto {
 
   ProfileScreenDto(
     int id,
-    String? nickname,
+    String nickname,
     String? firstName,
     String? lastName,
-    bool? isVerified,
+    bool isVerified,
     ProfileAvatarDto? avatar,
     bool isDefault,
     this.about,

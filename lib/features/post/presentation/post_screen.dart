@@ -46,6 +46,7 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
     return ColoredBox(
       color: AppColors.white80,
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Header(

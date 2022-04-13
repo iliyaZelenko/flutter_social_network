@@ -38,6 +38,7 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
     return ColoredBox(
       color: AppColors.white80,
       child: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Header(

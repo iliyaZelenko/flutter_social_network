@@ -15,50 +15,56 @@ class TapBar extends StatelessWidget {
     final homePresenter = Provider.of<HomePresenter>(context);
 
     return DecoratedBox(
-      decoration: BoxDecoration(color: AppColors.white100, boxShadow: [
-        BoxShadow(
-          color: AppColors.black100.withOpacity(0.1),
-          offset: const Offset(0, -2),
-          blurRadius: 8,
-        ),
-      ]),
-      child: SizedBox(
-        height: 55,
-        child: Observer(
-          builder: (_) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TabBarBtn(
-                  key: const ValueKey('home'),
-                  selected: homePresenter.tapBarNavigationIndex == 0,
-                  unSelectedIcon: AppIcons.home_4_line,
-                  selectedIcon: AppIcons.home_4_fill,
-                  alignment: Alignment.center,
-                  text: 'Лента',
-                  onPressed: () => homePresenter.tapBarNavigationIndex = 0,
-                ),
-                TabBarBtn(
-                  key: const ValueKey('create'),
-                  selected: homePresenter.tapBarNavigationIndex == 1,
-                  unSelectedIcon: AppIcons.add_circle_line,
-                  selectedIcon: AppIcons.add_circle_fill,
-                  alignment: Alignment.center,
-                  text: 'Создать',
-                  onPressed: () => homePresenter.tapBarNavigationIndex = 1,
-                ),
-                TabBarBtn(
-                  key: const ValueKey('subscriptions'),
-                  selected: homePresenter.tapBarNavigationIndex == 2,
-                  unSelectedIcon: AppIcons.user_4_line,
-                  selectedIcon: AppIcons.user_4_fill,
-                  alignment: Alignment.center,
-                  text: 'Подписки',
-                  onPressed: () => homePresenter.tapBarNavigationIndex = 2,
-                ),
-              ],
-            );
-          },
+      decoration: BoxDecoration(
+        color: AppColors.white100,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black100.withOpacity(0.1),
+            offset: const Offset(0, -2),
+            blurRadius: 8,
+          ),
+        ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 55,
+          child: Observer(
+            builder: (_) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TabBarBtn(
+                    key: const ValueKey('home'),
+                    selected: homePresenter.tapBarNavigationIndex == 0,
+                    unSelectedIcon: AppIcons.home_4_line,
+                    selectedIcon: AppIcons.home_4_fill,
+                    alignment: Alignment.center,
+                    text: 'Лента',
+                    onPressed: () => homePresenter.tapBarNavigationIndex = 0,
+                  ),
+                  TabBarBtn(
+                    key: const ValueKey('create'),
+                    selected: homePresenter.tapBarNavigationIndex == 1,
+                    unSelectedIcon: AppIcons.add_circle_line,
+                    selectedIcon: AppIcons.add_circle_fill,
+                    alignment: Alignment.center,
+                    text: 'Создать',
+                    onPressed: () => homePresenter.tapBarNavigationIndex = 1,
+                  ),
+                  TabBarBtn(
+                    key: const ValueKey('subscriptions'),
+                    selected: homePresenter.tapBarNavigationIndex == 2,
+                    unSelectedIcon: AppIcons.user_4_line,
+                    selectedIcon: AppIcons.user_4_fill,
+                    alignment: Alignment.center,
+                    text: 'Подписки',
+                    onPressed: () => homePresenter.tapBarNavigationIndex = 2,
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

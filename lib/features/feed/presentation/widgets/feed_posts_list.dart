@@ -15,7 +15,10 @@ class FeedPostsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (ctx, index) => PostCard(post: posts[index]),
+        (ctx, index) => PostCard(
+          key: ValueKey('post${posts[index].id}'),
+          post: posts[index],
+        ),
         childCount: posts.length,
         addAutomaticKeepAlives: false,
         addSemanticIndexes: false,

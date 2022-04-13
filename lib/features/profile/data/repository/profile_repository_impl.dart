@@ -26,11 +26,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileEntity _fromProfileDtoToProfile(ProfileDto model) {
     return ProfileEntity(
       id: ProfileId(model.id),
-      nickname: model.nickname!,
+      nickname: model.nickname,
       avatar: model.avatar?.defaultType,
       firstName: model.firstName!,
       lastName: model.lastName!,
-      isVerified: model.isVerified!,
+      isVerified: model.isVerified,
     );
   }
 }

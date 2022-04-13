@@ -23,11 +23,11 @@ class ProfileScreenRepositoryImpl implements ProfileScreenRepository {
   ProfileScreenEntity _fromProfileScreenDtoToEntity(ProfileScreenDto model) {
     return ProfileScreenEntity(
       id: ProfileId(model.id),
-      nickname: model.nickname!,
+      nickname: model.nickname,
       avatar: model.avatar?.defaultType,
       firstName: model.firstName!,
       lastName: model.lastName!,
-      isVerified: model.isVerified!,
+      isVerified: model.isVerified,
       about: model.about,
       counters: ProfileScreenCounters(
         articles: model.counters?.articles ?? 0,
