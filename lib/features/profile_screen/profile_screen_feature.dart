@@ -1,6 +1,7 @@
 import 'package:injector/injector.dart';
 import 'package:rate_club/rate_club.dart';
 
+import 'data/mappers/profile_screen_dto_to_entity_mapper.dart';
 import 'data/repository/profile_screen_repository_impl.dart';
 import 'domain/use_cases/get_profile_screen_use_case.dart';
 
@@ -16,7 +17,10 @@ class ProfileScreenFeature extends FeatureInterface {
 
   @override
   void execute() {
-    final repo = ProfileScreenRepositoryImpl(_http);
+    final repo = ProfileScreenRepositoryImpl(
+      _http,
+      ProfileScreenDtoToEntityMapper(),
+    );
     final getProfileScreenUseCase = GetProfileScreenUseCase(repo);
 
     _injector

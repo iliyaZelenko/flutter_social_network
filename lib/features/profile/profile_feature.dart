@@ -2,6 +2,7 @@ import 'package:injector/injector.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 
+import 'data/mappers/profile_dto_to_entity_mapper.dart';
 import 'data/repository/profile_repository_impl.dart';
 import 'domain/use_cases/get_profile_use_case.dart';
 
@@ -19,7 +20,10 @@ class ProfileFeature extends FeatureInterface {
   void execute() {
     _injector
       ..map<ProfileRepositoryImpl>(
-        (i) => ProfileRepositoryImpl(_http),
+        (i) => ProfileRepositoryImpl(
+          _http,
+          ProfileDtoToEntityMapper(),
+        ),
         isSingleton: true,
       )
       ..map<GetProfileUseCase>(

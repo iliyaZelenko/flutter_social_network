@@ -1,6 +1,7 @@
 import 'package:injector/injector.dart';
 import 'package:rate_club/rate_club.dart';
 
+import 'data/mappers/feed_item_dto_to_post_entity_mapper.dart';
 import 'data/repository/feed_repository_impl.dart';
 import 'domain/repositories/feed_repository.dart';
 import 'domain/use_cases/get_feed_use_case.dart';
@@ -21,7 +22,10 @@ class FeedFeature extends FeatureInterface {
   void execute() {
     _injector
       ..map<FeedRepository>(
-        (i) => FeedRepositoryImpl(_http),
+        (i) => FeedRepositoryImpl(
+          _http,
+          FeedItemDtoToPostEntityMapper(),
+        ),
         isSingleton: true,
       )
       ..map<GetFeedUseCase>(
