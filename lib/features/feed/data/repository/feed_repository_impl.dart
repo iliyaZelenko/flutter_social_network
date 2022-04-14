@@ -59,6 +59,7 @@ class FeedRepositoryImpl implements FeedRepository {
         lastName: 'Reporter',
         isVerified: true,
       ),
+      createdAt: DateTime.now(),
       title: 'Error when parsing post',
       content: 'TODO: error message',
       counters: PostCounters(

@@ -8,8 +8,11 @@ class PostClosedByPlanEntity extends PostEntity {
   final SubscriptionPlanEntity needBuyPlan;
 
   PostClosedByPlanEntity({
+    // Base class properties
     required PostId id,
     required PostCreatorEntity creator,
+
+    // This class properties
     required this.needBuyPlan,
   }) : super(
           id: id,

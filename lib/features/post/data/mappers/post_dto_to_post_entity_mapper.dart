@@ -21,6 +21,8 @@ class PostDtoToPostScreenEntityMapper {
 
     return PostScreenEntity(
       id: PostId(dto.id),
+      creator: creatorEntity,
+      createdAt: dto.createdAt,
       content: dto.content,
       title: dto.title,
       counters: PostCounters(
@@ -28,7 +30,6 @@ class PostDtoToPostScreenEntityMapper {
         comments: dto.counters.comments,
         marks: dto.counters.marks,
       ),
-      creator: creatorEntity,
       media: (dto.media ?? [])
           .map(
             (media) => PostMediaEntity(

@@ -19,4 +19,5 @@ PostDto _$PostDtoFromJson(Map<String, dynamic> json) => PostDto(
           ? null
           : PlanDetailsDto.fromJson(
               json['plan_details'] as Map<String, dynamic>),
+      DateTime.parse(json['created_at'] as String),
     );

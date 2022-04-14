@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+// TODO Ilya: replace all to hex format
 mixin AppColors {
   static const transparent = Color(0x00000000);
 
-  static const black100 = Color.fromRGBO(0x00, 0x00, 0x00, 1);
-  static const black80 = Color.fromRGBO(0x5b, 0x5a, 0x69, 1);
+  static const black100 = Color(0xFF000000);
+  static const black80 = Color(0xFF5b5a69);
   static const black60 = Color.fromRGBO(0x5b, 0x5a, 0x69, 1);
   static const black40 = Color.fromRGBO(0x76, 0x75, 0x87, 1);
   static const black20 = Color.fromRGBO(0x96, 0x96, 0xA4, 1);
@@ -19,5 +20,5 @@ mixin AppColors {
   static const purple80 = Color.fromRGBO(0x38, 0x5f, 0xea, 1);
 
   static const red100 = Color.fromRGBO(0xb6, 0x14, 0x14, 1);
-  static const red80 = Color.fromRGBO(0xeb, 0x5b, 0x52, 1);
+  static const red80 = Color(0xFFeb5b52);
 }

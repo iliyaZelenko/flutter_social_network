@@ -33,9 +33,11 @@ class FeedItemDtoToPostEntityMapper {
     // ];
 
     if (article.recommend == null) {
+      // Поля который обозначены "!" приходят для PostOpenByPlanEntity
       return PostOpenByPlanEntity(
         id: PostId(article.id),
-        // content тут приходит всегда
+        creator: creatorEntity,
+        createdAt: article.createdAt!,
         content: article.content!,
         title: article.title,
         counters: PostCounters(
@@ -43,7 +45,6 @@ class FeedItemDtoToPostEntityMapper {
           comments: article.counters!.comments,
           marks: article.counters!.marks,
         ),
-        creator: creatorEntity,
         media: (article.media ?? [])
             .map(
               (media) => PostMediaEntity(
@@ -57,6 +58,7 @@ class FeedItemDtoToPostEntityMapper {
       // Информация для такого поста содержится в article.recommend и article.planDetails
       return PostClosedByPlanEntity(
         id: PostId(article.id),
+        creator: creatorEntity,
         needBuyPlan: SubscriptionPlanEntity(
           id: SubscriptionPlanId(article.recommend!),
           title: article.planDetails!.title,
@@ -68,7 +70,6 @@ class FeedItemDtoToPostEntityMapper {
             ),
           ),
         ),
-        creator: creatorEntity,
       );
     }
   }

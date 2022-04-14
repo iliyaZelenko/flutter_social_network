@@ -22,6 +22,8 @@ class FeedResponseDto {
       try {
         return FeedResponseItemDto.fromJson(e);
       } catch (e) {
+        print(e);
+
         // null if error post
         return null;
       }
@@ -65,13 +67,15 @@ class PostCreatorDto {
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class ArticleDto {
   final int id;
-  // Может не быть если это PostClosedByPlanEntity
+
+  // Следующих полей может не быть если это PostClosedByPlanEntity:
   final String? content;
   final String? title;
-  // Может не быть если это PostClosedByPlanEntity
   final PostCountersDto? counters;
   final List<PostMediaDto>? media;
-  // recommended plan to buy to see this post
+  final DateTime? createdAt;
+
+  // recommended plan to buy to see this post (PostClosedByPlanEntity)
   final int? recommend;
   final PlanDetailsDto? planDetails;
 
@@ -83,6 +87,7 @@ class ArticleDto {
     this.media,
     this.recommend,
     this.planDetails,
+    this.createdAt,
   );
 
   factory ArticleDto.fromJson(Map<String, dynamic> json) => _$ArticleDtoFromJson(json);
@@ -130,5 +135,5 @@ class PostMediaDto {
 
   factory PostMediaDto.fromJson(Map<String, dynamic> json) => _$PostMediaDtoFromJson(json);
 
-  static String _readUrl(String value) => 'https://' + value;
+  static String _readUrl(String value) => 'https://$value';
 }

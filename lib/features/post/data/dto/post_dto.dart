@@ -12,6 +12,7 @@ class PostDto {
   final PostCountersDto counters;
   final List<PostMediaDto>? media;
   final PlanDetailsDto? planDetails;
+  final DateTime createdAt;
 
   PostDto(
     this.id,
@@ -21,6 +22,7 @@ class PostDto {
     this.counters,
     this.media,
     this.planDetails,
+    this.createdAt,
   );
 
   factory PostDto.fromJson(Map<String, dynamic> json) => _$PostDtoFromJson(json);

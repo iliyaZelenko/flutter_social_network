@@ -4,11 +4,13 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/profile_screen/presentation/abstract_profile_screen_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:timeago_flutter/timeago_flutter.dart';
 
 class PostCardHeader extends StatelessWidget {
   const PostCardHeader({
@@ -71,10 +73,14 @@ class PostCardHeader extends StatelessWidget {
                         ]
                       ],
                     ),
-                    Text(
-                      'недавно',
-                      style: AppTextStyles.medium12.apply(color: AppColors.black40),
-                    ),
+                    if (post is PostOpenByPlanEntity)
+                      Timeago(
+                        builder: (_, value) => Text(
+                          value,
+                          style: AppTextStyles.medium12.apply(color: AppColors.black40),
+                        ),
+                        date: post.createdAt,
+                      ),
                   ],
                 ),
               ),

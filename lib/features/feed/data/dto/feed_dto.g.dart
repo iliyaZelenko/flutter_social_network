@@ -45,6 +45,9 @@ ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => ArticleDto(
           ? null
           : PlanDetailsDto.fromJson(
               json['plan_details'] as Map<String, dynamic>),
+      json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
     );
 
 PlanDetailsDto _$PlanDetailsDtoFromJson(Map<String, dynamic> json) =>

@@ -12,6 +12,7 @@ class PostScreenEntity extends PostOpenByPlanEntity {
     required PostCounters counters,
     required PostCreatorEntity creator,
     required List<PostMediaEntity> media,
+    required DateTime createdAt,
   }) : super(
           id: id,
           content: content,
@@ -19,6 +20,7 @@ class PostScreenEntity extends PostOpenByPlanEntity {
           counters: counters,
           creator: creator,
           media: media,
+          createdAt: createdAt,
         );
 
   @override
