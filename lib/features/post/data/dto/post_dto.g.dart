@@ -20,4 +20,5 @@ PostDto _$PostDtoFromJson(Map<String, dynamic> json) => PostDto(
           : PlanDetailsDto.fromJson(
               json['plan_details'] as Map<String, dynamic>),
       DateTime.parse(json['created_at'] as String),
+      json['is_ilike'] as bool? ?? false,
     );

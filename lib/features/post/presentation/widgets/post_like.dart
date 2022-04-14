@@ -3,6 +3,7 @@ import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/delays.dart';
 
+// TODO Ilya: если лайкнул и открываешь первое состояние, то показывает анимация лайка
 class PostLike extends StatelessWidget {
   static const double iconSize = 24;
 

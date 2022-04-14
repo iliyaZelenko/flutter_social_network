@@ -4,4 +4,7 @@ import 'package:worker_manager/worker_manager.dart';
 
 abstract class PostRepository {
   Cancelable<PostScreenEntity> get(PostId id);
+
+  // Returns actual count of likes
+  Cancelable<int> like(PostId id);
 }

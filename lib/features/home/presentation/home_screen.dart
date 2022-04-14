@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/create/create_screen.dart';
-import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
 import 'package:rate_club/features/feed/presentation/feed_presenter.dart';
 import 'package:rate_club/features/feed/presentation/feed_screen.dart';
 import 'package:rate_club/features/home/presentation/home_presenter.dart';
@@ -40,9 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MultiProvider(
                         providers: [
                           Provider<FeedPresenter>(
-                            create: (_) => FeedPresenter(
-                              getFeedUseCase: injector.get<GetFeedUseCase>(),
-                            ),
+                            create: (_) => injector.get<FeedPresenter>(),
                           )
                         ],
                         child: const FeedScreen(),

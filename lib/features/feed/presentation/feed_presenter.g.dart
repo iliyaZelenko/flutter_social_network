@@ -65,6 +65,17 @@ mixin _$FeedPresenter on FeedPresenterBase, Store {
   }
 
   @override
+  Cancelable<int> likePost(PostOpenByPlanEntity post) {
+    final _$actionInfo = _$FeedPresenterBaseActionController.startAction(
+        name: 'FeedPresenterBase.likePost');
+    try {
+      return super.likePost(post);
+    } finally {
+      _$FeedPresenterBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 

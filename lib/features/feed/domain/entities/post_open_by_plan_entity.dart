@@ -1,18 +1,22 @@
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 
-import '../value_objects/post_counters.dart';
 import 'post_creator_entity.dart';
 import 'post_media_entity.dart';
 
 class PostOpenByPlanEntity extends PostEntity {
   final String content;
   final String? title;
-  final PostCounters counters;
   final List<PostMediaEntity> media;
   final DateTime createdAt;
+  bool likedByMe;
 
-  const PostOpenByPlanEntity({
+  int viewsCount;
+  int commentsCount;
+  // TODO Ilya: спросить, это кол-во лайков?
+  int marksCount;
+
+  PostOpenByPlanEntity({
     // Base class properties
     required PostId id,
     required PostCreatorEntity creator,
@@ -20,10 +24,14 @@ class PostOpenByPlanEntity extends PostEntity {
     // This class properties
     required this.content,
     required this.title,
-    required this.counters,
     required this.media,
     required this.createdAt,
-  }) : super(
+    required this.likedByMe,
+    required this.viewsCount,
+    required this.commentsCount,
+    required this.marksCount,
+  })  : assert(viewsCount >= 0 && commentsCount >= 0 && marksCount >= 0),
+        super(
           id: id,
           creator: creator,
         );

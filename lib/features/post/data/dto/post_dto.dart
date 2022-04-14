@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rate_club/features/feed/data/dto/feed_dto.dart';
+import 'package:rate_club/features/feed/infrastructure/dto/feed_dto.dart';
 
 part 'post_dto.g.dart';
 
@@ -14,6 +14,9 @@ class PostDto {
   final PlanDetailsDto? planDetails;
   final DateTime createdAt;
 
+  @JsonKey(name: 'is_ilike', defaultValue: false)
+  final bool likedByMe;
+
   PostDto(
     this.id,
     this.creator,
@@ -23,6 +26,7 @@ class PostDto {
     this.media,
     this.planDetails,
     this.createdAt,
+    this.likedByMe,
   );
 
   factory PostDto.fromJson(Map<String, dynamic> json) => _$PostDtoFromJson(json);

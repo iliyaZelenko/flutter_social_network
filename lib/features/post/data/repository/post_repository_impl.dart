@@ -15,12 +15,21 @@ class PostRepositoryImpl implements PostRepository {
   Cancelable<PostScreenEntity> get(PostId id) {
     return _http
         .get<Map<String, dynamic>>(
-      path: '/article/$id',
-    )
+          path: '/article/$id',
+        )
         .next(
-      onValue: (response) {
-        return _postEntityMapper.map(PostDto.fromJson(response.data!));
-      },
-    );
+          onValue: (response) => _postEntityMapper.map(PostDto.fromJson(response.data!)),
+        );
+  }
+
+  @override
+  Cancelable<int> like(PostId id) {
+    return _http
+        .post<Map<String, dynamic>>(
+          path: '/wall/$id/like/',
+        )
+        .next(
+          onValue: (response) => response.data!['count'] as int,
+        );
   }
 }

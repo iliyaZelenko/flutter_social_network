@@ -1,13 +1,12 @@
 import 'dart:math';
 
-import 'package:rate_club/features/feed/data/dto/feed_dto.dart';
-import 'package:rate_club/features/feed/data/mappers/feed_item_dto_to_post_entity_mapper.dart';
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/repositories/feed_repository.dart';
 import 'package:rate_club/features/feed/domain/value_objects/feed_response.dart';
-import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
+import 'package:rate_club/features/feed/infrastructure/dto/feed_dto.dart';
+import 'package:rate_club/features/feed/infrastructure/mappers/feed_item_dto_to_post_entity_mapper.dart';
 import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart';
 import 'package:rate_club/rate_club.dart';
 
@@ -60,13 +59,12 @@ class FeedRepositoryImpl implements FeedRepository {
         isVerified: true,
       ),
       createdAt: DateTime.now(),
+      likedByMe: false,
       title: 'Error when parsing post',
       content: 'TODO: error message',
-      counters: PostCounters(
-        comments: 0,
-        marks: 0,
-        viewed: 0,
-      ),
+      viewsCount: 0,
+      commentsCount: 0,
+      marksCount: 0,
       media: [],
     );
   }

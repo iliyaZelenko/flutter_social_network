@@ -6,6 +6,7 @@ import 'package:rate_club/rate_club.dart';
 
 import 'data/repository/post_repository_impl.dart';
 import 'domain/repositories/post_repository.dart';
+import 'domain/use_cases/like_post_use_case.dart';
 
 // TODO Ilya
 // extension on AppRoutes {
@@ -24,21 +25,30 @@ class PostFeature extends FeatureInterface {
 
   @override
   void execute() {
+    final postRepo = PostRepositoryImpl(
+      _http,
+      PostDtoToPostScreenEntityMapper(),
+    );
+
     _injector
       ..map<PostRepository>(
-        (i) => PostRepositoryImpl(
-          _http,
-          PostDtoToPostScreenEntityMapper(),
-        ),
+        (i) => postRepo,
         isSingleton: true,
       )
       ..map<GetPostUseCase>(
-        (i) => GetPostUseCase(i.get<PostRepository>()),
+        (i) => GetPostUseCase(postRepo),
+        isSingleton: true,
+      )
+      ..map<LikePostUseCase>(
+        (i) => LikePostUseCase(postRepo),
         isSingleton: true,
       )
       // TODO Ilya(optimization): dynamically map with "key" or parameters based on postId? And then dispose (remove instance from Injector)
       ..map<PostPresenter>(
-        (i) => PostPresenter(getPostUseCase: i.get<GetPostUseCase>()),
+        (i) => PostPresenter(
+          getPostUseCase: i.get<GetPostUseCase>(),
+          likePostUseCase: i.get<LikePostUseCase>(),
+        ),
       );
   }
 }

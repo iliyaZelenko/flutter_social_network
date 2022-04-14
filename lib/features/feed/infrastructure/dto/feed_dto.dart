@@ -75,6 +75,9 @@ class ArticleDto {
   final List<PostMediaDto>? media;
   final DateTime? createdAt;
 
+  @JsonKey(name: 'is_ilike', defaultValue: false)
+  final bool likedByMe;
+
   // recommended plan to buy to see this post (PostClosedByPlanEntity)
   final int? recommend;
   final PlanDetailsDto? planDetails;
@@ -88,6 +91,7 @@ class ArticleDto {
     this.recommend,
     this.planDetails,
     this.createdAt,
+    this.likedByMe,
   );
 
   factory ArticleDto.fromJson(Map<String, dynamic> json) => _$ArticleDtoFromJson(json);

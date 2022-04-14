@@ -48,6 +48,7 @@ ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => ArticleDto(
       json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
+      json['is_ilike'] as bool? ?? false,
     );
 
 PlanDetailsDto _$PlanDetailsDtoFromJson(Map<String, dynamic> json) =>

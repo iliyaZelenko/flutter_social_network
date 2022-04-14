@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
+import 'package:rate_club/features/feed/presentation/feed_presenter.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_like.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
@@ -19,12 +20,29 @@ class PostCardFooter extends StatefulWidget {
 }
 
 class _PostCardFooterState extends State<PostCardFooter> {
-  ValueNotifier<bool> _isLiked = ValueNotifier(false);
+  late final ValueNotifier<bool> _isLiked;
+  late final ValueNotifier<int> _likesCount;
+
+  PostOpenByPlanEntity get _post => Provider.of<PostEntity>(context, listen: false) as PostOpenByPlanEntity;
+
+  // TODO Ilya: Это может быть и пост. Добавить абстракцию чтобы работало универсально. Что-то типа LikeablePost
+  FeedPresenter get _feedPresenter => Provider.of<FeedPresenter>(context, listen: false);
+
+  @override
+  void initState() {
+    super.initState();
+
+    _isLiked = ValueNotifier(_post.likedByMe);
+    _likesCount = ValueNotifier(_post.marksCount);
+  }
+
+  void _setActualLikeState() {
+    _isLiked.value = _post.likedByMe;
+    _likesCount.value = _post.marksCount;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final post = Provider.of<PostEntity>(context) as PostOpenByPlanEntity;
-
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 12, top: 5, bottom: 20),
       child: Row(
@@ -33,7 +51,19 @@ class _PostCardFooterState extends State<PostCardFooter> {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              _isLiked.value = !_isLiked.value;
+              // TODO Ilya: может использовать напрямую тут Use Case?
+              _feedPresenter.likePost(_post).next(
+                onError: (e) {
+                  // Ставит состояние обратно
+                  _setActualLikeState();
+
+                  // Передаем дальше, чтобы обработалось в зоне и юзер увидел что за ошибка была с лайком.
+                  throw e;
+                },
+              );
+
+              // Сразу реагирует на изменённое состояние
+              _setActualLikeState();
             },
             child: Row(
               children: [
@@ -41,9 +71,14 @@ class _PostCardFooterState extends State<PostCardFooter> {
                   isLiked: _isLiked,
                 ),
                 const SizedBox(width: 4),
-                Text(
-                  post.counters.marks.toString(),
-                  style: AppTextStyles.semiBold15,
+                ValueListenableBuilder<int>(
+                  valueListenable: _likesCount,
+                  builder: (ctx, count, __) {
+                    return Text(
+                      count.toString(),
+                      style: AppTextStyles.semiBold15,
+                    );
+                  },
                 ),
               ],
             ),
@@ -57,7 +92,7 @@ class _PostCardFooterState extends State<PostCardFooter> {
                 return;
               }
 
-              Navigator.of(context).pushNamed(AppRoutes.post, arguments: post.id);
+              Navigator.of(context).pushNamed(AppRoutes.post, arguments: _post.id);
             },
             child: Row(
               children: [
@@ -68,7 +103,7 @@ class _PostCardFooterState extends State<PostCardFooter> {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  post.counters.comments.toString(),
+                  _post.commentsCount.toString(),
                   style: AppTextStyles.semiBold16.apply(color: AppColors.black60),
                 ),
               ],
@@ -92,7 +127,7 @@ class _PostCardFooterState extends State<PostCardFooter> {
           ),
           const SizedBox(width: 4),
           Text(
-            '${post.counters.viewed}',
+            '${_post.viewsCount}',
             style: AppTextStyles.medium12.apply(color: AppColors.black20),
           )
         ],

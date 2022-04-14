@@ -1,12 +1,11 @@
-import 'package:rate_club/features/feed/data/dto/feed_dto.dart';
 import 'package:rate_club/features/feed/domain/entities/post_closed_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/media_id.dart';
-import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
+import 'package:rate_club/features/feed/infrastructure/dto/feed_dto.dart';
 import 'package:rate_club/features/payments/domain/entities/currency_entity.dart';
 import 'package:rate_club/features/payments/domain/value_objects/currency_id.dart';
 import 'package:rate_club/features/payments/domain/value_objects/money.dart';
@@ -38,13 +37,12 @@ class FeedItemDtoToPostEntityMapper {
         id: PostId(article.id),
         creator: creatorEntity,
         createdAt: article.createdAt!,
+        likedByMe: article.likedByMe,
         content: article.content!,
         title: article.title,
-        counters: PostCounters(
-          viewed: article.counters!.viewed,
-          comments: article.counters!.comments,
-          marks: article.counters!.marks,
-        ),
+        viewsCount: article.counters!.viewed,
+        commentsCount: article.counters!.comments,
+        marksCount: article.counters!.marks,
         media: (article.media ?? [])
             .map(
               (media) => PostMediaEntity(

@@ -1,7 +1,6 @@
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/media_id.dart';
-import 'package:rate_club/features/feed/domain/value_objects/post_counters.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/post/data/dto/post_dto.dart';
 import 'package:rate_club/features/post/domain/entities/post_screen_entity.dart';
@@ -25,11 +24,10 @@ class PostDtoToPostScreenEntityMapper {
       createdAt: dto.createdAt,
       content: dto.content,
       title: dto.title,
-      counters: PostCounters(
-        viewed: dto.counters.viewed,
-        comments: dto.counters.comments,
-        marks: dto.counters.marks,
-      ),
+      likedByMe: dto.likedByMe,
+      viewsCount: dto.counters.viewed,
+      commentsCount: dto.counters.comments,
+      marksCount: dto.counters.marks,
       media: (dto.media ?? [])
           .map(
             (media) => PostMediaEntity(

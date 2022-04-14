@@ -57,6 +57,13 @@ mixin _$PostPresenter on PostPresenterBase, Store {
     return _$refreshAsyncAction.run(() => super.refresh());
   }
 
+  final _$likeAsyncAction = AsyncAction('PostPresenterBase.like');
+
+  @override
+  Future<void> like() {
+    return _$likeAsyncAction.run(() => super.like());
+  }
+
   @override
   String toString() {
     return '''
