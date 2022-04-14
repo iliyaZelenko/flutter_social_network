@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mobx/mobx.dart';
+import 'package:rate_club/features/auth/exceptions/auth_invalid_credentials_exception.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_routes.dart';
@@ -23,13 +24,16 @@ abstract class AuthFlowPresenterBase with Store {
   @readonly
   bool _loading = false;
 
-  // na1se_one/223322Aa
+  // na1se_one/123456qwer
   // email@zlat.ny/password666
   @readonly
   String _username = 'na1se_one';
 
   @readonly
-  String _password = '223322Aa';
+  String _password = '123456qwer';
+
+  @readonly
+  String? _error;
 
   @observable
   bool hidePassword = true;
@@ -38,7 +42,7 @@ abstract class AuthFlowPresenterBase with Store {
   bool rememberMe = false;
 
   @action
-  setInput({
+  void setInput({
     String? username,
     String? password,
   }) {
@@ -48,23 +52,28 @@ abstract class AuthFlowPresenterBase with Store {
 
   @action
   Future<void> signIn() async {
+    _error = null;
     _loading = true;
 
     try {
       await _authPresenter.signIn(
-        username: this._username,
-        password: this._password,
+        username: _username,
+        password: _password,
       );
+
+      FocusManager.instance.primaryFocus?.unfocus();
+      // Нужна задержка, иначе иногда баг вылазит
+      Delays.defaultDelayCancelable.next(onValue: (_) {
+        _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
+      });
     } catch (e) {
       _loading = false;
 
-      rethrow;
+      if (e is AuthInvalidCredentialsException) {
+        _error = e.message;
+      } else {
+        rethrow;
+      }
     }
-
-    FocusManager.instance.primaryFocus?.unfocus();
-    // Нужна задержка, иначе иногда баг вылазит
-    Delays.defaultDelayCancelable.next(onValue: (_) {
-      _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
-    });
   }
 }

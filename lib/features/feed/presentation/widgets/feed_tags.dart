@@ -41,7 +41,7 @@ class _FeedTagsState extends State<FeedTags> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Text(
-                    '#$tag',
+                    '#$tag', // TODO Ilya: test regular9
                     style: AppTextStyles.medium14.apply(
                       color: tag == selectedTag ? AppColors.white100 : AppColors.black100,
                     ),

@@ -74,7 +74,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
             );
 
             if (e.response!.statusCode == 401) {
-              throw AppHttpException401(exception);
+              throw AppHttp401Exception(exception);
             }
 
             throw exception;

@@ -29,6 +29,7 @@ abstract class AuthPresenterBase with Store {
     required String username,
     required String password,
   }) async {
+    // Не обрабатывать через try/catch, так как используется в auth_flow_presenter
     await _signInUseCase.execute(
       username: username,
       password: password,

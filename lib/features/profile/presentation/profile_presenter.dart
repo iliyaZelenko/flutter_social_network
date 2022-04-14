@@ -21,7 +21,7 @@ abstract class ProfilePresenterBase with Store {
   Future<void> fetch() async {
     try {
       profile = await _getProfileUseCase.execute();
-    } on AppHttpException401 {
+    } on AppHttp401Exception {
       profile = null;
     }
   }

@@ -60,6 +60,23 @@ mixin _$AuthFlowPresenter on AuthFlowPresenterBase, Store {
     });
   }
 
+  final _$_errorAtom = Atom(name: 'AuthFlowPresenterBase._error');
+
+  String? get error {
+    _$_errorAtom.reportRead();
+    return super._error;
+  }
+
+  @override
+  String? get _error => error;
+
+  @override
+  set _error(String? value) {
+    _$_errorAtom.reportWrite(value, super._error, () {
+      super._error = value;
+    });
+  }
+
   final _$hidePasswordAtom = Atom(name: 'AuthFlowPresenterBase.hidePassword');
 
   @override
@@ -101,7 +118,7 @@ mixin _$AuthFlowPresenter on AuthFlowPresenterBase, Store {
       ActionController(name: 'AuthFlowPresenterBase');
 
   @override
-  dynamic setInput({String? username, String? password}) {
+  void setInput({String? username, String? password}) {
     final _$actionInfo = _$AuthFlowPresenterBaseActionController.startAction(
         name: 'AuthFlowPresenterBase.setInput');
     try {

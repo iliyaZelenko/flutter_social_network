@@ -43,7 +43,7 @@ Future<void> main() async {
   await runZonedGuarded(() async {
     await _runRateClub();
   }, (error, stackTrace) {
-    if (error is AppHttpException401) {
+    if (error is AppHttp401Exception) {
       _mainNavigatorKey.currentState?.pushNamedAndRemoveUntil(AppRoutes.auth, (route) => false);
     } else if (error is! CanceledError) {
       // TODO Ilya: show notification

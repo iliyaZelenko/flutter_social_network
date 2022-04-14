@@ -99,17 +99,30 @@ class SignInScreen extends StatelessWidget {
                 children: [
                   Observer(
                     builder: (_) {
-                      return RegularAppBtn(
-                        text: 'войти',
-                        loading: authPresenter.loading,
-                        onTap: () {
-                          authPresenter.signIn();
-                        },
+                      return Expanded(
+                        child: RegularAppBtn(
+                          text: 'Log in',
+                          loading: authPresenter.loading,
+                          onTap: () {
+                            authPresenter.signIn();
+                          },
+                        ),
                       );
                     },
                   ),
                 ],
-              )
+              ),
+              const SizedBox(height: 20),
+              Observer(
+                builder: (_) {
+                  return authPresenter.error == null
+                      ? const SizedBox.shrink()
+                      : Text(
+                          authPresenter.error!,
+                          style: AppTextStyles.regular15.apply(color: AppColors.red80),
+                        );
+                },
+              ),
             ],
           ),
         ),

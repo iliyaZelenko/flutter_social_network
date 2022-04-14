@@ -55,7 +55,7 @@ class AppHttpException implements Exception {
 
   @override
   String toString() {
-    var msg = 'HttpErrorType [$type]: $message';
+    var msg = '$runtimeType [$type]: $message';
     if (error is Error) {
       msg += '\n${(error as Error).stackTrace}';
     }
@@ -67,8 +67,8 @@ class AppHttpException implements Exception {
 }
 
 // If 401 (Unauthorized)
-class AppHttpException401 extends AppHttpException {
-  AppHttpException401(AppHttpException exception)
+class AppHttp401Exception extends AppHttpException {
+  AppHttp401Exception(AppHttpException exception)
       : super(
           requestOptions: exception.requestOptions,
           response: exception.response,

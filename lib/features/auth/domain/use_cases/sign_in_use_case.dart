@@ -1,4 +1,5 @@
-import 'package:worker_manager/worker_manager.dart';
+import 'package:app_http_client/app_http_client.dart';
+import 'package:rate_club/features/auth/exceptions/auth_invalid_credentials_exception.dart';
 
 import '../repositories/auth_repository.dart';
 
@@ -7,10 +8,14 @@ class SignInUseCase {
 
   SignInUseCase(this._authRepo);
 
-  Cancelable<void> execute({
+  Future<void> execute({
     required String username,
     required String password,
-  }) {
-    return _authRepo.signIn(username: username, password: password);
+  }) async {
+    try {
+      return await _authRepo.signIn(username: username, password: password);
+    } on AppHttp401Exception catch (e) {
+      throw AuthInvalidCredentialsException(e.response?.data?['detail'] as String? ?? 'Invalid credentials');
+    }
   }
 }
