@@ -4,8 +4,10 @@ import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart'
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 
+import 'data/mappers/post_comment_dto_to_entity_mapper.dart';
 import 'data/repository/post_repository_impl.dart';
 import 'domain/repositories/post_repository.dart';
+import 'domain/use_cases/get_post_comments_use_case.dart';
 import 'domain/use_cases/like_post_use_case.dart';
 
 // TODO Ilya
@@ -28,6 +30,7 @@ class PostFeature extends FeatureInterface {
     final postRepo = PostRepositoryImpl(
       _http,
       FeedItemDtoToPostEntityMapper(),
+      PostCommentDtoToEntityMapper(),
     );
 
     _injector
@@ -43,10 +46,15 @@ class PostFeature extends FeatureInterface {
         (i) => LikePostUseCase(postRepo),
         isSingleton: true,
       )
+      ..map<GetPostCommentsUseCase>(
+        (i) => GetPostCommentsUseCase(postRepo),
+        isSingleton: true,
+      )
       // TODO Ilya(optimization): dynamically map with "key" or parameters based on postId? And then dispose (remove instance from Injector)
       ..map<PostPresenter>(
         (i) => PostPresenter(
           getPostUseCase: i.get<GetPostUseCase>(),
+          getPostCommentsUseCase: i.get<GetPostCommentsUseCase>(),
         ),
       );
   }

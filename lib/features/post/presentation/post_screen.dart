@@ -41,6 +41,7 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
   @override
   void afterFirstLayout(BuildContext context) {
     postPresenter.initFetch(widget._postId);
+    postPresenter.fetchComments(widget._postId);
   }
 
   @override
@@ -102,7 +103,7 @@ class _PostBody extends StatelessWidget {
           scrollPhysics: const AlwaysScrollableScrollPhysics(),
           onRefresh: postPresenter.refresh,
           slivers: [
-            SliverToBoxAdapter(
+            SliverFillRemaining(
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: DecoratedBox(
@@ -125,11 +126,30 @@ class _PostBody extends StatelessWidget {
                               create: (_) => postPresenter.post!,
                               child: const PostCardFooter(),
                             ),
+                            if (postPresenter.postCommentsResponse == null)
+                              const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            else
+                              Expanded(
+                                child: ListView.builder(
+                                  addAutomaticKeepAlives: false,
+                                  addRepaintBoundaries: false,
+                                  addSemanticIndexes: false,
+                                  itemExtent: 60,
+                                  padding: const EdgeInsets.only(top: 20, left: 14, right: 14, bottom: 50),
+                                  itemBuilder: (ctx, index) {
+                                    final comment = postPresenter.postCommentsResponse!.results.elementAt(index);
+                                    return Text(comment.content);
+                                  },
+                                  itemCount: postPresenter.postCommentsResponse!.results.length,
+                                ),
+                              ),
                           ],
                   ),
                 ),
               ),
-            )
+            ),
           ],
         );
       },

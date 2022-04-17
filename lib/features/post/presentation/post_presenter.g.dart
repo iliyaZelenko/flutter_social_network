@@ -43,11 +43,38 @@ mixin _$PostPresenter on PostPresenterBase, Store {
     });
   }
 
+  final _$_postCommentsResponseAtom =
+      Atom(name: 'PostPresenterBase._postCommentsResponse');
+
+  PostCommentsResponse? get postCommentsResponse {
+    _$_postCommentsResponseAtom.reportRead();
+    return super._postCommentsResponse;
+  }
+
+  @override
+  PostCommentsResponse? get _postCommentsResponse => postCommentsResponse;
+
+  @override
+  set _postCommentsResponse(PostCommentsResponse? value) {
+    _$_postCommentsResponseAtom.reportWrite(value, super._postCommentsResponse,
+        () {
+      super._postCommentsResponse = value;
+    });
+  }
+
   final _$initFetchAsyncAction = AsyncAction('PostPresenterBase.initFetch');
 
   @override
   Future<void> initFetch(PostId id) {
     return _$initFetchAsyncAction.run(() => super.initFetch(id));
+  }
+
+  final _$fetchCommentsAsyncAction =
+      AsyncAction('PostPresenterBase.fetchComments');
+
+  @override
+  Future<void> fetchComments(PostId id) {
+    return _$fetchCommentsAsyncAction.run(() => super.fetchComments(id));
   }
 
   final _$refreshAsyncAction = AsyncAction('PostPresenterBase.refresh');

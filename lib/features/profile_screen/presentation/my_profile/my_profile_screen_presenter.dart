@@ -25,10 +25,10 @@ abstract class MyProfileScreenPresenterBase with Store implements AbstractProfil
         _getProfileScreenUseCase = getProfileScreenUseCase,
         _getProfileFeedUseCase = getProfileFeedUseCase;
 
-  @observable
+  @readonly
   ProfileScreenEntity? _fetchedProfile;
 
-  @observable
+  @readonly
   FeedResponse? _feedResponse;
 
   String get _nickname => _profilePresenter.profile!.nickname;

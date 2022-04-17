@@ -20,12 +20,11 @@ class AppDioHttpClient implements AppHttpClientInterface {
     Dio? dio,
     TokensStorage? tokensStorage,
     this.defaultHost,
-  })  : _dio = dio ??
-            Dio(BaseOptions(
-              validateStatus: (int? status) {
-                // Fix https://github.com/flutterchina/dio/issues/995#issuecomment-739902537
-                return status != null && status >= 100 && status <= 400;
-              },
+  })  : _dio = dio ?? Dio(BaseOptions(
+            // validateStatus: (int? status) {
+            //   // Fix https://github.com/flutterchina/dio/issues/995#issuecomment-739902537
+            //   return status != null && status >= 100 && status <= 400;
+            // },
             )),
         _tokensStorage = tokensStorage ?? TokensStorage();
 

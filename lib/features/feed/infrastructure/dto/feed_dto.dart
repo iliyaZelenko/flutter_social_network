@@ -31,6 +31,7 @@ class FeedResponseDto {
   }
 }
 
+// TODO Ilya: "comment" from the backend
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class FeedResponseItemDto {
   // id события

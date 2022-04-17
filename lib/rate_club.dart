@@ -3,8 +3,7 @@ library rate_club;
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import 'features/tools/global_events/events/AbstractGlobalEvent.dart';
+import 'package:rate_club/resources/global_events/events/AbstractGlobalEvent.dart';
 
 export 'package:app_http_client/app_http_client.dart';
 export 'package:collection/collection.dart';

@@ -12,9 +12,11 @@ void showErrorMsg(Object error, GlobalKey<NavigatorState> mainNavigatorKey) {
     msg = 'Нет подключения к интернету';
   } else if (error is AppHttpException) {
     if (error.response != null) {
-      final defaultMsg = error.response?.data is String
+      String? defaultMsg = error.response?.data is String
           ? (error.response?.data as String).characters.take(200).toString() // .substring(0, min(200, str.length))
           : error.response?.data?['message']?.toString();
+
+      if (defaultMsg == '') defaultMsg = null;
 
       if (error.response!.statusCode! >= 500 && error.response!.statusCode! < 600) {
         // Server error

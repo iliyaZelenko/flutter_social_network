@@ -50,9 +50,9 @@ class FeedRepositoryImpl implements FeedRepository {
     final random = Random();
 
     return PostOpenByPlanEntity(
-      id: PostId(random.nextInt(100)),
+      id: PostId(99999999999 + random.nextInt(100)),
       creator: PostCreatorEntity(
-        id: ProfileId(random.nextInt(100)),
+        id: ProfileId(99999999999 + random.nextInt(100)),
         nickname: 'error_reporter',
         firstName: 'Error',
         lastName: 'Reporter',

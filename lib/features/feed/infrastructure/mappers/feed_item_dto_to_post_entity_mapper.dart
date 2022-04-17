@@ -3,8 +3,8 @@ import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_media_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
-import 'package:rate_club/features/feed/domain/value_objects/media_id.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
+import 'package:rate_club/features/feed/domain/value_objects/post_media_id.dart';
 import 'package:rate_club/features/feed/infrastructure/dto/feed_dto.dart';
 import 'package:rate_club/features/payments/domain/entities/currency_entity.dart';
 import 'package:rate_club/features/payments/domain/value_objects/currency_id.dart';
@@ -20,7 +20,7 @@ class FeedItemDtoToPostEntityMapper {
     final creatorEntity = PostCreatorEntity(
       id: ProfileId(creator.pid),
       nickname: creator.nickname,
-      avatar: creator.avatar?.defaultType ?? 'i.imgur.com/QHyTGKE.png',
+      avatar: creator.avatar?.defaultType ?? 'https://i.imgur.com/xWGGZgV.png',
       firstName: creator.firstName ?? 'Без имени',
       lastName: creator.lastName ?? 'Без фамилии',
       isVerified: creator.isVerified,
@@ -46,7 +46,7 @@ class FeedItemDtoToPostEntityMapper {
         media: (article.media ?? [])
             .map(
               (media) => PostMediaEntity(
-                id: MediaId(media.id),
+                id: PostMediaId(media.id),
                 url: media.url,
               ),
             )

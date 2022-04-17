@@ -23,10 +23,10 @@ abstract class OtherProfileScreenPresenterBase with Store implements AbstractPro
         _getProfileScreenUseCase = getProfileScreenUseCase,
         _getProfileFeedUseCase = getProfileFeedUseCase;
 
-  @observable
+  @readonly
   ProfileScreenEntity? _fetchedProfile;
 
-  @observable
+  @readonly
   FeedResponse? _feedResponse;
 
   @override

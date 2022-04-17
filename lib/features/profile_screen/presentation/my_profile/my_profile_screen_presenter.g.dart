@@ -27,11 +27,13 @@ mixin _$MyProfileScreenPresenter on MyProfileScreenPresenterBase, Store {
   final _$_fetchedProfileAtom =
       Atom(name: 'MyProfileScreenPresenterBase._fetchedProfile');
 
-  @override
-  ProfileScreenEntity? get _fetchedProfile {
+  ProfileScreenEntity? get fetchedProfile {
     _$_fetchedProfileAtom.reportRead();
     return super._fetchedProfile;
   }
+
+  @override
+  ProfileScreenEntity? get _fetchedProfile => fetchedProfile;
 
   @override
   set _fetchedProfile(ProfileScreenEntity? value) {
@@ -43,11 +45,13 @@ mixin _$MyProfileScreenPresenter on MyProfileScreenPresenterBase, Store {
   final _$_feedResponseAtom =
       Atom(name: 'MyProfileScreenPresenterBase._feedResponse');
 
-  @override
-  FeedResponse? get _feedResponse {
+  FeedResponse? get feedResponse {
     _$_feedResponseAtom.reportRead();
     return super._feedResponse;
   }
+
+  @override
+  FeedResponse? get _feedResponse => feedResponse;
 
   @override
   set _feedResponse(FeedResponse? value) {

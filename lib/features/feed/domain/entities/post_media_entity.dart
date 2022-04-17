@@ -1,7 +1,7 @@
-import 'package:rate_club/features/feed/domain/value_objects/media_id.dart';
+import 'package:rate_club/features/feed/domain/value_objects/post_media_id.dart';
 
 class PostMediaEntity {
-  final MediaId id;
+  final PostMediaId id;
   final String url;
 
   const PostMediaEntity({
