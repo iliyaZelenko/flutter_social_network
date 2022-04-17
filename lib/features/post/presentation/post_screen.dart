@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_club/features/feed/domain/entities/post_closed_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
+import 'package:rate_club/features/feed/presentation/widgets/post_card/post_card_content_closed_by_plan.dart';
 import 'package:rate_club/features/feed/presentation/widgets/post_card/post_card_footer.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_screen_content.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_screen_header.dart';
@@ -113,14 +115,17 @@ class _PostBody extends StatelessWidget {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const PostScreenHeader(),
-                      const PostScreenContent(),
-                      Provider<PostEntity>(
-                        create: (_) => postPresenter.post!,
-                        child: const PostCardFooter(),
-                      ),
-                    ],
+                    children: postPresenter.post! is PostClosedByPlanEntity
+                        // Если контент поста не допступен по плану
+                        ? [const PostCardContentClosedByPlan()]
+                        : [
+                            const PostScreenHeader(),
+                            const PostScreenContent(),
+                            Provider<PostEntity>(
+                              create: (_) => postPresenter.post!,
+                              child: const PostCardFooter(),
+                            ),
+                          ],
                   ),
                 ),
               ),

@@ -64,7 +64,7 @@ class FeedRepositoryImpl implements FeedRepository {
       content: 'TODO: error message',
       viewsCount: 0,
       commentsCount: 0,
-      marksCount: 0,
+      likesCount: 0,
       media: [],
     );
   }

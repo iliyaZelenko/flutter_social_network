@@ -14,6 +14,7 @@ FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
 
 FeedResponseItemDto _$FeedResponseItemDtoFromJson(Map<String, dynamic> json) =>
     FeedResponseItemDto(
+      json['id'] as int,
       PostCreatorDto.fromJson(json['creator'] as Map<String, dynamic>),
       ArticleDto.fromJson(json['article'] as Map<String, dynamic>),
     );

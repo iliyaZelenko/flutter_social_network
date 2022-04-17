@@ -14,7 +14,7 @@ class PostOpenByPlanEntity extends PostEntity {
   int viewsCount;
   int commentsCount;
   // TODO Ilya: спросить, это кол-во лайков?
-  int marksCount;
+  int likesCount;
 
   PostOpenByPlanEntity({
     // Base class properties
@@ -29,8 +29,8 @@ class PostOpenByPlanEntity extends PostEntity {
     required this.likedByMe,
     required this.viewsCount,
     required this.commentsCount,
-    required this.marksCount,
-  })  : assert(viewsCount >= 0 && commentsCount >= 0 && marksCount >= 0),
+    required this.likesCount,
+  })  : assert(viewsCount >= 0 && commentsCount >= 0 && likesCount >= 0),
         super(
           id: id,
           creator: creator,

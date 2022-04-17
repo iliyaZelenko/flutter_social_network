@@ -1,5 +1,4 @@
 import 'package:injector/injector.dart';
-import 'package:rate_club/features/post/domain/use_cases/like_post_use_case.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'domain/repositories/feed_repository.dart';
@@ -40,7 +39,6 @@ class FeedFeature extends FeatureInterface {
       ..map<FeedPresenter>(
         (i) => FeedPresenter(
           getFeedUseCase: i.get<GetFeedUseCase>(),
-          likePostUseCase: i.get<LikePostUseCase>(),
         ),
         isSingleton: true,
       );

@@ -1,5 +1,5 @@
 import 'package:injector/injector.dart';
-import 'package:rate_club/features/post/data/mappers/post_dto_to_post_entity_mapper.dart';
+import 'package:rate_club/features/feed/infrastructure/mappers/feed_item_dto_to_post_entity_mapper.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
 import 'package:rate_club/rate_club.dart';
@@ -27,7 +27,7 @@ class PostFeature extends FeatureInterface {
   void execute() {
     final postRepo = PostRepositoryImpl(
       _http,
-      PostDtoToPostScreenEntityMapper(),
+      FeedItemDtoToPostEntityMapper(),
     );
 
     _injector
@@ -47,7 +47,6 @@ class PostFeature extends FeatureInterface {
       ..map<PostPresenter>(
         (i) => PostPresenter(
           getPostUseCase: i.get<GetPostUseCase>(),
-          likePostUseCase: i.get<LikePostUseCase>(),
         ),
       );
   }

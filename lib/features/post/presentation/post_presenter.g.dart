@@ -28,16 +28,16 @@ mixin _$PostPresenter on PostPresenterBase, Store {
 
   final _$_postAtom = Atom(name: 'PostPresenterBase._post');
 
-  PostScreenEntity? get post {
+  PostEntity? get post {
     _$_postAtom.reportRead();
     return super._post;
   }
 
   @override
-  PostScreenEntity? get _post => post;
+  PostEntity? get _post => post;
 
   @override
-  set _post(PostScreenEntity? value) {
+  set _post(PostEntity? value) {
     _$_postAtom.reportWrite(value, super._post, () {
       super._post = value;
     });
@@ -55,13 +55,6 @@ mixin _$PostPresenter on PostPresenterBase, Store {
   @override
   Future<void> refresh() {
     return _$refreshAsyncAction.run(() => super.refresh());
-  }
-
-  final _$likeAsyncAction = AsyncAction('PostPresenterBase.like');
-
-  @override
-  Future<void> like() {
-    return _$likeAsyncAction.run(() => super.like());
   }
 
   @override

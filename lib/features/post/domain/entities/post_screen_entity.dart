@@ -14,7 +14,7 @@ class PostScreenEntity extends PostOpenByPlanEntity {
     required bool likedByMe,
     required int viewsCount,
     required int commentsCount,
-    required int marksCount,
+    required int likesCount,
   }) : super(
           id: id,
           content: content,
@@ -25,7 +25,7 @@ class PostScreenEntity extends PostOpenByPlanEntity {
           likedByMe: likedByMe,
           viewsCount: viewsCount,
           commentsCount: commentsCount,
-          marksCount: marksCount,
+          likesCount: likesCount,
         );
 
   @override

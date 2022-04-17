@@ -11,7 +11,6 @@ import 'package:worker_manager/worker_manager.dart';
 import 'dio_flutter_transformer.dart';
 import 'tokens_storage.dart';
 
-// @throws AppHttpException if http error
 class AppDioHttpClient implements AppHttpClientInterface {
   final TokensStorage _tokensStorage;
   final String? defaultHost;
@@ -21,17 +20,26 @@ class AppDioHttpClient implements AppHttpClientInterface {
     Dio? dio,
     TokensStorage? tokensStorage,
     this.defaultHost,
-  })  : _dio = dio ?? Dio(),
+  })  : _dio = dio ??
+            Dio(BaseOptions(
+              validateStatus: (int? status) {
+                // Fix https://github.com/flutterchina/dio/issues/995#issuecomment-739902537
+                return status != null && status >= 100 && status <= 400;
+              },
+            )),
         _tokensStorage = tokensStorage ?? TokensStorage();
 
+  @override
   String? get tokenStr => _tokensStorage.token;
 
+  @override
   Future<void> init() async {
     // See https://stackoverflow.com/a/62911616/5286034
     _dio.transformer = FlutterTransformer();
     await _tokensStorage.init();
   }
 
+  // @throws AppHttpException if http error
   Cancelable<Response<T>> _performRequest<T>({
     String? host,
     String path = '',
@@ -51,6 +59,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
         ..addAll({
           if (_tokensStorage.token != null) HttpHeaders.authorizationHeader: 'Bearer ${_tokensStorage.token}',
           HttpHeaders.contentTypeHeader: ContentType('application', 'json', charset: 'utf-8').toString(),
+          // HttpHeaders.acceptHeader: ContentType('application', 'json', charset: 'utf-8').toString(),
         });
 
       return Cancelable.fromFuture(
@@ -88,6 +97,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     return _request().next(
       onValue: (response) async {
         await _rememberTokens(response);
+
         return response;
       },
     );
@@ -140,7 +150,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     bool handleOnUnauthorized = true,
     bool? fakeIsolate,
   }) {
-    return _performRequest(
+    return _performRequest<T>(
       method: HttpMethod.post,
       host: host,
       path: path,
@@ -162,7 +172,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     bool handleOnUnauthorized = true,
     bool? fakeIsolate,
   }) {
-    return _performRequest(
+    return _performRequest<T>(
       method: HttpMethod.put,
       host: host,
       path: path,
@@ -184,7 +194,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     bool handleOnUnauthorized = true,
     bool? fakeIsolate,
   }) {
-    return _performRequest(
+    return _performRequest<T>(
       method: HttpMethod.delete,
       host: host,
       path: path,
@@ -205,7 +215,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     Map<String, dynamic>? body,
     bool? fakeIsolate,
   }) {
-    return _performRequest(
+    return _performRequest<T>(
       method: HttpMethod.patch,
       host: host,
       path: path,
@@ -216,6 +226,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     );
   }
 
+  @override
   Cancelable<Response<T>> filesPost<T>({
     String? host,
     String path = '',
@@ -226,7 +237,7 @@ class AppDioHttpClient implements AppHttpClientInterface {
     required files,
     Map<String, String>? fields,
   }) {
-    return _performRequest(
+    return _performRequest<T>(
       method: HttpMethod.filePost,
       host: host,
       path: path,
@@ -238,8 +249,10 @@ class AppDioHttpClient implements AppHttpClientInterface {
     );
   }
 
+  @override
   Map<String, dynamic>? get authInfo => _tokensStorage.token == null ? null : JwtDecoder.decode(_tokensStorage.token!);
 
+  @override
   Future<void> clearTokens() => _tokensStorage.clear();
 
   Future<void> _rememberTokens(Response value) async {
@@ -247,8 +260,8 @@ class AppDioHttpClient implements AppHttpClientInterface {
       final data = value.data;
 
       await _tokensStorage.save(
-        data[TokensStorageKeys.token],
-        data[TokensStorageKeys.refreshToken],
+        data[TokensStorageKeys.token] as String?,
+        data[TokensStorageKeys.refreshToken] as String?,
       );
     } catch (_) {}
   }

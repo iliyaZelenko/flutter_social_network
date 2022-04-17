@@ -33,10 +33,13 @@ class FeedResponseDto {
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class FeedResponseItemDto {
+  // id события
+  final int id;
   final PostCreatorDto creator;
   final ArticleDto article;
 
   FeedResponseItemDto(
+    this.id,
     this.creator,
     this.article,
   );
@@ -114,12 +117,17 @@ class PlanDetailsDto {
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class PostCountersDto {
-  final int viewed, comments, marks;
+  final int viewed, comments;
+
+  @JsonKey(
+    name: 'marks',
+  )
+  final int likes;
 
   PostCountersDto(
     this.viewed,
     this.comments,
-    this.marks,
+    this.likes,
   );
 
   factory PostCountersDto.fromJson(Map<String, dynamic> json) => _$PostCountersDtoFromJson(json);
