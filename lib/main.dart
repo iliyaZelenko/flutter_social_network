@@ -62,6 +62,7 @@ Future<void> main() async {
 
 Future<void> _runRateClub() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   _fixCertificateError();
 
   final injector = await _setupEnvironment();
