@@ -18,7 +18,7 @@ class PostScreenHeader extends StatelessWidget {
   void _goToProfile(BuildContext context, PostCreatorEntity profile) {
     Navigator.of(context).pushNamed(
       AppRoutes.otherProfile,
-      arguments: Provider.of<PostPresenter>(context).post!.creator.nickname,
+      arguments: Provider.of<PostPresenter>(context, listen: false).post!.creator.nickname,
     );
   }
 

@@ -13,16 +13,25 @@ class FeedPostsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (ctx, index) => PostCard(
-          key: ValueKey('post${posts[index].id}'),
-          post: posts[index],
-        ),
-        childCount: posts.length,
-        addAutomaticKeepAlives: false,
-        addSemanticIndexes: false,
-      ),
-    );
+    return posts.isEmpty
+        ? const SliverPadding(
+            padding: EdgeInsets.only(top: 20),
+            sliver: SliverToBoxAdapter(
+              child: Center(
+                child: Text('No posts'),
+              ),
+            ),
+          )
+        : SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (ctx, index) => PostCard(
+                key: ValueKey('post${posts[index].id}'),
+                post: posts[index],
+              ),
+              childCount: posts.length,
+              addAutomaticKeepAlives: false,
+              addSemanticIndexes: false,
+            ),
+          );
   }
 }

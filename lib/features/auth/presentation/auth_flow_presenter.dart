@@ -27,10 +27,10 @@ abstract class AuthFlowPresenterBase with Store {
   // na1se_one/123456qwer
   // email@zlat.ny/password666
   @readonly
-  String _username = 'na1se_one';
+  String _username = 'arttest10';
 
   @readonly
-  String _password = '123456qwer';
+  String _password = 'arturkh123';
 
   @readonly
   String? _error;

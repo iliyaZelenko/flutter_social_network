@@ -70,6 +70,7 @@ class _AppDrawerState extends State<AppDrawer> {
     );
 
     return DrawerController(
+      edgeDragWidth: 100,
       key: _drawerKey,
       alignment: DrawerAlignment.start,
       child: Drawer(
@@ -126,23 +127,29 @@ class _AppDrawerState extends State<AppDrawer> {
                             ),
                           ),
                           const SizedBox(width: 15),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                profilePresenter.profile!.fullName,
-                                style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                '@${profilePresenter.profile!.nickname}',
-                                style: AppTextStyles.regular12.apply(color: AppColors.black60),
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  profilePresenter.profile!.fullName,
+                                  style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  '@${profilePresenter.profile!.nickname}',
+                                  style: AppTextStyles.regular12.apply(color: AppColors.black60),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(width: 50),
                           const Icon(AppIcons.arrow_right_line, color: AppColors.black80),
-                          const SizedBox(width: 5),
+                          const SizedBox(width: 8),
                         ],
                       ),
                     ),
