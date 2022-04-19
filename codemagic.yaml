@@ -15,6 +15,12 @@ workflows:
       flutter: 2.5.3
       xcode: latest
       cocoapods: default
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: release
+      cancel_previous_builds: true
     scripts:
       - name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
         script: |
@@ -70,3 +76,6 @@ workflows:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true
+        beta_groups:
+          - rateclub
