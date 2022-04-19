@@ -32,7 +32,7 @@ packages:
   app_http_client:
     dependency: "direct main"
     description:
-      path: "features/app_http_client"
+      path: "packages/app_http_client"
       relative: true
     source: path
     version: "1.0.0"
@@ -327,7 +327,7 @@ packages:
   injector:
     dependency: "direct main"
     description:
-      path: "features/injector"
+      path: "packages/injector"
       relative: true
     source: path
     version: "1.0.0"
