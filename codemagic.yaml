@@ -37,9 +37,9 @@ workflows:
       - name: Get Flutter packages
         script: |
                     cd . && flutter packages pub get
-      - name: Flutter analyze
-        script: |
-                    cd . && flutter analyze
+#      - name: Flutter analyze
+#        script: |
+#                    cd . && flutter analyze
       - name: Flutter unit tests
         script: |
                     cd . && flutter test
