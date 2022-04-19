@@ -12,7 +12,7 @@ workflows:
         XCODE_WORKSPACE: 'Runner.xcworkspace'
         XCODE_SCHEME: 'Runner'
         BUNDLE_ID: 'app.rateclub.rateClub'
-      flutter: stable
+      flutter: 2.5.3
       xcode: latest
       cocoapods: default
     scripts:
@@ -31,13 +31,13 @@ workflows:
       - name: Get Flutter packages
         script: |
                     cd . && flutter packages pub get
-#      - name: Flutter analyze
-#        script: |
-#                    cd . && flutter analyze
-#      - name: Flutter unit tests
-#        script: |
-#                    cd . && flutter test
-#        ignore_failure: true
+      - name: Flutter analyze
+        script: |
+                    cd . && flutter analyze
+      - name: Flutter unit tests
+        script: |
+                    cd . && flutter test
+        ignore_failure: true
       - name: Install pods
         script: |
                     find . -name "Podfile" -execdir pod install \;
