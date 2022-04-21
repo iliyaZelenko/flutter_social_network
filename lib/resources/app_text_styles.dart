@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 
 mixin AppTextStyles {
+  // Regular
+  static const regular13 = TextStyle(
+    fontSize: 13,
+    fontFamily: 'Raleway Regular',
+  );
+
+  // Medium
+  static const medium15 = TextStyle(
+    fontSize: 15,
+    fontFamily: 'Raleway Medium',
+  );
+  static const medium13 = TextStyle(
+    fontSize: 13,
+    fontFamily: 'Raleway Medium',
+  );
+}
+
+mixin AppTextStylesOld {
   // Semi Bold
   static const semiBold25 = TextStyle(
     fontSize: 25,

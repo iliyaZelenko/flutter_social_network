@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AfterLayoutMixin {
                         Flexible(
                           child: Text(
                             presenter.profile!.fullName,
-                            style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                            style: AppTextStylesOld.semiBold16.apply(color: AppColors.black100),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),

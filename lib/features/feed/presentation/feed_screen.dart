@@ -5,15 +5,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/assets.dart';
 import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 import 'package:rate_club/resources/header.dart';
+import 'package:rate_club/resources/icons/icon_add.dart';
 
 import 'feed_presenter.dart';
 import 'widgets/feed_posts_list.dart';
-import 'widgets/feed_tags.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
@@ -39,63 +39,14 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
       color: AppColors.white80,
       child: SafeArea(
         bottom: false,
-        child: Column(
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            Header(
-              slot: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      drawerController.open();
-                    },
-                    child: SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  Text(
-                    'Лента',
-                    style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
-                  ),
-                  const Spacer(),
-                  const Icon(
-                    AppIcons.search_line,
-                    color: AppColors.black60,
-                    size: 30,
-                  ),
-                  const SizedBox(width: 20),
-                  // Bell with indicator
-                  Stack(
-                    children: const [
-                      Positioned(
-                        right: 1,
-                        child: SizedBox(
-                          width: 8,
-                          height: 8,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: AppColors.red100,
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Icon(
-                        AppIcons.notification_line,
-                        color: AppColors.black60,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
+            Positioned(
+              top: Header.height,
+              left: 0,
+              right: 0,
+              bottom: 0,
               child: Observer(
                 builder: (_) {
                   return feedPresenter.loading
@@ -104,6 +55,71 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
                         )
                       : const _FeedBody();
                 },
+              ),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Header(
+                slot: Padding(
+                  padding: const EdgeInsets.only(left: 6, right: 8),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        Assets.logo,
+                        width: 32,
+                        height: 25,
+                      ),
+
+                      const Spacer(),
+                      const IconAdd(
+                        size: 32,
+                      ),
+                      const SizedBox(width: 14),
+                      Text(
+                        'create new',
+                        style: AppTextStyles.medium15.apply(color: AppColors.black80),
+                      ),
+                      const Spacer(),
+
+                      // Avatar with the bell indicator
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              drawerController.open();
+                            },
+                            child: SizedBox(
+                              width: 32,
+                              height: 32,
+                              child: CircleAvatar(
+                                radius: 200,
+                                backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
+                              ),
+                            ),
+                          ),
+                          // Red dot
+                          Positioned(
+                            top: -5,
+                            right: -5,
+                            child: SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(255, 109, 28, 1),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(color: AppColors.white100, width: 2)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -130,11 +146,10 @@ class _FeedBody extends StatelessWidget {
           scrollPhysics: const AlwaysScrollableScrollPhysics(),
           onRefresh: feedPresenter.refresh,
           slivers: [
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              sliver: SliverToBoxAdapter(child: FeedTags()),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              sliver: FeedPostsList(posts: posts),
             ),
-            FeedPostsList(posts: posts),
           ],
         );
       },

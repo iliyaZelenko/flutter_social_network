@@ -105,7 +105,7 @@ Future<void> _runRateClub() async {
               theme: const CupertinoThemeData(
                 brightness: Brightness.dark,
                 textTheme: CupertinoTextThemeData(
-                    navLargeTitleTextStyle: AppTextStyles.semiBold16,
+                    navLargeTitleTextStyle: AppTextStylesOld.semiBold16,
                     primaryColor: AppColors.black80,
                     textStyle: TextStyle(color: AppColors.black80)),
               ),

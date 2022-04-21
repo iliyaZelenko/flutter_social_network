@@ -70,7 +70,7 @@ class ProfileScreenHeader extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 profile.nickname,
-                                style: AppTextStyles.semiBold20.apply(color: AppColors.black100),
+                                style: AppTextStylesOld.semiBold20.apply(color: AppColors.black100),
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -93,7 +93,7 @@ class ProfileScreenHeader extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   profile.about!,
-                                  style: AppTextStyles.medium14.apply(color: AppColors.black60),
+                                  style: AppTextStylesOld.medium14.apply(color: AppColors.black60),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 3,
                                 ),
@@ -121,14 +121,14 @@ class ProfileScreenHeader extends StatelessWidget {
                           children: [
                             Text(
                               '${formatter.formatWithWord(counter.count)} ',
-                              style: AppTextStyles.medium15.apply(color: AppColors.black100),
+                              style: AppTextStylesOld.medium15.apply(color: AppColors.black100),
                             ),
                             Text(
                               plural.pluralIterable(
                                 counter.count,
                                 counter.plural,
                               ),
-                              style: AppTextStyles.regular15.apply(color: AppColors.black80),
+                              style: AppTextStylesOld.regular15.apply(color: AppColors.black80),
                             )
                           ],
                         ),

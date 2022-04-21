@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nil/nil.dart';
-import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/durations.dart';
 
 class AppTextField extends StatefulWidget {
   final void Function(String value)? onChanged;
@@ -69,7 +69,7 @@ class AppTextField extends StatefulWidget {
     this.cursorColor = AppColors.purple80,
     this.hintColor = AppColors.black60,
     this.initialValue = '',
-  })  : textStyle = textStyle ?? AppTextStyles.medium16.apply(color: AppColors.black100),
+  })  : textStyle = textStyle ?? AppTextStylesOld.medium16.apply(color: AppColors.black100),
         super(key: key);
 
   @override
@@ -123,7 +123,7 @@ class _AppTextFieldState extends State<AppTextField> {
               children: [
                 Text(
                   widget.labelText!,
-                  style: AppTextStyles.regular12.apply(color: AppColors.black60),
+                  style: AppTextStylesOld.regular12.apply(color: AppColors.black60),
                 ),
                 const SizedBox(height: 13),
               ],
@@ -176,7 +176,7 @@ class _AppTextFieldState extends State<AppTextField> {
             isDense: true,
             contentPadding: widget.border ? const EdgeInsets.only(bottom: bottomPadding) : EdgeInsets.zero,
             counter: widget.showCounter ? null : nil,
-            counterStyle: AppTextStyles.medium16.apply(color: AppColors.black100),
+            counterStyle: AppTextStylesOld.medium16.apply(color: AppColors.black100),
 
             // Suffix/prefix
             suffixIcon: widget.suffix,

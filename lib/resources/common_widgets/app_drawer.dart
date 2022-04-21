@@ -84,7 +84,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(
-                      Assets.logo,
+                      Assets.logoText,
                       width: 112,
                     ),
                     InkWell(
@@ -133,14 +133,14 @@ class _AppDrawerState extends State<AppDrawer> {
                               children: [
                                 Text(
                                   profilePresenter.profile!.fullName,
-                                  style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                                  style: AppTextStylesOld.semiBold15.apply(color: AppColors.black100),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   '@${profilePresenter.profile!.nickname}',
-                                  style: AppTextStyles.regular12.apply(color: AppColors.black60),
+                                  style: AppTextStylesOld.regular12.apply(color: AppColors.black60),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ),
@@ -192,7 +192,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Observer(builder: (_) {
-                              final isSelected = homePresenter.tapBarNavigationIndex == 0;
+                              final isSelected = homePresenter.tapBarNavigationIndex == 2;
 
                               return ListTile(
                                 title: Row(
@@ -205,7 +205,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                     const SizedBox(width: 10),
                                     Text(
                                       'Лента',
-                                      style: AppTextStyles.regular15.apply(
+                                      style: AppTextStylesOld.regular15.apply(
                                         color: isSelected ? AppColors.black100 : AppColors.black80,
                                       ),
                                     ),
@@ -220,7 +220,7 @@ class _AppDrawerState extends State<AppDrawer> {
                               );
                             }),
                             Observer(builder: (_) {
-                              final isSelected = homePresenter.tapBarNavigationIndex == 2;
+                              final isSelected = homePresenter.tapBarNavigationIndex == 1;
 
                               return ListTile(
                                 title: Row(
@@ -233,7 +233,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                     const SizedBox(width: 10),
                                     Text(
                                       'Подписки',
-                                      style: AppTextStyles.regular15.apply(
+                                      style: AppTextStylesOld.regular15.apply(
                                         color: isSelected ? AppColors.black100 : AppColors.black80,
                                       ),
                                     ),
@@ -258,7 +258,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                     size: 30,
                                   ),
                                   const SizedBox(width: 10),
-                                  Text('Выйти', style: AppTextStyles.regular15.apply(color: AppColors.black80)),
+                                  Text('Выйти', style: AppTextStylesOld.regular15.apply(color: AppColors.black80)),
                                 ],
                               ),
                               onTap: () {
@@ -277,7 +277,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                 'Реклама\n'
                                 'Файлы cookie\n'
                                 '© RateClub, ${currentYear}',
-                                style: AppTextStyles.regular15.apply(color: AppColors.black80),
+                                style: AppTextStylesOld.regular15.apply(color: AppColors.black80),
                               ),
                             ),
                           ],

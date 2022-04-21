@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rate_club/resources/durations.dart';
-import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/app_icons.dart';
+import 'package:rate_club/resources/icons/icon_like.dart';
+import 'package:rate_club/resources/icons/icon_like_on.dart';
 
 // TODO Ilya: если лайкнул и открываешь первое состояние, то показывает анимация лайка
 class PostLike extends StatelessWidget {
@@ -20,13 +20,7 @@ class PostLike extends StatelessWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: _isLiked,
       builder: (ctx, value, __) {
-        return value
-            ? _LikeBody(key: UniqueKey(), animated: value)
-            : const Icon(
-                AppIcons.heart_line,
-                size: PostLike.iconSize,
-                color: AppColors.white40,
-              );
+        return value ? _LikeBody(key: UniqueKey(), animated: value) : const IconLike(size: PostLike.iconSize);
       },
     );
   }
@@ -49,11 +43,7 @@ class _LikeBodyState extends State<_LikeBody> {
   Widget build(BuildContext context) {
     _animated = widget.animated;
 
-    const body = Icon(
-      AppIcons.heart_fill,
-      size: PostLike.iconSize,
-      color: AppColors.red100,
-    );
+    const body = IconLikeOn(size: PostLike.iconSize);
 
     if (_animated) {
       return Stack(

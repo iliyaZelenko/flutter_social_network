@@ -64,7 +64,7 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
                     const SizedBox(width: 15),
                     Text(
                       'Публикация',
-                      style: AppTextStyles.semiBold16.apply(color: AppColors.black100),
+                      style: AppTextStylesOld.semiBold16.apply(color: AppColors.black100),
                     ),
                   ],
                 ),

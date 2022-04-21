@@ -105,6 +105,7 @@ flutter:
     - family: Raleway Regular
       fonts:
         - asset: fonts/Raleway-Regular.ttf
+    # TODO Ilya: remove after new design
     - family: AppIcons
       fonts:
         - asset: fonts/MingCuteIcons.ttf

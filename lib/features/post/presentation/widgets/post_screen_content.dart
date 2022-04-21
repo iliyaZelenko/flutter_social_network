@@ -25,7 +25,7 @@ class PostScreenContent extends StatelessWidget {
         if (post.title != null)
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
-            child: Text(post.title!, style: AppTextStyles.semiBold20.apply(color: AppColors.black100)),
+            child: Text(post.title!, style: AppTextStylesOld.semiBold20.apply(color: AppColors.black100)),
           ),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
@@ -33,19 +33,17 @@ class PostScreenContent extends StatelessWidget {
             post.content,
             maxLines: 3,
             animation: true,
-            style: AppTextStyles.regular15.apply(color: AppColors.black80),
+            style: AppTextStylesOld.regular15.apply(color: AppColors.black80),
             animationDuration: Durations.duration400,
             expandText: 'view all text',
             collapseText: 'hide text',
             linkColor: AppColors.black100,
-            linkStyle: AppTextStyles.regular15.apply(color: AppColors.purple80),
+            linkStyle: AppTextStylesOld.regular15.apply(color: AppColors.purple80),
             // WEB ссылка
-            urlStyle: AppTextStyles.regular15.apply(color: AppColors.purple80),
-            mentionStyle: AppTextStyles.regular15.apply(color: AppColors.purple80),
-            hashtagStyle: AppTextStyles.semiBold15,
-            onUrlTap: (url) {
-              launch(url);
-            },
+            urlStyle: AppTextStylesOld.regular15.apply(color: AppColors.purple80),
+            mentionStyle: AppTextStylesOld.regular15.apply(color: AppColors.purple80),
+            hashtagStyle: AppTextStylesOld.semiBold15,
+            onUrlTap: launch,
             expandOnTextTap: true,
             collapseOnTextTap: true,
           ),

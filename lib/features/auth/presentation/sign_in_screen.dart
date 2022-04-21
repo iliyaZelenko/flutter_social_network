@@ -28,7 +28,7 @@ class SignInScreen extends StatelessWidget {
             children: [
               Text(
                 'Войти',
-                style: AppTextStyles.semiBold25.apply(color: AppColors.black100),
+                style: AppTextStylesOld.semiBold25.apply(color: AppColors.black100),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 25),
@@ -87,7 +87,7 @@ class SignInScreen extends StatelessWidget {
                         },
                         child: Text(
                           'запомнить меня',
-                          style: AppTextStyles.regular12.apply(color: AppColors.black80),
+                          style: AppTextStylesOld.regular12.apply(color: AppColors.black80),
                         ),
                       ),
                     ],
@@ -119,7 +119,7 @@ class SignInScreen extends StatelessWidget {
                       ? const SizedBox.shrink()
                       : Text(
                           authPresenter.error!,
-                          style: AppTextStyles.regular15.apply(color: AppColors.red80),
+                          style: AppTextStylesOld.regular15.apply(color: AppColors.red80),
                         );
                 },
               ),

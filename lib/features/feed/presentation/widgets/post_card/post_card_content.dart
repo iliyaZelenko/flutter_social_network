@@ -39,7 +39,7 @@ class PostCardContent extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(AppRoutes.post, arguments: post.id);
                 },
-                child: Text(post.title!, style: AppTextStyles.semiBold20.apply(color: AppColors.black100)),
+                child: Text(post.title!, style: AppTextStylesOld.semiBold20.apply(color: AppColors.black100)),
               ),
             ),
           // Content
@@ -54,22 +54,20 @@ class PostCardContent extends StatelessWidget {
                 post.content,
                 maxLines: 3,
                 animation: true,
-                style: AppTextStyles.regular15.apply(color: AppColors.black80),
+                style: AppTextStyles.regular13.apply(color: AppColors.black80),
                 animationDuration: Durations.duration400,
                 expandText: 'view all text',
                 collapseText: 'hide text',
                 linkColor: AppColors.black100,
-                linkStyle: AppTextStyles.regular15.apply(color: AppColors.purple80),
+                linkStyle: AppTextStyles.regular13.apply(color: AppColors.purple80),
                 // WEB ссылка
-                urlStyle: AppTextStyles.regular15.apply(color: AppColors.purple80),
-                mentionStyle: AppTextStyles.regular15.apply(color: AppColors.purple80),
-                hashtagStyle: AppTextStyles.semiBold15,
+                urlStyle: AppTextStyles.regular13.apply(color: AppColors.purple80),
+                mentionStyle: AppTextStyles.regular13.apply(color: AppColors.purple80),
+                hashtagStyle: AppTextStyles.regular13,
                 onLinkTap: () {
                   _goToPost(context, post.id);
                 },
-                onUrlTap: (url) {
-                  launch(url);
-                },
+                onUrlTap: launch,
               ),
             ),
           ),

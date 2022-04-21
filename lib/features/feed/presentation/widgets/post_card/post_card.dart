@@ -20,7 +20,7 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 20),
       child: DecoratedBox(
         decoration: const BoxDecoration(
           color: AppColors.white100,
@@ -28,6 +28,12 @@ class PostCard extends StatelessWidget {
             top: BorderSide(width: 0.7, color: AppColors.white60),
             bottom: BorderSide(width: 0.7, color: AppColors.white60),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow,
+              blurRadius: 16,
+            ),
+          ],
         ),
         child: Provider<PostEntity>(
           create: (_) => post,

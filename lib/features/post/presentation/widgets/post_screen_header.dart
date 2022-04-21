@@ -60,7 +60,7 @@ class PostScreenHeader extends StatelessWidget {
                       children: [
                         Text(
                           post.creator.nickname,
-                          style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                          style: AppTextStylesOld.semiBold15.apply(color: AppColors.black100),
                         ),
                         if (post.creator.isVerified) ...const [
                           SizedBox(width: 5),
@@ -74,7 +74,7 @@ class PostScreenHeader extends StatelessWidget {
                     Timeago(
                       builder: (_, value) => Text(
                         value,
-                        style: AppTextStyles.medium12.apply(color: AppColors.black40),
+                        style: AppTextStylesOld.medium12.apply(color: AppColors.black40),
                       ),
                       date: post.createdAt,
                     ),

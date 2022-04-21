@@ -32,18 +32,18 @@ class PostCardContentClosedByPlan extends StatelessWidget {
                   children: [
                     Text(
                       'Автор сделал этот контент доступным только для подписки:',
-                      style: AppTextStyles.medium12.apply(color: AppColors.black100),
+                      style: AppTextStylesOld.medium12.apply(color: AppColors.black100),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
                     Text(
                       post.needBuyPlan.title,
-                      style: AppTextStyles.semiBold16.apply(color: AppColors.purple80),
+                      style: AppTextStylesOld.semiBold16.apply(color: AppColors.purple80),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       'и выше',
-                      style: AppTextStyles.medium12.apply(color: AppColors.black80),
+                      style: AppTextStylesOld.medium12.apply(color: AppColors.black80),
                     ),
                   ],
                 ),

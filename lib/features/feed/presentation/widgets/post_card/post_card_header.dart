@@ -5,11 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
+import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/features/profile_screen/presentation/abstract_profile_screen_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/icons/icon_menu.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 class PostCardHeader extends StatelessWidget {
@@ -28,28 +30,31 @@ class PostCardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final post = Provider.of<PostEntity>(context);
+    final profilePresenter = Provider.of<ProfilePresenter>(context);
 
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 5, top: 17.5, bottom: 12.5),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 17.5, bottom: 12.5),
       child: Column(
         children: [
           Row(
             children: [
+              // Avatar
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
                   _goToProfile(context, post.creator);
                 },
                 child: SizedBox(
-                  width: 35,
-                  height: 35,
+                  width: 40,
+                  height: 40,
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 200,
                     backgroundImage: NetworkImage(post.creator.avatar),
                   ),
                 ),
               ),
               const SizedBox(width: 10),
+
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
@@ -58,11 +63,12 @@ class PostCardHeader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Nickname
                     Row(
                       children: [
                         Text(
-                          post.creator.nickname,
-                          style: AppTextStyles.semiBold15.apply(color: AppColors.black100),
+                          '@${post.creator.nickname}',
+                          style: AppTextStyles.medium15.apply(color: AppColors.black80),
                         ),
                         if (post.creator.isVerified) ...const [
                           SizedBox(width: 5),
@@ -73,11 +79,15 @@ class PostCardHeader extends StatelessWidget {
                         ]
                       ],
                     ),
+
+                    const SizedBox(height: 6),
+
+                    // Created at
                     if (post is PostOpenByPlanEntity)
                       Timeago(
                         builder: (_, value) => Text(
                           value,
-                          style: AppTextStyles.medium12.apply(color: AppColors.black40),
+                          style: AppTextStyles.regular13.apply(color: AppColors.black60),
                         ),
                         date: post.createdAt,
                       ),
@@ -86,19 +96,8 @@ class PostCardHeader extends StatelessWidget {
               ),
               const Spacer(),
 
-              // TODO Ilya: refactor
-              const Icon(
-                AppIcons.round_fill,
-                size: 6,
-                color: AppColors.white40,
-              ),
-              const SizedBox(width: 3),
-              const Icon(
-                AppIcons.round_fill,
-                size: 6,
-                color: AppColors.white40,
-              ),
-              const SizedBox(width: 8),
+              // TODO Ilya
+              if (post.creator == profilePresenter.profile) const IconMenu() else const Text('subscribe'),
             ],
           )
         ],
