@@ -117,7 +117,7 @@ def gen_markdown():
   for filename in os.listdir(assetDirectory):
     var_name = filename.replace('.svg', '')
     line = "| " + 'icon_' + var_name + " | "
-    line += '<p align="center"><img width="50" loading="lazy" src="icons/' + str(filename) + '"></p> | '
+    line += '<p align="center"><img width="50" loading="lazy" src="assets/icons/' + str(filename) + '"></p> | '
     line +=  "`import 'package:rate_club/" + dartIconsPath + 'icon_' + var_name + ".dart';`<br>"
     line += '`AppIcon' + var_name.title().replace('_', '') +  "(), `|"  + "\n"
     f1.write("".join(line))
