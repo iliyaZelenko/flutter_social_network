@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'dart:math';
+
 import 'package:animator/animator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nil/nil.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/delays.dart';
 
 Widget buildRefreshIndicator(
   BuildContext context,
@@ -56,7 +57,7 @@ Widget _buildIndicatorForRefreshState(RefreshIndicatorMode refreshState, double 
     case RefreshIndicatorMode.refresh:
       return Animator<double>(
         curve: Curves.easeOutQuad,
-        duration: Delays.delay1sec,
+        duration: Durations.duration1sec,
         tween: Tween(begin: 0, end: pi),
         builder: (ctx, state, widget) {
           return Transform.rotate(angle: state.value, child: widget);

@@ -43,6 +43,9 @@ dependencies:
   timeago_flutter: ^1.1.0
   flutter_native_splash: ^1.2.0
   flutter_launcher_icons: ^0.9.2
+  expandable_text: 2.3.0
+  url_launcher: ^6.0.20
+  flutter_svg: ^1.0.3
 
   app_http_client:
     path: packages/app_http_client
@@ -96,18 +99,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Inter Semi Bold
+    - family: Raleway Medium
       fonts:
-        - asset: fonts/Inter-SemiBold.ttf
-    - family: Inter Medium
+        - asset: fonts/Raleway-Medium.ttf
+    - family: Raleway Regular
       fonts:
-        - asset: fonts/Inter-Medium.ttf
-    - family: Inter Regular
-      fonts:
-        - asset: fonts/Inter-Regular.ttf
-    - family: Inter Light
-      fonts:
-        - asset: fonts/Inter-Light.ttf
+        - asset: fonts/Raleway-Regular.ttf
     - family: AppIcons
       fonts:
         - asset: fonts/MingCuteIcons.ttf

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/delays.dart';
 
 import 'regular_app_btn.dart';
 import 'regular_unconstrained_app_btn.dart';
@@ -122,7 +122,7 @@ class _AbstractAppBtnState extends State<AbstractAppBtn> {
         });
       },
       onTapUp: (_) {
-        Future.delayed(Delays.delay100, () {
+        Future.delayed(Durations.duration100, () {
           if (mounted) {
             setState(() {
               _tapped = false;

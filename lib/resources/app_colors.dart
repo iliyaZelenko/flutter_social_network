@@ -5,7 +5,7 @@ mixin AppColors {
   static const transparent = Color(0x00000000);
 
   static const black100 = Color(0xFF000000);
-  static const black80 = Color(0xFF5b5a69);
+  static const black80 = Color(0xFF343341);
   static const black60 = Color.fromRGBO(0x5b, 0x5a, 0x69, 1);
   static const black40 = Color.fromRGBO(0x76, 0x75, 0x87, 1);
   static const black20 = Color.fromRGBO(0x96, 0x96, 0xA4, 1);

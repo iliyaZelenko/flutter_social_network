@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/delays.dart';
 
 class PostCardContentCarousel extends StatefulWidget {
   final PostOpenByPlanEntity post;
@@ -79,7 +79,7 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
                   height: 24,
                   minWidth: 24,
                   onPressed: () {
-                    _pageController.previousPage(duration: Delays.delay300, curve: Curves.easeInOut);
+                    _pageController.previousPage(duration: Durations.duration300, curve: Curves.easeInOut);
                   },
                   color: AppColors.white100,
                   textColor: Colors.white,
@@ -98,7 +98,7 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
                   height: 24,
                   minWidth: 24,
                   onPressed: () {
-                    _pageController.nextPage(duration: Delays.delay300, curve: Curves.easeInOut);
+                    _pageController.nextPage(duration: Durations.duration300, curve: Curves.easeInOut);
                   },
                   color: AppColors.white100,
                   textColor: Colors.white,

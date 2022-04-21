@@ -22,32 +22,32 @@ mixin AppTextStyles {
   // Medium
   static const medium16 = TextStyle(
     fontSize: 16,
-    fontFamily: 'Inter Medium',
+    fontFamily: 'Raleway Medium',
   );
   static const medium15 = TextStyle(
     fontSize: 15,
-    fontFamily: 'Inter Medium',
+    fontFamily: 'Raleway Medium',
   );
   static const medium14 = TextStyle(
     fontSize: 14,
-    fontFamily: 'Inter Medium',
+    fontFamily: 'Raleway Medium',
   );
   static const medium12 = TextStyle(
     fontSize: 12,
-    fontFamily: 'Inter Medium',
+    fontFamily: 'Raleway Medium',
   );
 
   // Regular
   static const regular15 = TextStyle(
     fontSize: 15,
-    fontFamily: 'Inter Regular',
+    fontFamily: 'Raleway Regular',
   );
   static const regular12 = TextStyle(
     fontSize: 12,
-    fontFamily: 'Inter Regular',
+    fontFamily: 'Raleway Regular',
   );
   static const regular9 = TextStyle(
     fontSize: 9,
-    fontFamily: 'Inter Regular',
+    fontFamily: 'Raleway Regular',
   );
 }

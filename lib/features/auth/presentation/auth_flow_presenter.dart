@@ -3,8 +3,8 @@ import 'package:mobx/mobx.dart';
 import 'package:rate_club/features/auth/exceptions/auth_invalid_credentials_exception.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/rate_club.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_routes.dart';
-import 'package:rate_club/resources/delays.dart';
 
 part 'auth_flow_presenter.g.dart';
 
@@ -63,7 +63,7 @@ abstract class AuthFlowPresenterBase with Store {
 
       FocusManager.instance.primaryFocus?.unfocus();
       // Нужна задержка, иначе иногда баг вылазит
-      Delays.defaultDelayCancelable.next(onValue: (_) {
+      Durations.defaultDurationCancelable.next(onValue: (_) {
         _mainNavigatorKey.currentState!.pushReplacementNamed(AppRoutes.home);
       });
     } catch (e) {

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nil/nil.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/delays.dart';
 
 class AppTextField extends StatefulWidget {
   final void Function(String value)? onChanged;
@@ -158,7 +158,7 @@ class _AppTextFieldState extends State<AppTextField> {
           onChanged: (text) {
             widget.onChanged?.call(text);
             _timer?.cancel();
-            _timer = Timer(Delays.delay500, () {
+            _timer = Timer(Durations.duration500, () {
               if (mounted) {
                 widget.onEndEditing?.call();
               }

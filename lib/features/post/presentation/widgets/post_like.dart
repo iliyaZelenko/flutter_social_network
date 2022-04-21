@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
-import 'package:rate_club/resources/delays.dart';
 
 // TODO Ilya: если лайкнул и открываешь первое состояние, то показывает анимация лайка
 class PostLike extends StatelessWidget {
@@ -68,7 +68,7 @@ class _LikeBodyState extends State<_LikeBody> {
             },
             curve: Curves.elasticOut,
             scale: _tapped ? 1.5 : 1,
-            duration: Delays.delay500,
+            duration: Durations.duration500,
             child: body,
           ),
         ],

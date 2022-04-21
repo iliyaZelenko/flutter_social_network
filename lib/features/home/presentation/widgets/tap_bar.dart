@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/home/presentation/home_presenter.dart';
+import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/delays.dart';
 
 class TapBar extends StatelessWidget {
   const TapBar({Key? key}) : super(key: key);
@@ -114,7 +114,7 @@ class TabBarBtn extends StatelessWidget {
                     color: AppColors.black60,
                     size: 30,
                   ),
-                  duration: Delays.delay300,
+                  duration: Durations.duration300,
                   firstCurve: Curves.decelerate.flipped,
                   secondCurve: Curves.decelerate,
                 ),
