@@ -51,31 +51,32 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
             itemCount: widget.post.media.length,
           ),
 
-          Positioned(
-            left: 10,
-            bottom: 10,
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: AppColors.black100.withOpacity(0.5),
-                borderRadius: const BorderRadius.all(Radius.circular(4)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: SmoothPageIndicator(
-                  controller: _pageController, // PageController
-                  count: widget.post.media.length,
-                  effect: const ScrollingDotsEffect(
-                    dotWidth: 8,
-                    dotHeight: 8,
-                    activeDotColor: AppColors.black60,
-                    dotColor: AppColors.white20,
-                    activeDotScale: 1.5,
-                  ), // your preferred effect
-                  onDotClicked: (index) {},
+          if (widget.post.media.length > 1)
+            Positioned(
+              left: 10,
+              bottom: 10,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppColors.black100.withOpacity(0.5),
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: SmoothPageIndicator(
+                    controller: _pageController, // PageController
+                    count: widget.post.media.length,
+                    effect: const ScrollingDotsEffect(
+                      dotWidth: 8,
+                      dotHeight: 8,
+                      activeDotColor: AppColors.black60,
+                      dotColor: AppColors.white20,
+                      activeDotScale: 1.5,
+                    ), // your preferred effect
+                    onDotClicked: (index) {},
+                  ),
                 ),
               ),
             ),
-          ),
 
           // Counter
           if (widget.post.media.length > 1)
