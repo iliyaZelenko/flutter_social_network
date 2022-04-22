@@ -6,5 +6,5 @@ class HomePresenter = HomePresenterBase with _$HomePresenter;
 
 abstract class HomePresenterBase with Store {
   @observable
-  int tapBarNavigationIndex = 0;
+  int tapBarNavigationIndex = 2;
 }

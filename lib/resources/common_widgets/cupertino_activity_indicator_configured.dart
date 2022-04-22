@@ -4,8 +4,9 @@ import 'dart:math';
 import 'package:animator/animator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:nil/nil.dart';
-import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_colors.dart';
+import 'package:rate_club/resources/durations.dart';
+import 'package:rate_club/resources/media_query_setup.dart';
 
 Widget buildRefreshIndicator(
   BuildContext context,
@@ -20,8 +21,7 @@ Widget buildRefreshIndicator(
       clipBehavior: Clip.none,
       children: [
         Positioned(
-          // TODO Ilya: screenPadding.top + (Platform.isAndroid ? 18 : 6)
-          top: 30 + (Platform.isAndroid ? 18 : 6),
+          top: screenPadding.top + (Platform.isAndroid ? 18 : 6),
           left: 0,
           right: 0,
           child: Center(

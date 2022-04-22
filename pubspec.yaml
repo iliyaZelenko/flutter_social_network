@@ -46,6 +46,7 @@ dependencies:
   expandable_text: 2.3.0
   url_launcher: ^6.0.20
   flutter_svg: ^1.0.3
+  smooth_page_indicator: ^1.0.0+2
 
   app_http_client:
     path: packages/app_http_client
@@ -105,6 +106,9 @@ flutter:
     - family: Raleway Regular
       fonts:
         - asset: fonts/Raleway-Regular.ttf
+    - family: Raleway Semi Bold
+      fonts:
+        - asset: fonts/Raleway-SemiBold.ttf
     # TODO Ilya: remove after new design
     - family: AppIcons
       fonts:

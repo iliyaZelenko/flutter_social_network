@@ -14,6 +14,15 @@ class Plural implements PluralInterface {
   }
 
   @override
+  String pluralOneMany(
+    int count,
+    String one,
+    String many,
+  ) {
+    return plural(count, one, many, many);
+  }
+
+  @override
   String pluralIterable(int count, Iterable<String> iterable) {
     return plural(count, iterable.elementAt(0), iterable.elementAt(1), iterable.elementAt(2));
   }

@@ -22,13 +22,13 @@ class PostCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: AppColors.white100,
-          border: Border(
+        decoration: BoxDecoration(
+          color: (post is PostOpenByPlanEntity) ? AppColors.white100 : AppColors.purple20,
+          border: const Border(
             top: BorderSide(width: 0.7, color: AppColors.white60),
             bottom: BorderSide(width: 0.7, color: AppColors.white60),
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: AppColors.shadow,
               blurRadius: 16,

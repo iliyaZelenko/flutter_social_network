@@ -1,8 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/use_cases/get_feed_use_case.dart';
 import 'package:rate_club/features/feed/domain/value_objects/feed_response.dart';
-import 'package:rate_club/rate_club.dart';
 
 part 'feed_presenter.g.dart';
 
@@ -36,7 +34,7 @@ abstract class FeedPresenterBase with Store {
   }
 
   @action
-  Future<void> refresh() {
-    return _getFeedUseCase.execute();
+  Future<void> refresh() async {
+    _feed = await _getFeedUseCase.execute();
   }
 }

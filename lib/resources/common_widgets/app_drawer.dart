@@ -13,7 +13,7 @@ import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/assets.dart';
 
-import 'buttons/regular_app_btn.dart';
+import 'buttons/app_btn_regular.dart';
 
 // TODO Ilya: ValueListenable
 class AppDrawerController {
@@ -70,7 +70,6 @@ class _AppDrawerState extends State<AppDrawer> {
     );
 
     return DrawerController(
-      edgeDragWidth: 100,
       key: _drawerKey,
       alignment: DrawerAlignment.start,
       child: Drawer(
@@ -162,7 +161,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: RegularAppBtn(
+                      child: AppBtnRegular(
                         text: 'СОЗДАТЬ ПОСТ',
                         useMinPadding: true,
                         outlined: true,

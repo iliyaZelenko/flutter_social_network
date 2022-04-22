@@ -3,21 +3,22 @@ import 'package:flutter/widgets.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/durations.dart';
+import 'package:rate_club/resources/icons/icon_interface.dart';
 
-import 'regular_app_btn.dart';
-import 'regular_unconstrained_app_btn.dart';
+import 'app_btn_regular.dart';
+import 'app_btn_small.dart';
 
 abstract class AbstractAppBtn extends StatefulWidget {
-  static const defaultColor = AppColors.purple80;
+  static const defaultColor = AppColors.blue80;
 
   const AbstractAppBtn({
     Key? key,
     this.tapped = false,
     this.child,
     this.text,
+    this.textStyle,
     this.icon,
     required this.padding,
-    required this.centered,
     this.onTap,
     bool? loading,
     // Fill with transparent, only border
@@ -34,25 +35,14 @@ abstract class AbstractAppBtn extends StatefulWidget {
   final bool tapped;
   final Widget? child;
   final String? text;
+  final TextStyle? textStyle;
   final Color color;
   final Color textColor;
-  final Widget? icon;
+  final IconInterface? icon;
   final EdgeInsets padding;
-  final bool centered;
   final VoidCallback? onTap;
   final bool loading;
   final bool outlined;
-
-  const factory AbstractAppBtn.regularUnconstrained({
-    Key? key,
-    bool tapped,
-    Widget? child,
-    String? text,
-    Color? color,
-    Color textColor,
-    VoidCallback? onTap,
-    bool? loading,
-  }) = RegularUnconstrainedAppBtn;
 
   const factory AbstractAppBtn.regular({
     Key? key,
@@ -63,7 +53,18 @@ abstract class AbstractAppBtn extends StatefulWidget {
     Color textColor,
     VoidCallback? onTap,
     bool? loading,
-  }) = RegularAppBtn;
+  }) = AppBtnRegular;
+
+  const factory AbstractAppBtn.small({
+    Key? key,
+    bool tapped,
+    Widget? child,
+    String? text,
+    Color? color,
+    Color textColor,
+    VoidCallback? onTap,
+    bool? loading,
+  }) = AppBtnSmall;
 
   @override
   State<AbstractAppBtn> createState() => _AbstractAppBtnState();
@@ -89,14 +90,22 @@ class _AbstractAppBtnState extends State<AbstractAppBtn> {
           )
         : DefaultTextStyle(
             style: AppTextStylesOld.semiBold16.apply(color: textColor),
-            child: widget.text != null ? Text(widget.text!) : widget.child!,
+            child: widget.text != null
+                ? Flexible(
+                    child: Text(
+                      widget.text!,
+                      textAlign: TextAlign.center,
+                      style: widget.textStyle,
+                    ),
+                  )
+                : widget.child!,
           );
 
     final child = AnimatedContainer(
-      alignment: widget.centered ? Alignment.center : null,
+      alignment: Alignment.center,
       padding: widget.loading ? const EdgeInsets.all(10) : widget.padding,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(32)),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
         border: Border.all(color: borderColor),
         color: _tapped ? fillColor.withOpacity(0.5) : fillColor,
       ),

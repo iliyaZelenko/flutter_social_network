@@ -19,7 +19,7 @@ class _PeoplePlaceScreenState extends State<PeoplePlaceScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('People Place'),
+              Text('People'),
             ],
           ),
         ],

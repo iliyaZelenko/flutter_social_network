@@ -9,7 +9,8 @@ import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/assets.dart';
 import 'package:rate_club/resources/common_widgets/app_drawer.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
-import 'package:rate_club/resources/header.dart';
+import 'package:rate_club/resources/header/header.dart';
+import 'package:rate_club/resources/header/slots_content/profile_in_header.dart';
 import 'package:rate_club/resources/icons/icon_add.dart';
 
 import 'feed_presenter.dart';
@@ -42,11 +43,8 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Positioned(
+            Positioned.fill(
               top: Header.height,
-              left: 0,
-              right: 0,
-              bottom: 0,
               child: Observer(
                 builder: (_) {
                   return feedPresenter.loading
@@ -71,7 +69,6 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
                         width: 32,
                         height: 25,
                       ),
-
                       const Spacer(),
                       const IconAdd(
                         size: 32,
@@ -82,41 +79,7 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
                         style: AppTextStyles.medium15.apply(color: AppColors.black80),
                       ),
                       const Spacer(),
-
-                      // Avatar with the bell indicator
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              drawerController.open();
-                            },
-                            child: SizedBox(
-                              width: 32,
-                              height: 32,
-                              child: CircleAvatar(
-                                radius: 200,
-                                backgroundImage: NetworkImage(profilePresenter.profile!.avatar),
-                              ),
-                            ),
-                          ),
-                          // Red dot
-                          Positioned(
-                            top: -5,
-                            right: -5,
-                            child: SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 109, 28, 1),
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: AppColors.white100, width: 2)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      const ProfileInHeader(),
                     ],
                   ),
                 ),

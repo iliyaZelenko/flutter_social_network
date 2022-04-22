@@ -9,6 +9,9 @@ import 'package:rate_club/resources/icons/icon_content.dart';
 import 'package:rate_club/resources/icons/icon_interface.dart';
 import 'package:rate_club/resources/icons/icon_money.dart';
 import 'package:rate_club/resources/icons/icon_people.dart';
+import 'package:rate_club/resources/media_query_setup.dart';
+
+final double tabBarHeight = 64 + screenPadding.bottom;
 
 class TapBar extends StatelessWidget {
   const TapBar({Key? key}) : super(key: key);
@@ -28,46 +31,43 @@ class TapBar extends StatelessWidget {
           ),
         ],
       ),
-      child: SafeArea(
-        top: false,
-        child: SizedBox(
-          height: 64,
-          child: Observer(
-            builder: (_) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TabBarBtn(
-                    key: const ValueKey('marketplace'),
-                    selected: homePresenter.tapBarNavigationIndex == 0,
-                    unSelectedIcon: const IconMoney(),
-                    selectedIcon: const IconMoney(),
-                    alignment: Alignment.center,
-                    text: 'marketplace',
-                    onPressed: () => homePresenter.tapBarNavigationIndex = 0,
-                  ),
-                  TabBarBtn(
-                    key: const ValueKey('people'),
-                    selected: homePresenter.tapBarNavigationIndex == 1,
-                    unSelectedIcon: const IconPeople(),
-                    selectedIcon: const IconPeople(),
-                    alignment: Alignment.center,
-                    text: 'people',
-                    onPressed: () => homePresenter.tapBarNavigationIndex = 1,
-                  ),
-                  TabBarBtn(
-                    key: const ValueKey('content'),
-                    selected: homePresenter.tapBarNavigationIndex == 2,
-                    unSelectedIcon: const IconContent(),
-                    selectedIcon: const IconContent(),
-                    alignment: Alignment.center,
-                    text: 'content',
-                    onPressed: () => homePresenter.tapBarNavigationIndex = 2,
-                  ),
-                ],
-              );
-            },
-          ),
+      child: SizedBox(
+        height: tabBarHeight,
+        child: Observer(
+          builder: (_) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TabBarBtn(
+                  key: const ValueKey('marketplace'),
+                  selected: homePresenter.tapBarNavigationIndex == 0,
+                  unSelectedIcon: const IconMoney(),
+                  selectedIcon: const IconMoney(),
+                  alignment: Alignment.center,
+                  text: 'marketplace',
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 0,
+                ),
+                TabBarBtn(
+                  key: const ValueKey('people'),
+                  selected: homePresenter.tapBarNavigationIndex == 1,
+                  unSelectedIcon: const IconPeople(),
+                  selectedIcon: const IconPeople(),
+                  alignment: Alignment.center,
+                  text: 'people',
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 1,
+                ),
+                TabBarBtn(
+                  key: const ValueKey('content'),
+                  selected: homePresenter.tapBarNavigationIndex == 2,
+                  unSelectedIcon: const IconContent(),
+                  selectedIcon: const IconContent(),
+                  alignment: Alignment.center,
+                  text: 'content',
+                  onPressed: () => homePresenter.tapBarNavigationIndex = 2,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -106,13 +106,16 @@ class TabBarBtn extends StatelessWidget {
             alignment: alignment,
             child: Column(
               children: [
-                if (selected)
-                  const SizedBox(
-                    width: 76,
+                AnimatedSize(
+                  curve: Curves.easeIn,
+                  duration: const Duration(milliseconds: 200),
+                  child: SizedBox(
+                    width: selected ? 76 : 0,
                     height: selectedLineHeight,
-                    child: ColoredBox(color: AppColors.black100),
+                    child: const ColoredBox(color: AppColors.black100),
                   ),
-                SizedBox(height: 10 - (selected ? selectedLineHeight : 0)),
+                ),
+                const SizedBox(height: 10),
                 AnimatedCrossFade(
                   alignment: Alignment.center,
                   crossFadeState: selected ? CrossFadeState.showFirst : CrossFadeState.showSecond,

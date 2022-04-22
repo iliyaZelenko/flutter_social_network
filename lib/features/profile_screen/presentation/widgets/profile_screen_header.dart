@@ -6,7 +6,7 @@ import 'package:rate_club/features/tools/plural/plural_interface.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
-import 'package:rate_club/resources/common_widgets/buttons/regular_app_btn.dart';
+import 'package:rate_club/resources/common_widgets/buttons/app_btn_regular.dart';
 
 import '../abstract_profile_screen_presenter.dart';
 
@@ -137,7 +137,7 @@ class ProfileScreenHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: 33),
                   const Center(
-                    child: RegularAppBtn(
+                    child: AppBtnRegular(
                       text: 'подписаться',
                     ),
                   )

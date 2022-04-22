@@ -22,6 +22,7 @@ import 'package:rate_club/features/profile_screen/profile_screen_feature.dart';
 import 'package:rate_club/features/tools/number_formatter/number_formatter_interface.dart';
 import 'package:rate_club/features/tools/tools_feature.dart';
 import 'package:rate_club/rate_club.dart';
+import 'package:rate_club/resources/media_query_setup.dart';
 import 'package:worker_manager/worker_manager.dart';
 
 import 'features/auth/auth_feature.dart';
@@ -34,7 +35,6 @@ import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
 import 'resources/app_text_styles.dart';
 import 'resources/common_widgets/app_drawer.dart';
-import 'resources/emojis.dart';
 import 'resources/errors_handler.dart';
 
 late final _mainNavigatorKey = GlobalKey<NavigatorState>();
@@ -114,25 +114,22 @@ Future<void> _runRateClub() async {
               initialRoute: initialRoute,
               home: nil,
               builder: (ctx, widget) {
-                return Stack(
-                  children: [
-                    const Text(
-                      emojis,
-                      style: TextStyle(fontSize: 5),
-                      textScaleFactor: 1,
-                    ),
-                    widget!,
-                    Observer(
-                      builder: (_) {
-                        return authPresenter.loggedIn
-                            ? AppDrawer(
-                                controller: Provider.of<AppDrawerController>(ctx),
-                                mainNavigatorKey: navigatorKey,
-                              )
-                            : const SizedBox.shrink();
-                      },
-                    ),
-                  ],
+                return MediaQuerySetup(
+                  Stack(
+                    children: [
+                      widget!,
+                      Observer(
+                        builder: (_) {
+                          return authPresenter.loggedIn
+                              ? AppDrawer(
+                                  controller: Provider.of<AppDrawerController>(ctx),
+                                  mainNavigatorKey: navigatorKey,
+                                )
+                              : const SizedBox.shrink();
+                        },
+                      ),
+                    ],
+                  ),
                 );
               },
               routes: getRoutesMap(injector),

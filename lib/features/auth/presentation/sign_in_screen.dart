@@ -6,7 +6,7 @@ import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/app_text_field.dart';
-import 'package:rate_club/resources/common_widgets/buttons/regular_app_btn.dart';
+import 'package:rate_club/resources/common_widgets/buttons/app_btn_regular.dart';
 import 'package:rate_club/resources/constants.dart';
 
 import 'auth_flow_presenter.dart';
@@ -26,14 +26,16 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Войти',
-                style: AppTextStylesOld.semiBold25.apply(color: AppColors.black100),
+              Center(
+                child: Text(
+                  'Log in',
+                  style: AppTextStyles.semiBold32.apply(color: AppColors.black100),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 25),
                 child: AppTextField(
-                  labelText: 'адрес электронной почты',
+                  labelText: 'email',
                   textInputType: TextInputType.emailAddress,
                   initialValue: authPresenter.username,
                   onChanged: (value) {
@@ -44,7 +46,7 @@ class SignInScreen extends StatelessWidget {
               Observer(
                 builder: (_) {
                   return AppTextField(
-                    labelText: 'пароль',
+                    labelText: 'password',
                     hideInput: authPresenter.hidePassword,
                     initialValue: authPresenter.password,
                     suffix: InkWell(
@@ -86,7 +88,7 @@ class SignInScreen extends StatelessWidget {
                           authPresenter.rememberMe = !authPresenter.rememberMe;
                         },
                         child: Text(
-                          'запомнить меня',
+                          'remember me',
                           style: AppTextStylesOld.regular12.apply(color: AppColors.black80),
                         ),
                       ),
@@ -100,7 +102,7 @@ class SignInScreen extends StatelessWidget {
                   Observer(
                     builder: (_) {
                       return Expanded(
-                        child: RegularAppBtn(
+                        child: AppBtnRegular(
                           text: 'Log in',
                           loading: authPresenter.loading,
                           onTap: () {

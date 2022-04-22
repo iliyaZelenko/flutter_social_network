@@ -5,19 +5,22 @@ class NumberFormatter implements NumberFormatterInterface {
   String formatWithWord(
     int count,
   ) {
-    final formatedCount = _format(count);
+    String result = count.toString();
 
     if (count >= 1000) {
-      return '$formatedCount тыс';
-    } else if (count >= 1000000) {
-      return '$formatedCount млн';
-    } else if (count >= 1000000000) {
-      return '$formatedCount млрд';
+      result = '${count / 1000}K';
+    }
+    if (count >= 1000000) {
+      result = '${count / 1000000}M';
+    }
+    if (count >= 1000000000) {
+      result = '${count / 1000000000}B';
     }
 
-    return formatedCount;
+    return result;
   }
 
+  // TODO Ilya: use in the future
   String _format(
     num num, {
     int decimalLength = 0,

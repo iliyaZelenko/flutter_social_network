@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import 'abstract_app_btn.dart';
 
-class RegularAppBtn extends AbstractAppBtn {
-  const RegularAppBtn({
+class AppBtnRegular extends AbstractAppBtn {
+  const AppBtnRegular({
     Key? key,
     bool useMinPadding = false,
     bool tapped = false,
@@ -16,15 +16,14 @@ class RegularAppBtn extends AbstractAppBtn {
     bool? outlined,
   }) : super(
           key: key,
+          padding: useMinPadding
+              ? const EdgeInsets.symmetric(horizontal: 19, vertical: 11)
+              : const EdgeInsets.symmetric(horizontal: 65, vertical: 11),
           tapped: tapped,
           child: child,
           text: text,
           color: color,
           textColor: textColor,
-          padding: useMinPadding
-              ? const EdgeInsets.symmetric(horizontal: 19, vertical: 11)
-              : const EdgeInsets.symmetric(horizontal: 65, vertical: 11),
-          centered: false,
           onTap: onTap,
           loading: loading,
           outlined: outlined,

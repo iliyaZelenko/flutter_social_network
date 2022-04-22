@@ -8,6 +8,8 @@ import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/features/post/domain/use_cases/like_post_use_case.dart';
 import 'package:rate_club/features/post/presentation/widgets/post_like.dart';
+import 'package:rate_club/features/tools/number_formatter/number_formatter_interface.dart';
+import 'package:rate_club/features/tools/plural/plural_interface.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_routes.dart';
@@ -15,7 +17,7 @@ import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/global_events/events/LikeGlobalEvent.dart';
 import 'package:rate_club/resources/icons/icon_comment.dart';
 import 'package:rate_club/resources/icons/icon_send.dart';
-import 'package:rate_club/resources/icons/icon_show.dart';
+import 'package:timeago_flutter/timeago_flutter.dart';
 
 class PostCardFooter extends StatefulWidget {
   const PostCardFooter({
@@ -89,16 +91,33 @@ class _PostCardFooterState extends State<PostCardFooter> {
 
   @override
   Widget build(BuildContext context) {
+    final plural = Provider.of<PluralInterface>(context);
+    final formatter = Provider.of<NumberFormatterInterface>(context);
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
       child: Row(
         children: [
-          // Views
-          const IconShow(),
-          const SizedBox(width: 4),
-          Text(
-            '${_post.viewsCount}',
-            style: AppTextStyles.regular13.apply(color: AppColors.black60),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Created at
+              Timeago(
+                builder: (_, value) => Text(
+                  value,
+                  style: AppTextStyles.regular13.apply(
+                    color: AppColors.black60,
+                  ),
+                ),
+                date: _post.createdAt,
+              ),
+
+              // Views
+              Text(
+                '${formatter.formatWithWord(_post.viewsCount)} ${plural.pluralOneMany(_post.viewsCount, 'view', 'views')}',
+                style: AppTextStyles.regular13.apply(color: AppColors.black60),
+              ),
+            ],
           ),
 
           const Spacer(),
@@ -123,10 +142,11 @@ class _PostCardFooterState extends State<PostCardFooter> {
               children: [
                 const IconComment(),
                 const SizedBox(width: 4),
-                Text(
-                  _post.commentsCount.toString(),
-                  style: AppTextStyles.regular13.apply(color: AppColors.black60),
-                ),
+                if (_post.commentsCount != 0)
+                  Text(
+                    _post.commentsCount.toString(),
+                    style: AppTextStyles.regular13.apply(color: AppColors.black60),
+                  ),
               ],
             ),
           ),

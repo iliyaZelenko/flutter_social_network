@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rate_club/features/feed/domain/entities/post_open_by_plan_entity.dart';
 import 'package:rate_club/resources/app_colors.dart';
-import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/durations.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PostCardContentCarousel extends StatefulWidget {
   final PostOpenByPlanEntity post;
@@ -51,6 +51,32 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
             itemCount: widget.post.media.length,
           ),
 
+          Positioned(
+            left: 10,
+            bottom: 10,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: AppColors.black100.withOpacity(0.5),
+                borderRadius: const BorderRadius.all(Radius.circular(4)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: SmoothPageIndicator(
+                  controller: _pageController, // PageController
+                  count: widget.post.media.length,
+                  effect: const ScrollingDotsEffect(
+                    dotWidth: 8,
+                    dotHeight: 8,
+                    activeDotColor: AppColors.black60,
+                    dotColor: AppColors.white20,
+                    activeDotScale: 1.5,
+                  ), // your preferred effect
+                  onDotClicked: (index) {},
+                ),
+              ),
+            ),
+          ),
+
           // Counter
           if (widget.post.media.length > 1)
             Positioned(
@@ -74,20 +100,17 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
           // Arrow left
           if (_currentPageIndex != 0)
             Positioned(
-              left: -5,
-              child: MaterialButton(
-                height: 24,
-                minWidth: 24,
-                onPressed: () {
+              top: 0,
+              bottom: 0,
+              left: 0,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
                   _pageController.previousPage(duration: Durations.duration300, curve: Curves.easeInOut);
                 },
-                color: AppColors.white100,
-                textColor: Colors.white,
-                shape: const CircleBorder(),
-                child: const Icon(
-                  AppIcons.arrow_left_line,
-                  color: AppColors.black100,
-                  size: 20,
+                child: const SizedBox(
+                  width: 120,
+                  height: double.infinity,
                 ),
               ),
             ),
@@ -95,20 +118,17 @@ class _PostCardContentCarouselState extends State<PostCardContentCarousel> {
           // Arrow right
           if (_currentPageIndex != widget.post.media.length - 1)
             Positioned(
-              right: -5,
-              child: MaterialButton(
-                height: 24,
-                minWidth: 24,
-                onPressed: () {
+              top: 0,
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
                   _pageController.nextPage(duration: Durations.duration300, curve: Curves.easeInOut);
                 },
-                color: AppColors.white100,
-                textColor: Colors.white,
-                shape: const CircleBorder(),
-                child: const Icon(
-                  AppIcons.arrow_right_line,
-                  color: AppColors.black100,
-                  size: 20,
+                child: const SizedBox(
+                  width: 120,
+                  height: double.infinity,
                 ),
               ),
             ),

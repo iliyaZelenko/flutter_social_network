@@ -6,5 +6,11 @@ abstract class PluralInterface {
     String five,
   );
 
+  String pluralOneMany(
+    int count,
+    String one,
+    String many,
+  );
+
   String pluralIterable(int count, Iterable<String> iterable);
 }
