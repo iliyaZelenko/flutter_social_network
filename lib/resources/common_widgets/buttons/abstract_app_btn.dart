@@ -89,7 +89,7 @@ class _AbstractAppBtnState extends State<AbstractAppBtn> {
             ),
           )
         : DefaultTextStyle(
-            style: AppTextStylesOld.semiBold16.apply(color: textColor),
+            style: AppTextStyles.regular16.apply(color: textColor),
             child: widget.text != null
                 ? Flexible(
                     child: Text(

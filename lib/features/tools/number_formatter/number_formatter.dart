@@ -8,13 +8,13 @@ class NumberFormatter implements NumberFormatterInterface {
     String result = count.toString();
 
     if (count >= 1000) {
-      result = '${count / 1000}K';
+      result = '${(count / 1000).toStringAsFixed(0)}K';
     }
     if (count >= 1000000) {
-      result = '${count / 1000000}M';
+      result = '${(count / 1000000).toStringAsFixed(0)}M';
     }
     if (count >= 1000000000) {
-      result = '${count / 1000000000}B';
+      result = '${(count / 1000000000).toStringAsFixed(0)}B';
     }
 
     return result;

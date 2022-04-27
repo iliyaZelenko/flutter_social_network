@@ -16,6 +16,7 @@ mixin AppColors {
   static const white40 = Color.fromRGBO(0xd3, 0xfd8, 0xe2, 1);
   static const white20 = Color.fromRGBO(0xc9, 0xfcb, 0xdf, 1);
 
+  static const blue100 = Color(0xFF3051C7);
   static const blue80 = Color(0xFF385FEA);
   static const blue60 = Color(0xFFCED7FA);
 

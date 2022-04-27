@@ -1,6 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_closed_by_plan_entity.dart';
@@ -47,51 +48,57 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.white80,
-      child: SafeArea(
-        bottom: false,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Positioned.fill(
-              top: Header.height,
-              child: Observer(
-                builder: (_) {
-                  return postPresenter.loading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : const _PostBody();
-                },
-              ),
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Header(
-                slot: GestureDetector(
-                  onTap: () {
-                    // TODO Ilya: use Provider, really
-                    widget._mainNavigatorKey.currentState!.pop();
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: AppColors.white100, // Color for Android
+        statusBarBrightness: Brightness.dark, // Dark == white status bar -- for IOS.
+      ),
+      child: ColoredBox(
+        color: AppColors.white80,
+        child: SafeArea(
+          bottom: false,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned.fill(
+                top: Header.height,
+                child: Observer(
+                  builder: (_) {
+                    return postPresenter.loading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : const _PostBody();
                   },
-                  child: Row(
-                    children: [
-                      const IconArrowLeft(),
-                      const Spacer(),
-                      Text(
-                        'post',
-                        style: AppTextStyles.medium15.apply(color: AppColors.black80),
-                      ),
-                      const Spacer(),
-                      const ProfileInHeader(),
-                    ],
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Header(
+                  slot: GestureDetector(
+                    onTap: () {
+                      // TODO Ilya: use Provider, really
+                      widget._mainNavigatorKey.currentState!.pop();
+                    },
+                    child: Row(
+                      children: [
+                        const IconArrowLeft(),
+                        const Spacer(),
+                        Text(
+                          'post',
+                          style: AppTextStyles.medium15.apply(color: AppColors.black80),
+                        ),
+                        const Spacer(),
+                        const ProfileInHeader(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

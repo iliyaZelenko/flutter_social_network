@@ -17,8 +17,8 @@ class AppBtnRegular extends AbstractAppBtn {
   }) : super(
           key: key,
           padding: useMinPadding
-              ? const EdgeInsets.symmetric(horizontal: 19, vertical: 11)
-              : const EdgeInsets.symmetric(horizontal: 65, vertical: 11),
+              ? const EdgeInsets.symmetric(horizontal: 19, vertical: 10)
+              : const EdgeInsets.symmetric(horizontal: 65, vertical: 10),
           tapped: tapped,
           child: child,
           text: text,

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rate_club/resources/app_colors.dart';
 
 class Header extends StatelessWidget {
-  static const double height = 55;
+  // TODO Ilya: Maybe? "+ screenPadding.top"
+  static const double height = 64;
 
   final Widget? slot;
 

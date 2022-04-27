@@ -1,6 +1,7 @@
 workflows:
   ios-workflow:
     name: iOS Workflow
+    # TODO Ilya: mac_mini_m1
     # instance_type: mac_mini
     max_build_duration: 120
     environment:
@@ -50,6 +51,7 @@ workflows:
       - name: Flutter build ipa and automatic versioning
         script: |
           flutter build ipa --release \
+          --bundle-sksl-path flutter_01.sksl.json \
           --build-name=1.0.0 \
           --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1)) \
           --export-options-plist=/Users/builder/export_options.plist          

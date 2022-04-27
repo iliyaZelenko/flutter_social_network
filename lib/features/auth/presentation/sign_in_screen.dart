@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_icons.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/assets.dart';
 import 'package:rate_club/resources/common_widgets/app_text_field.dart';
 import 'package:rate_club/resources/common_widgets/buttons/app_btn_regular.dart';
 import 'package:rate_club/resources/constants.dart';
@@ -26,6 +27,9 @@ class SignInScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 32),
+              Center(child: Image.asset(Assets.logoText)),
+              const SizedBox(height: 24),
               Center(
                 child: Text(
                   'Log in',
@@ -75,8 +79,18 @@ class SignInScreen extends StatelessWidget {
                       Observer(
                         builder: (_) {
                           return Checkbox(
-                            shape: const CircleBorder(),
                             value: authPresenter.rememberMe,
+                            fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                              if (states.contains(MaterialState.selected)) return AppColors.transparent;
+                              return null;
+                            }),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            side: MaterialStateBorderSide.resolveWith(
+                              (states) => const BorderSide(color: AppColors.white20),
+                            ),
+                            checkColor: AppColors.blue80,
                             onChanged: (bool? value) {
                               authPresenter.rememberMe = value!;
                             },

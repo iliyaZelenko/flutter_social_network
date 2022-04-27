@@ -37,8 +37,16 @@ abstract class OtherProfileScreenPresenterBase with Store implements AbstractPro
   @computed
   List<PostEntity>? get posts => _feedResponse?.results;
 
+  @override
+  @computed
+  int? get postsCount => _feedResponse?.count;
+
   @readonly
   bool _loading = false;
+
+  @override
+  @observable
+  int currentTab = 0;
 
   @override
   @action

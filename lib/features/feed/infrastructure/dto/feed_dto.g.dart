@@ -9,6 +9,7 @@ part of 'feed_dto.dart';
 FeedResponseDto _$FeedResponseDtoFromJson(Map<String, dynamic> json) =>
     FeedResponseDto(
       json['next'] as String?,
+      json['count'] as int,
       FeedResponseDto._readResults(json['results']),
     );
 

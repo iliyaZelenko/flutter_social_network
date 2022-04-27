@@ -23,6 +23,13 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
       (_$postsComputed ??= Computed<List<PostEntity>?>(() => super.posts,
               name: 'OtherProfileScreenPresenterBase.posts'))
           .value;
+  Computed<int?>? _$postsCountComputed;
+
+  @override
+  int? get postsCount =>
+      (_$postsCountComputed ??= Computed<int?>(() => super.postsCount,
+              name: 'OtherProfileScreenPresenterBase.postsCount'))
+          .value;
 
   final _$_fetchedProfileAtom =
       Atom(name: 'OtherProfileScreenPresenterBase._fetchedProfile');
@@ -77,6 +84,22 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
     });
   }
 
+  final _$currentTabAtom =
+      Atom(name: 'OtherProfileScreenPresenterBase.currentTab');
+
+  @override
+  int get currentTab {
+    _$currentTabAtom.reportRead();
+    return super.currentTab;
+  }
+
+  @override
+  set currentTab(int value) {
+    _$currentTabAtom.reportWrite(value, super.currentTab, () {
+      super.currentTab = value;
+    });
+  }
+
   final _$fetchAsyncAction =
       AsyncAction('OtherProfileScreenPresenterBase.fetch');
 
@@ -104,8 +127,10 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
   @override
   String toString() {
     return '''
+currentTab: ${currentTab},
 profile: ${profile},
-posts: ${posts}
+posts: ${posts},
+postsCount: ${postsCount}
     ''';
   }
 }

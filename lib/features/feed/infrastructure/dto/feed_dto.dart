@@ -7,11 +7,14 @@ part 'feed_dto.g.dart';
 class FeedResponseDto {
   final String? next;
 
+  final int count;
+
   @JsonKey(fromJson: _readResults)
   final List<FeedResponseItemDto?> results;
 
   FeedResponseDto(
     this.next,
+    this.count,
     this.results,
   );
 

@@ -35,6 +35,7 @@ class FeedRepositoryImpl implements FeedRepository {
 
         return FeedResponse(
           next: responseDto.next,
+          count: responseDto.count,
           results: responseDto.results
               .map(
                 (item) => item == null ? _makeErrorPost() : _postEntityMapper.map(item),

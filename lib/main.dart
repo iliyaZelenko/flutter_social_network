@@ -63,6 +63,12 @@ Future<void> main() async {
 Future<void> _runRateClub() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle.light.copyWith(
+  //     statusBarColor: AppColors.white100, // Color for Android
+  //     statusBarBrightness: Brightness.dark, // Dark == white status bar -- for IOS.
+  //   ),
+  // );
   _fixCertificateError();
 
   final injector = await _setupEnvironment();

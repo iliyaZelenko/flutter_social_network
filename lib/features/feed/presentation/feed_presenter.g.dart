@@ -50,18 +50,11 @@ mixin _$FeedPresenter on FeedPresenterBase, Store {
     return _$initFetchAsyncAction.run(() => super.initFetch());
   }
 
-  final _$FeedPresenterBaseActionController =
-      ActionController(name: 'FeedPresenterBase');
+  final _$refreshAsyncAction = AsyncAction('FeedPresenterBase.refresh');
 
   @override
   Future<void> refresh() {
-    final _$actionInfo = _$FeedPresenterBaseActionController.startAction(
-        name: 'FeedPresenterBase.refresh');
-    try {
-      return super.refresh();
-    } finally {
-      _$FeedPresenterBaseActionController.endAction(_$actionInfo);
-    }
+    return _$refreshAsyncAction.run(() => super.refresh());
   }
 
   @override
