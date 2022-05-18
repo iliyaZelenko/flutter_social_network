@@ -5,6 +5,7 @@ import 'package:rate_club/features/profile_screen/domain/entities/profile_screen
 abstract class AbstractProfileScreenPresenter with Store {
   late int currentTab;
 
+  // TODO Ilya: why don't refresh? ObservableStream/ObservableFuture
   @computed
   ProfileScreenEntity? get profile;
 

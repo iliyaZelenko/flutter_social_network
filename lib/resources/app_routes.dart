@@ -15,6 +15,9 @@ import 'package:rate_club/features/profile_screen/presentation/abstract_profile_
 import 'package:rate_club/features/profile_screen/presentation/my_profile/my_profile_screen_presenter.dart';
 import 'package:rate_club/features/profile_screen/presentation/other_profile/other_profile_screen_presenter.dart';
 import 'package:rate_club/features/profile_screen/presentation/profile_screen.dart';
+import 'package:rate_club/features/subscriptions/domain/use_cases/cancel_subscription_use_case.dart';
+import 'package:rate_club/features/subscriptions/domain/use_cases/get_subscriptions_by_profile_use_case.dart';
+import 'package:rate_club/features/subscriptions/domain/use_cases/subscribe_use_case.dart';
 import 'package:rate_club/rate_club.dart';
 
 mixin AppRoutes {
@@ -62,6 +65,9 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
           nickname: nickname,
           getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
           getProfileFeedUseCase: injector.get<GetProfileFeedUseCase>(),
+          getSubscriptionsByProfileUseCase: injector.get<GetSubscriptionsByProfileUseCase>(),
+          subscribeUseCase: injector.get<SubscribeUseCase>(),
+          cancelSubscriptionUseCase: injector.get<CancelSubscriptionUseCase>(),
         ),
       );
     },

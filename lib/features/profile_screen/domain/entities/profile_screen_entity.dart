@@ -5,6 +5,10 @@ import 'package:rate_club/features/profile_screen/domain/value_objects/profile_s
 class ProfileScreenEntity extends ProfileEntity {
   final String? about;
   final ProfileScreenCounters counters;
+  final bool subscriptionFreeActive;
+  final bool subscriptionPremiumActive;
+  final int? subscriptionPremiumActiveCoid;
+  final int? subscriptionFreeActiveCoid;
 
   const ProfileScreenEntity({
     required ProfileId id,
@@ -13,6 +17,10 @@ class ProfileScreenEntity extends ProfileEntity {
     required String lastName,
     required bool isVerified,
     required this.counters,
+    required this.subscriptionFreeActive,
+    required this.subscriptionPremiumActive,
+    required this.subscriptionPremiumActiveCoid,
+    required this.subscriptionFreeActiveCoid,
     String? avatar,
     this.about,
   }) : super(

@@ -13,7 +13,7 @@ class ProfileResponseDto {
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
 class ProfileDto {
-  final int id;
+  final int pid;
   final String nickname;
   final String? firstName, lastName;
   final bool isVerified;
@@ -25,7 +25,7 @@ class ProfileDto {
   final bool isDefault;
 
   ProfileDto(
-    this.id,
+    this.pid,
     this.nickname,
     this.firstName,
     this.lastName,

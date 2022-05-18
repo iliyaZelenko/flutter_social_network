@@ -49,7 +49,7 @@ class _FeedScreenState extends State<FeedScreen> with AfterLayoutMixin {
                 builder: (_) {
                   return feedPresenter.loading
                       ? const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(color: AppColors.blue60),
                         )
                       : const _FeedBody();
                 },

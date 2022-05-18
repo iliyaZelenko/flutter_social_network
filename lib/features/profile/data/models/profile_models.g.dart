@@ -14,7 +14,7 @@ ProfileResponseDto _$ProfileResponseDtoFromJson(Map<String, dynamic> json) =>
     );
 
 ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) => ProfileDto(
-      json['id'] as int,
+      json['pid'] as int,
       json['nickname'] as String,
       json['first_name'] as String?,
       json['last_name'] as String?,

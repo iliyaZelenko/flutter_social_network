@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rate_club/features/profile/data/models/profile_models.dart';
+import 'package:rate_club/features/subscriptions/data/models/subscriptions_models.dart';
 
 part 'profile_screen_dto.g.dart';
 
@@ -7,9 +8,10 @@ part 'profile_screen_dto.g.dart';
 class ProfileScreenDto extends ProfileDto {
   final String? about;
   final ProfileScreenCountersDto? counters;
+  final List<PlanDto> plans;
 
   ProfileScreenDto(
-    int id,
+    int pid,
     String nickname,
     String? firstName,
     String? lastName,
@@ -18,8 +20,9 @@ class ProfileScreenDto extends ProfileDto {
     bool isDefault,
     this.about,
     this.counters,
+    this.plans,
   ) : super(
-          id,
+          pid,
           nickname,
           firstName,
           lastName,

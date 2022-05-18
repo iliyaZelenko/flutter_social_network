@@ -3,8 +3,8 @@ import 'package:mobx/mobx.dart';
 import 'package:rate_club/features/auth/exceptions/auth_invalid_credentials_exception.dart';
 import 'package:rate_club/features/auth/presentation/auth_presenter.dart';
 import 'package:rate_club/rate_club.dart';
-import 'package:rate_club/resources/durations.dart';
 import 'package:rate_club/resources/app_routes.dart';
+import 'package:rate_club/resources/durations.dart';
 
 part 'auth_flow_presenter.g.dart';
 
@@ -26,6 +26,7 @@ abstract class AuthFlowPresenterBase with Store {
 
   // na1se_one/123456qwer
   // email@zlat.ny/password666
+  // AutoTestUser1/rateautobo1
   @readonly
   String _username = 'arttest10';
 

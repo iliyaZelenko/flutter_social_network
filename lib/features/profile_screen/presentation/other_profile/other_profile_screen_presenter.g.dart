@@ -100,6 +100,43 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
     });
   }
 
+  final _$_loadingSubscribeAtom =
+      Atom(name: 'OtherProfileScreenPresenterBase._loadingSubscribe');
+
+  bool get loadingSubscribe {
+    _$_loadingSubscribeAtom.reportRead();
+    return super._loadingSubscribe;
+  }
+
+  @override
+  bool get _loadingSubscribe => loadingSubscribe;
+
+  @override
+  set _loadingSubscribe(bool value) {
+    _$_loadingSubscribeAtom.reportWrite(value, super._loadingSubscribe, () {
+      super._loadingSubscribe = value;
+    });
+  }
+
+  final _$_loadingSubscribeInDialogAtom =
+      Atom(name: 'OtherProfileScreenPresenterBase._loadingSubscribeInDialog');
+
+  bool get loadingSubscribeInDialog {
+    _$_loadingSubscribeInDialogAtom.reportRead();
+    return super._loadingSubscribeInDialog;
+  }
+
+  @override
+  bool get _loadingSubscribeInDialog => loadingSubscribeInDialog;
+
+  @override
+  set _loadingSubscribeInDialog(bool value) {
+    _$_loadingSubscribeInDialogAtom
+        .reportWrite(value, super._loadingSubscribeInDialog, () {
+      super._loadingSubscribeInDialog = value;
+    });
+  }
+
   final _$fetchAsyncAction =
       AsyncAction('OtherProfileScreenPresenterBase.fetch');
 
@@ -122,6 +159,22 @@ mixin _$OtherProfileScreenPresenter on OtherProfileScreenPresenterBase, Store {
   @override
   Future<void> refresh() {
     return _$refreshAsyncAction.run(() => super.refresh());
+  }
+
+  final _$subscribeAsyncAction =
+      AsyncAction('OtherProfileScreenPresenterBase.subscribe');
+
+  @override
+  Future<void> subscribe(BuildContext context) {
+    return _$subscribeAsyncAction.run(() => super.subscribe(context));
+  }
+
+  final _$openMenuAsyncAction =
+      AsyncAction('OtherProfileScreenPresenterBase.openMenu');
+
+  @override
+  Future<void> openMenu(BuildContext context) {
+    return _$openMenuAsyncAction.run(() => super.openMenu(context));
   }
 
   @override

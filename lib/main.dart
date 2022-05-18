@@ -16,6 +16,7 @@ import 'package:rate_club/features/env/env_registry.dart';
 import 'package:rate_club/features/env/env_variables.dart';
 import 'package:rate_club/features/feed/feed_feature.dart';
 import 'package:rate_club/features/http/http_feature.dart';
+import 'package:rate_club/features/payments/money_formatter/money_formatter_interface.dart';
 import 'package:rate_club/features/post/post_feature.dart';
 import 'package:rate_club/features/profile/profile_feature.dart';
 import 'package:rate_club/features/profile_screen/profile_screen_feature.dart';
@@ -29,7 +30,9 @@ import 'features/auth/auth_feature.dart';
 import 'features/feature_invoker.dart';
 import 'features/home/home_feature.dart';
 import 'features/home/presentation/home_presenter.dart';
+import 'features/payments/payments_feature.dart';
 import 'features/profile/presentation/profile_presenter.dart';
+import 'features/subscriptions/subscriptions_feature.dart';
 import 'features/tools/plural/plural_interface.dart';
 import 'resources/app_colors.dart';
 import 'resources/app_routes.dart';
@@ -85,6 +88,7 @@ Future<void> _runRateClub() async {
         Provider<InjectorInterface>(create: (_) => injector),
         Provider<PluralInterface>(create: (_) => injector.get<PluralInterface>()),
         Provider<NumberFormatterInterface>(create: (_) => injector.get<NumberFormatterInterface>()),
+        Provider<MoneyFormatterInterface>(create: (_) => injector.get<MoneyFormatterInterface>()),
         Provider<HomePresenter>(create: (_) => injector.get<HomePresenter>()),
         Provider<ProfilePresenter>(create: (_) => injector.get<ProfilePresenter>()),
         Provider<AuthPresenter>(create: (_) => injector.get<AuthPresenter>()),
@@ -177,7 +181,9 @@ Future<InjectorInterface> _setupEnvironment() async {
     ..use(ProfileFeature(injector: injector, http: http))
     ..use(ProfileScreenFeature(injector: injector, http: http))
     ..use(FeedFeature(injector: injector, http: http))
-    ..use(PostFeature(injector: injector, http: http));
+    ..use(PostFeature(injector: injector, http: http))
+    ..use(SubscriptionsFeature(injector: injector, http: http))
+    ..use(PaymentsFeature(injector: injector));
 
   return injector;
 }

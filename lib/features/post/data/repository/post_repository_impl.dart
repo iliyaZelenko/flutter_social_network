@@ -49,12 +49,13 @@ class PostRepositoryImpl implements PostRepository {
   }) {
     return _http
         .get<Map<String, dynamic>>(
-      path: 'wall/$id/0/comments/',
+      path: 'wall/posts/$id/0/comments/',
     )
         .next(
       onValue: (response) {
         final responseDto = PostCommentsResponseDto.fromJson(response.data!);
 
+        // TODO Ilya: update contract
         return PostCommentsResponse(
           next: responseDto.next,
           results: responseDto.results

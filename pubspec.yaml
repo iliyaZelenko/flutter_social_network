@@ -17,6 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+3
 
+# TODO Ilya: upgrade to flutter 3 (already stable)
 environment:
   sdk: ">=2.14.4 <3.0.0"
 

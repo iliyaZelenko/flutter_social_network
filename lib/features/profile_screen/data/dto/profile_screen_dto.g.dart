@@ -8,7 +8,7 @@ part of 'profile_screen_dto.dart';
 
 ProfileScreenDto _$ProfileScreenDtoFromJson(Map<String, dynamic> json) =>
     ProfileScreenDto(
-      json['id'] as int,
+      json['pid'] as int,
       json['nickname'] as String,
       json['first_name'] as String?,
       json['last_name'] as String?,
@@ -22,6 +22,9 @@ ProfileScreenDto _$ProfileScreenDtoFromJson(Map<String, dynamic> json) =>
           ? null
           : ProfileScreenCountersDto.fromJson(
               json['counters'] as Map<String, dynamic>),
+      (json['plans'] as List<dynamic>)
+          .map((e) => PlanDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 ProfileScreenCountersDto _$ProfileScreenCountersDtoFromJson(

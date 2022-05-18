@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AfterLayoutMixin {
                 builder: (_) {
                   return presenter.loading
                       ? const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(color: AppColors.blue60),
                         )
                       : const _ProfileBody();
                 },
@@ -141,6 +141,7 @@ class _ProfileBody extends StatelessWidget {
                                   'post',
                                   'posts',
                                 )}',
+                                style: AppTextStyles.regular15.apply(color: AppColors.black80),
                               ),
                               const Spacer(),
                               const IconFilter(),
@@ -158,7 +159,7 @@ class _ProfileBody extends StatelessWidget {
                   if (presenter.posts == null)
                     const SliverFillRemaining(
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(color: AppColors.blue60),
                       ),
                     )
                   else

@@ -5,7 +5,7 @@ import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart'
 class ProfileDtoToEntityMapper {
   ProfileEntity map(ProfileDto model) {
     return ProfileEntity(
-      id: ProfileId(model.id),
+      id: ProfileId(model.pid),
       nickname: model.nickname,
       avatar: model.avatar?.defaultType,
       firstName: model.firstName!,

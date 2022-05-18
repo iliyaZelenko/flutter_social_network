@@ -43,7 +43,8 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
   @override
   void afterFirstLayout(BuildContext context) {
     postPresenter.initFetch(widget._postId);
-    postPresenter.fetchComments(widget._postId);
+    // TODO Ilya: update comments contract
+    // postPresenter.fetchComments(widget._postId);
   }
 
   @override
@@ -66,7 +67,7 @@ class _PostScreenState extends State<PostScreen> with AfterLayoutMixin {
                   builder: (_) {
                     return postPresenter.loading
                         ? const Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(color: AppColors.blue60),
                           )
                         : const _PostBody();
                   },
@@ -160,7 +161,7 @@ class _PostBody extends StatelessWidget {
                           if (postPresenter.postCommentsResponse == null)
                             const Expanded(
                               child: Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(color: AppColors.blue60),
                               ),
                             )
                           else
