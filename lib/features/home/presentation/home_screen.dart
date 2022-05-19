@@ -9,6 +9,7 @@ import 'package:rate_club/features/home/presentation/home_presenter.dart';
 import 'package:rate_club/features/home/presentation/widgets/tap_bar.dart';
 import 'package:rate_club/features/marketplace/market_place_screen.dart';
 import 'package:rate_club/features/people/people_place_screen.dart';
+import 'package:rate_club/features/subscriptions/presentation/subscriptions_presenter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,7 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         providers: [
                           Provider<FeedPresenter>(
                             create: (_) => injector.get<FeedPresenter>(),
-                          )
+                          ),
+                          Provider<SubscriptionsPresenter>(
+                            create: (_) => injector.get<SubscriptionsPresenter>(),
+                          ),
                         ],
                         child: const FeedScreen(),
                       ),

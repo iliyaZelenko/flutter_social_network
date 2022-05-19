@@ -1,4 +1,5 @@
 import 'package:injector/injector.dart';
+import 'package:rate_club/features/subscriptions/data/mappers/plan_dto_to_entity_mapper.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'domain/repositories/feed_repository.dart';
@@ -24,7 +25,7 @@ class FeedFeature extends FeatureInterface {
       ..map<FeedRepository>(
         (i) => FeedRepositoryImpl(
           _http,
-          FeedItemDtoToPostEntityMapper(),
+          FeedItemDtoToPostEntityMapper(i.get<PlanDtoToEntityMapper>()),
         ),
         isSingleton: true,
       )

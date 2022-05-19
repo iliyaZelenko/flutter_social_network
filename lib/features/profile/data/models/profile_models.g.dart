@@ -23,6 +23,9 @@ ProfileDto _$ProfileDtoFromJson(Map<String, dynamic> json) => ProfileDto(
           ? null
           : ProfileAvatarDto.fromJson(json['avatar'] as Map<String, dynamic>),
       json['default'] as bool,
+      (json['plans'] as List<dynamic>)
+          .map((e) => PlanDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 ProfileAvatarDto _$ProfileAvatarDtoFromJson(Map<String, dynamic> json) =>

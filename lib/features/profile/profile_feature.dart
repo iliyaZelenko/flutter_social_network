@@ -1,5 +1,6 @@
 import 'package:injector/injector.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
+import 'package:rate_club/features/subscriptions/data/mappers/plan_dto_to_entity_mapper.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'data/mappers/profile_dto_to_entity_mapper.dart';
@@ -22,7 +23,7 @@ class ProfileFeature extends FeatureInterface {
       ..map<ProfileRepositoryImpl>(
         (i) => ProfileRepositoryImpl(
           _http,
-          ProfileDtoToEntityMapper(),
+          ProfileDtoToEntityMapper(i.get<PlanDtoToEntityMapper>()),
         ),
         isSingleton: true,
       )

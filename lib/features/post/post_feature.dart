@@ -2,6 +2,7 @@ import 'package:injector/injector.dart';
 import 'package:rate_club/features/feed/infrastructure/mappers/feed_item_dto_to_post_entity_mapper.dart';
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
 import 'package:rate_club/features/post/presentation/post_presenter.dart';
+import 'package:rate_club/features/subscriptions/data/mappers/plan_dto_to_entity_mapper.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'data/mappers/post_comment_dto_to_entity_mapper.dart';
@@ -29,7 +30,7 @@ class PostFeature extends FeatureInterface {
   void execute() {
     final postRepo = PostRepositoryImpl(
       _http,
-      FeedItemDtoToPostEntityMapper(),
+      FeedItemDtoToPostEntityMapper(_injector.get<PlanDtoToEntityMapper>()),
       PostCommentDtoToEntityMapper(),
     );
 

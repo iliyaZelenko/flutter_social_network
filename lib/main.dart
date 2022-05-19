@@ -98,6 +98,9 @@ Future<void> _runRateClub() async {
         Provider<GlobalEventsStreamType>(
           create: (_) => StreamController.broadcast(),
         ),
+        Provider<MainNavigatorKeyType>(
+          create: (_) => navigatorKey,
+        ),
       ],
       child: GestureDetector(
         onTap: () {
@@ -177,12 +180,12 @@ Future<InjectorInterface> _setupEnvironment() async {
   featureInvoker
     ..use(ToolsFeature(injector: injector))
     ..use(AuthFeature(injector: injector, http: http))
+    ..use(SubscriptionsFeature(injector: injector, http: http))
     ..use(HomeFeature(injector: injector))
     ..use(ProfileFeature(injector: injector, http: http))
     ..use(ProfileScreenFeature(injector: injector, http: http))
     ..use(FeedFeature(injector: injector, http: http))
     ..use(PostFeature(injector: injector, http: http))
-    ..use(SubscriptionsFeature(injector: injector, http: http))
     ..use(PaymentsFeature(injector: injector));
 
   return injector;

@@ -17,7 +17,7 @@ import 'package:rate_club/features/profile_screen/presentation/other_profile/oth
 import 'package:rate_club/features/profile_screen/presentation/profile_screen.dart';
 import 'package:rate_club/features/subscriptions/domain/use_cases/cancel_subscription_use_case.dart';
 import 'package:rate_club/features/subscriptions/domain/use_cases/get_subscriptions_by_profile_use_case.dart';
-import 'package:rate_club/features/subscriptions/domain/use_cases/subscribe_use_case.dart';
+import 'package:rate_club/features/subscriptions/presentation/subscriptions_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 
 mixin AppRoutes {
@@ -42,32 +42,42 @@ Map<String, WidgetBuilder> getRoutesMap(InjectorInterface injector) {
     AppRoutes.post: (context) {
       final postId = ModalRoute.of(context)?.settings.arguments as PostId;
 
-      return Provider<PostPresenter>(
-        key: ValueKey('provider$postId'),
+      return MultiProvider(
+        providers: [
+          Provider<PostPresenter>(
+            key: ValueKey('provider$postId'),
+            create: (_) => injector.get<PostPresenter>(),
+          ),
+        ],
         child: PostScreen(
           key: ValueKey(postId),
           postId: postId,
           mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
         ),
-        create: (_) => injector.get<PostPresenter>(),
       );
     },
     AppRoutes.otherProfile: (context) {
       final nickname = ModalRoute.of(context)?.settings.arguments as String;
 
-      return Provider<AbstractProfileScreenPresenter>(
-        key: ValueKey('provider$nickname'),
+      return MultiProvider(
+        providers: [
+          Provider<AbstractProfileScreenPresenter>(
+            key: ValueKey('provider$nickname'),
+            create: (_) => OtherProfileScreenPresenter(
+              nickname: nickname,
+              getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
+              getProfileFeedUseCase: injector.get<GetProfileFeedUseCase>(),
+              getSubscriptionsByProfileUseCase: injector.get<GetSubscriptionsByProfileUseCase>(),
+              cancelSubscriptionUseCase: injector.get<CancelSubscriptionUseCase>(),
+            ),
+          ),
+          Provider<SubscriptionsPresenter>(
+            create: (_) => injector.get<SubscriptionsPresenter>(),
+          ),
+        ],
         child: ProfileScreen(
           key: ValueKey(nickname),
           mainNavigatorKey: injector.get<MainNavigatorKeyType>(),
-        ),
-        create: (_) => OtherProfileScreenPresenter(
-          nickname: nickname,
-          getProfileScreenUseCase: injector.get<GetProfileScreenUseCase>(),
-          getProfileFeedUseCase: injector.get<GetProfileFeedUseCase>(),
-          getSubscriptionsByProfileUseCase: injector.get<GetSubscriptionsByProfileUseCase>(),
-          subscribeUseCase: injector.get<SubscribeUseCase>(),
-          cancelSubscriptionUseCase: injector.get<CancelSubscriptionUseCase>(),
         ),
       );
     },

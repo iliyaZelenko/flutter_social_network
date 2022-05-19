@@ -2,7 +2,7 @@
 
 import 'package:rate_club/features/subscriptions/domain/entities/subscription_plan.dart';
 
-PlansInfo getPlansInfo(List<SubscriptionPlanEntity> plans) {
+PlansInfo getPlansInfo(Iterable<SubscriptionPlanEntity> plans) {
   final premiumPlan = plans.firstWhere((element) => element.title == 'Premium');
   final freePlan = plans.firstWhere((element) => element != premiumPlan);
 

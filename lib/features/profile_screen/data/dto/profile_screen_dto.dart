@@ -29,6 +29,7 @@ class ProfileScreenDto extends ProfileDto {
           isVerified,
           avatar,
           isDefault,
+          plans,
         );
 
   factory ProfileScreenDto.fromJson(Map<String, dynamic> json) => _$ProfileScreenDtoFromJson(json);

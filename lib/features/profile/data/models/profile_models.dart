@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rate_club/features/subscriptions/data/models/subscriptions_models.dart';
 
 part 'profile_models.g.dart';
 
@@ -18,6 +19,7 @@ class ProfileDto {
   final String? firstName, lastName;
   final bool isVerified;
   final ProfileAvatarDto? avatar;
+  final List<PlanDto> plans;
 
   @JsonKey(
     name: 'default',
@@ -32,6 +34,7 @@ class ProfileDto {
     this.isVerified,
     this.avatar,
     this.isDefault,
+    this.plans,
   );
 
   factory ProfileDto.fromJson(Map<String, dynamic> json) => _$ProfileDtoFromJson(json);
@@ -46,5 +49,5 @@ class ProfileAvatarDto {
 
   factory ProfileAvatarDto.fromJson(Map<String, dynamic> json) => _$ProfileAvatarDtoFromJson(json);
 
-  static String _readTypeUrl(dynamic value) => 'https://' + (value['url'] as String);
+  static String _readTypeUrl(dynamic value) => 'https://${value['url'] as String}';
 }

@@ -7,10 +7,12 @@ import 'package:rate_club/features/feed/domain/entities/post_creator_entity.dart
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
 import 'package:rate_club/features/profile/presentation/profile_presenter.dart';
 import 'package:rate_club/features/profile_screen/presentation/abstract_profile_screen_presenter.dart';
+import 'package:rate_club/features/subscriptions/presentation/subscriptions_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_routes.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/buttons/app_btn_small.dart';
+import 'package:rate_club/resources/helpers.dart';
 import 'package:rate_club/resources/icons/icon_menu.dart';
 
 class PostCardHeader extends StatelessWidget {
@@ -26,10 +28,21 @@ class PostCardHeader extends StatelessWidget {
     }
   }
 
+  Future<void> _subscribe(BuildContext context) async {
+    final post = Provider.of<PostEntity>(context, listen: false);
+    final subscriptionsPresenter = Provider.of<SubscriptionsPresenter>(context, listen: false);
+
+    // If subscribed
+    if (await subscriptionsPresenter.subscribe(context, post.creator.plans!) == true) {
+      // TODO Ilya: refresh only post.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final post = Provider.of<PostEntity>(context);
     final profilePresenter = Provider.of<ProfilePresenter>(context);
+    final plansInfo = getPlansInfo(post.creator.plans!);
 
     final mainContent = Padding(
       padding: const EdgeInsets.only(left: 10, right: 10, top: 16, bottom: 16),
@@ -85,17 +98,33 @@ class PostCardHeader extends StatelessWidget {
               const Spacer(),
 
               // TODO Ilya
-              if (post.creator == profilePresenter.profile)
+              if (post.creator.id == profilePresenter.profile!.id)
                 const IconMenu()
               else
                 (post is PostClosedByPlanEntity)
                     ? Text(
                         'premium content  ',
                         style: AppTextStyles.regular13.apply(
-                          color: (post is PostClosedByPlanEntity) ? AppColors.purple80 : AppColors.black60,
+                          color: AppColors.purple80,
                         ),
                       )
-                    : const AppBtnSmall(text: 'subscribe'),
+                    : plansInfo.subscriptionPremiumActive == true
+                        ? const SizedBox.shrink()
+                        : plansInfo.subscriptionFreeActive == true
+                            ? AppBtnSmall(
+                                text: 'add premium',
+                                color: AppColors.purple100,
+                                textColor: AppColors.white80,
+                                onTap: () {
+                                  _subscribe(context);
+                                },
+                              )
+                            : AppBtnSmall(
+                                text: 'subscribe',
+                                onTap: () {
+                                  _subscribe(context);
+                                },
+                              ),
             ],
           )
         ],

@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rate_club/features/profile/data/models/profile_models.dart';
+import 'package:rate_club/features/subscriptions/data/models/subscriptions_models.dart';
 
 part 'feed_dto.g.dart';
 
@@ -58,6 +59,7 @@ class PostCreatorDto {
   final String? firstName, lastName;
   final bool isVerified;
   final ProfileAvatarDto? avatar;
+  final List<PlanDto> plans;
 
   PostCreatorDto(
     this.pid,
@@ -66,6 +68,7 @@ class PostCreatorDto {
     this.lastName,
     this.isVerified,
     this.avatar,
+    this.plans,
   );
 
   factory PostCreatorDto.fromJson(Map<String, dynamic> json) => _$PostCreatorDtoFromJson(json);

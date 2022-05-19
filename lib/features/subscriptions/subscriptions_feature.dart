@@ -1,4 +1,6 @@
 import 'package:injector/injector.dart';
+import 'package:rate_club/features/subscriptions/data/mappers/plan_dto_to_entity_mapper.dart';
+import 'package:rate_club/features/subscriptions/presentation/subscriptions_presenter.dart';
 import 'package:rate_club/rate_club.dart';
 
 import 'data/repository/subscriptions_repository_impl.dart';
@@ -37,6 +39,14 @@ class SubscriptionsFeature extends FeatureInterface {
       ..map<CancelSubscriptionUseCase>(
         (i) => CancelSubscriptionUseCase(repo),
         isSingleton: true,
+      )
+      ..map<SubscriptionsPresenter>(
+        (i) => SubscriptionsPresenter(
+          subscribeUseCase: _injector.get<SubscribeUseCase>(),
+        ),
+      )
+      ..map<PlanDtoToEntityMapper>(
+        (i) => PlanDtoToEntityMapper(),
       );
   }
 }

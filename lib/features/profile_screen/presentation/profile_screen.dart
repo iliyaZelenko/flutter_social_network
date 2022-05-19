@@ -13,6 +13,7 @@ import 'package:rate_club/features/tools/plural/plural_interface.dart';
 import 'package:rate_club/rate_club.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
+import 'package:rate_club/resources/common_widgets/app_inline_loader.dart';
 import 'package:rate_club/resources/common_widgets/refreshable.dart';
 import 'package:rate_club/resources/header/header.dart';
 import 'package:rate_club/resources/header/slots_content/profile_in_header.dart';
@@ -58,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> with AfterLayoutMixin {
                 builder: (_) {
                   return presenter.loading
                       ? const Center(
-                          child: CircularProgressIndicator(color: AppColors.blue60),
+                          child: AppInlineLoader(),
                         )
                       : const _ProfileBody();
                 },
@@ -159,7 +160,7 @@ class _ProfileBody extends StatelessWidget {
                   if (presenter.posts == null)
                     const SliverFillRemaining(
                       child: Center(
-                        child: CircularProgressIndicator(color: AppColors.blue60),
+                        child: AppInlineLoader(),
                       ),
                     )
                   else

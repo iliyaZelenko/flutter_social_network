@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_club/features/feed/domain/entities/post_closed_by_plan_entity.dart';
 import 'package:rate_club/features/feed/domain/entities/post_entity.dart';
+import 'package:rate_club/features/subscriptions/presentation/subscriptions_presenter.dart';
 import 'package:rate_club/resources/app_colors.dart';
 import 'package:rate_club/resources/app_text_styles.dart';
 import 'package:rate_club/resources/common_widgets/buttons/app_btn_regular.dart';
@@ -10,6 +11,16 @@ class PostCardContentClosedByPlan extends StatelessWidget {
   const PostCardContentClosedByPlan({
     Key? key,
   }) : super(key: key);
+
+  Future<void> _subscribe(BuildContext context) async {
+    final post = Provider.of<PostEntity>(context, listen: false);
+    final subscriptionsPresenter = Provider.of<SubscriptionsPresenter>(context, listen: false);
+
+    // If subscribed
+    if (await subscriptionsPresenter.subscribe(context, post.creator.plans!) == true) {
+      // TODO Ilya: refresh only post.
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +54,9 @@ class PostCardContentClosedByPlan extends StatelessWidget {
                 child: AppBtnRegular(
                   text: 'go to ${post.needBuyPlan.title} subscribe',
                   color: AppColors.purple100,
+                  onTap: () {
+                    _subscribe(context);
+                  },
                 ),
               ),
             ],

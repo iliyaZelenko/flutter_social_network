@@ -30,6 +30,9 @@ PostCreatorDto _$PostCreatorDtoFromJson(Map<String, dynamic> json) =>
       json['avatar'] == null
           ? null
           : ProfileAvatarDto.fromJson(json['avatar'] as Map<String, dynamic>),
+      (json['plans'] as List<dynamic>)
+          .map((e) => PlanDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 ArticleDto _$ArticleDtoFromJson(Map<String, dynamic> json) => ArticleDto(

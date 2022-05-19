@@ -36,15 +36,15 @@ class ProfileScreenHeader extends StatelessWidget {
     final plural = Provider.of<PluralInterface>(context);
     final formatter = Provider.of<NumberFormatterInterface>(context);
     final presenter = Provider.of<AbstractProfileScreenPresenter>(context);
-    // TODO Ilya: why don't refresh? ObservableStream/ObservableFuture
-    final profile = presenter.profile!;
-    final List<_CounterData> countersToDisplay = [
-      _CounterData(profile.counters.subscribers, 'subscriber', 'subscribers'),
-      _CounterData(profile.counters.contracts, 'subscribe', 'subscribes'),
-      _CounterData(profile.counters.tokens, 'token', 'tokens'),
-    ];
 
     return Observer(builder: (_) {
+      final profile = presenter.profile!;
+      final List<_CounterData> countersToDisplay = [
+        _CounterData(profile.counters.subscribers, 'subscriber', 'subscribers'),
+        _CounterData(profile.counters.contracts, 'subscribe', 'subscribes'),
+        _CounterData(profile.counters.tokens, 'token', 'tokens'),
+      ];
+
       return DecoratedBox(
         decoration: BoxDecoration(
           color: profile.subscriptionPremiumActive ? AppColors.purple20 : AppColors.white100,

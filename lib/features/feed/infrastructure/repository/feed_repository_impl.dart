@@ -7,7 +7,12 @@ import 'package:rate_club/features/feed/domain/value_objects/feed_response.dart'
 import 'package:rate_club/features/feed/domain/value_objects/post_id.dart';
 import 'package:rate_club/features/feed/infrastructure/dto/feed_dto.dart';
 import 'package:rate_club/features/feed/infrastructure/mappers/feed_item_dto_to_post_entity_mapper.dart';
+import 'package:rate_club/features/payments/domain/entities/currency_entity.dart';
+import 'package:rate_club/features/payments/domain/value_objects/currency_id.dart';
+import 'package:rate_club/features/payments/domain/value_objects/money.dart';
 import 'package:rate_club/features/profile/domain/value_objects/profile_id.dart';
+import 'package:rate_club/features/subscriptions/domain/entities/subscription_plan.dart';
+import 'package:rate_club/features/subscriptions/domain/value_objects/subscription_plan_id.dart';
 import 'package:rate_club/rate_club.dart';
 
 class FeedRepositoryImpl implements FeedRepository {
@@ -58,6 +63,24 @@ class FeedRepositoryImpl implements FeedRepository {
         firstName: 'Error',
         lastName: 'Reporter',
         isVerified: true,
+        plans: [
+          SubscriptionPlanEntity(
+            id: SubscriptionPlanId(123),
+            title: 'Premium',
+            cost: Money(
+              amountInCents: 100,
+              currency: CurrencyEntity(id: CurrencyId(840)),
+            ),
+          ),
+          SubscriptionPlanEntity(
+            id: SubscriptionPlanId(123),
+            title: 'Other plan (free)',
+            cost: Money(
+              amountInCents: 0,
+              currency: CurrencyEntity(id: CurrencyId(840)),
+            ),
+          ),
+        ],
       ),
       createdAt: DateTime.now(),
       likedByMe: false,

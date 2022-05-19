@@ -19,7 +19,7 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Подписки'),
+              Text('Subscriptions'),
             ],
           ),
         ],
