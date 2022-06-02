@@ -5,6 +5,8 @@ import 'package:rate_club/features/post/domain/use_cases/get_post_comments_use_c
 import 'package:rate_club/features/post/domain/use_cases/get_post_use_case.dart';
 import 'package:rate_club/features/post/domain/value_objects/post_comments_response.dart';
 
+import '../domain/entities/post_comment_entity.dart';
+
 part 'post_presenter.g.dart';
 
 class PostPresenter = PostPresenterBase with _$PostPresenter;
@@ -28,6 +30,10 @@ abstract class PostPresenterBase with Store {
   @readonly
   PostCommentsResponse? _postCommentsResponse;
 
+  // TODO Ilya: observable list
+  @readonly
+  Set<PostCommentEntity>? _comments;
+
   @action
   Future<void> initFetch(PostId id) async {
     _loading = true;
@@ -45,10 +51,16 @@ abstract class PostPresenterBase with Store {
   @action
   Future<void> fetchComments(PostId id) async {
     _postCommentsResponse = await _getPostCommentsUseCase.execute(id: id);
+    _comments = _postCommentsResponse!.results;
   }
 
   @action
   Future<void> refresh() async {
     _post = await _getPostUseCase.execute(_post!.id);
+  }
+
+  @action
+  Future<void> addComment() async {
+    // _comments.add('TODO')
   }
 }
