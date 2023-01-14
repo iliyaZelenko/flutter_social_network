@@ -2,7 +2,7 @@
 
 ## Features
 
-Feed with posts, post page, profiles, likes, auth.
+Feed with posts, post page, comments, profiles, likes, auth.
 
 ## Stack
 
